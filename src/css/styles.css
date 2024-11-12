@@ -460,8 +460,22 @@ footer p.copyright {
     display: none;
 }
 
+.logo_desktop{
+    display: none;
+}
+
 /* Tablet */
 @media (min-width: 768px) {
+    .logo_mobile{
+        display: none;
+    }
+    .logo_desktop{
+        display: block;
+        width: 100px;
+    }
+    header .logo img {
+        width: 250px;
+    }
     .carousel-mobile {
         display: none;
     }
