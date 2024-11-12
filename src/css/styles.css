@@ -25,10 +25,6 @@ header .logo img {
     width: 50px;
 }
 
-header .search input {
-    border-radius: 20px;
-    border: 1px solid #7E7E7E;
-}
 .search{
     position: relative;
     max-width: 400px;
@@ -40,7 +36,7 @@ header .search input {
     padding: 10px 40px 10px 15px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 20px;
 }
 
 .search .search-icon {
@@ -51,11 +47,6 @@ header .search input {
     width: 24px; 
     height: 24px;
     cursor: pointer;
-}
-
-header {
-    color: white;
-    text-decoration: none;
 }
 
 .cart {
@@ -92,11 +83,7 @@ header {
     align-items: center;
     height: 55px;
 }
-.cta span{
-    background-color:#F7B32C;
-    height: 38px!important;
-    border-radius: 15px;
-}
+
 
 .cta h1 {
     color: white;
@@ -104,13 +91,11 @@ header {
     letter-spacing: 0.1rem;
 }
 
-.cta-btn {
-    background-color: #F7B32C;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 16px;
-    cursor: pointer;
+.cta span{
+    background-color:#F7B32C;
+    height: 38px!important;
+    border-radius: 15px;
+    padding: 0 10px;
 }
 
 /* Categories Section */
@@ -141,7 +126,7 @@ header {
     font-size: 14px;
     color: #666;
     text-align: left;
-    margin: 5px 0 0;
+    margin-top: 5px;
 }
 
 /* Segunda columna para el botón, centrado */
@@ -155,14 +140,13 @@ header {
 .view-more {
     background-color: #F7B32C;
     color: #fff;
-    border: 1px solid #ffffff;
+    border: none;
     padding: 5px 15px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 18px;
     height: 38px;
     font-weight: 600;
-    width: 120px;
 }
 
 .view-more:hover {
@@ -173,17 +157,16 @@ header {
 .categories {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
+    margin: 30px;
 }
 
 .category-item {
     text-align: center;
-    width: 80px;
 }
 
 .category-icon {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background-color: #B3B826;
     border-radius: 50%;
     display: flex;
@@ -193,68 +176,17 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.category-icon img {
-    width: 150px;
-    height: 130px;
-}
-
-.category-item p {
-    font-size: 14px;
-    color: #333;
-    font-weight: bold;
-}
-
+/* Sección de ofertas especiales */
 .special-offers {
-    padding: 20px;
+    background-color: #ECECEC;
     text-align: center;
+    border-radius: 25px;
+    margin: 1rem;
+    padding-bottom: 0.5rem;
 }
 
 .special-offers h2 {
     font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.timer {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.offer-products {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.product {
-    width: 45%;
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.product img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-
-}
-
-.product button {
-    background-color: #B3B826;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-/* Sección de ofertas especiales */
-.special-offers {
-    padding: 20px;
-    background-color: #ECECEC;
-    text-align: center;
-    border-radius: 8px;
 }
 
 /* Encabezado de las ofertas con el temporizador */
@@ -262,29 +194,28 @@ header {
     background-color: #CC292E;
     color: #fff;
     padding: 15px 20px;
-    border-radius: 20px 20px 0 0;
-    align-items: center;
-    text-align: center;
+    border-radius: 25px 25px 0 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .offers-header h2 {
-    /* margin: 0; */
     font-size: 24px;
     font-weight: bold;
-    align-items: center;
+    letter-spacing: 0.1rem;
     display: flex;
     gap: 8px;
-    letter-spacing: 0.1rem;
 }
+
 .clock-icon{
     width: 30px; 
     height: 30px;
 }
+
 .timer {
     display: flex;
-    justify-content: center;
     gap: 10px;
     font-size: 18px;
     margin-top: 10px;
@@ -297,18 +228,12 @@ header {
     border-radius: 5px;
 }
 
-.timer small {
-    display: block;
-    font-size: 12px;
-    margin-top: 2px;
-}
-
 /* Estilos de las tarjetas de productos */
 .offer-products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin-top: 20px;
+    margin: 20px;
 }
 
 .product-card {
@@ -322,19 +247,6 @@ header {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-}
-
-.product-card img {
-    width: 150px;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.product-name {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
 }
 
 .product-price-wrapper {
@@ -372,11 +284,6 @@ header {
     font-size: 1rem;
 }
 
-.add-to-cart .cart-icon {
-    width: 24px;
-    height: auto;
-}
-
 .add-to-cart:hover {
     background-color: #e0a22a;
 }
@@ -387,7 +294,7 @@ footer {
     text-align: center;
 }
 
-footer .footer-content {
+.footer-content {
     max-width: 1000px;
     margin: auto;
     padding: 20px;
@@ -460,8 +367,22 @@ footer p.copyright {
     display: none;
 }
 
+.logo_desktop{
+    display: none;
+}
+
 /* Tablet */
 @media (min-width: 768px) {
+    .logo_mobile{
+        display: none;
+    }
+    .logo_desktop{
+        display: block;
+        width: 100px;
+    }
+    header .logo img {
+        width: 250px;
+    }
     .carousel-mobile {
         display: none;
     }
@@ -470,11 +391,10 @@ footer p.copyright {
     }
     .categories {
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
-
-    .product {
-        width: 30%;
+    .offer-products {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -485,7 +405,7 @@ footer p.copyright {
     }
 
     .offer-products {
-        justify-content: space-around;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     footer {
@@ -494,3 +414,4 @@ footer p.copyright {
         align-items: center;
     }
 }
+
