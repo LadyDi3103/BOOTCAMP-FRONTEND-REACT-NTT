@@ -8,10 +8,12 @@
 
 body {
     font-family: 'Alatsi', sans-serif;
+    /* tratemos de que los valores repetidos como valores o tamaños fijos esten en variables css */
     background-color: #F4F4F4;
 }
 
 header {
+    /* tratemos de que los valores repetidos como valores o tamaños fijos esten en variables css */
     background-color: #F4F4F4;
     padding: 15px;
     display: flex;
@@ -110,6 +112,7 @@ header .logo img {
     display: grid;
     grid-template-columns: 70% 30%;
     align-items: center;
+    /* tratemos de que los valores repetidos como valores o tamaños fijos esten en variables css */
     background-color: #ECECEC;
     padding: 20px;
     border-radius: 8px;
@@ -138,6 +141,7 @@ header .logo img {
 
 
 .view-more {
+    /* tratemos de que los valores repetidos como valores o tamaños fijos esten en variables css */
     background-color: #F7B32C;
     color: #fff;
     border: none;
@@ -150,6 +154,7 @@ header .logo img {
 }
 
 .view-more:hover {
+    /* tratemos de que los valores repetidos como valores o tamaños fijos esten en variables css */
     background-color: #e0a22a;
 }
 
