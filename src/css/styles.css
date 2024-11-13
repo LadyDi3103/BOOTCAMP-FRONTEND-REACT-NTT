@@ -1,5 +1,30 @@
 /*CSS (Mobile-First)*/
 
+:root {
+    /* Colores primarios */
+    --color-primary: #4F1A0F; /* Primary - Marrón */
+    --color-secondary: #B3B826; /* Secondary - Verde */
+    --color-accent: #F7B32C; /* Accent - Amarillo */
+
+    /* Fondo */
+    --color-background: #F4F4F4; /* Background - Gris Claro */
+    --color-surface: #ECECEC; /* Superficies */
+
+    /* Estados */
+    --color-hover: #e0a22a; /* Hover - Amarillo Oscuro */
+    --color-warn: #CC292E; /* Warn - Rojo */
+
+    /* Tipografía */
+    --color-text-light: white; /* Tipografía Clara */
+    --color-text-dark: #333; /* Tipografía Oscura */
+    --color-text-dark-lighter: #666; /* Tipografía Oscura en un 60%*/
+
+    /* Espaciados y bordes */
+    --padding-small: 15px;
+    --padding-medium: 20px;
+    --border-radius: 8px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,16 +33,16 @@
 
 body {
     font-family: 'Alatsi', sans-serif;
-    background-color: #F4F4F4;
+    background-color: var(--color-background);
 }
 
 header {
-    background-color: #F4F4F4;
+    background-color: var(--color-background);
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
+    color: var(--color-typography-1);
     height: 80px;
 }
 
@@ -63,8 +88,8 @@ header .logo img {
     position: absolute;
     top: -15px;
     right: -15px;
-    background-color: #CC292E;
-    color: white;
+    background-color: var(--color-warn);
+    color: var(--color-text-light);
     font-size: 12px;
     font-weight: bold;
     border-radius: 50%;
@@ -75,7 +100,7 @@ header .logo img {
 }
 
 .cta {
-    background-color: #CC292E;
+    background-color: var(--color-warn);
     text-align: center;
     padding: 20px 0;
     display: flex;
@@ -86,13 +111,13 @@ header .logo img {
 
 
 .cta h1 {
-    color: white;
+    color: var(--color-text-light);
     font-size: 18px;
     letter-spacing: 0.1rem;
 }
 
 .cta span {
-    background-color: #F7B32C;
+    background-color: var(--color-accent);
     height: 38px !important;
     border-radius: 15px;
     padding: 0 10px;
@@ -100,7 +125,7 @@ header .logo img {
 
 /* Categories Section */
 .categories-section {
-    background-color: #f4f4f4;
+    background-color: var(--color-background);
     text-align: center;
     display: flex;
     justify-content: space-around;
@@ -115,7 +140,7 @@ header .logo img {
     display: grid;
     grid-template-columns: 70% 30%;
     align-items: center;
-    background-color: #ECECEC;
+    background-color: var(--color-surface);
     padding: 20px;
     border-radius: 8px;
     box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.1),
@@ -128,13 +153,13 @@ header .logo img {
 
 .categories-header h2 {
     font-size: 20px;
-    color: #333;
+    color: var(--color-text-dark);
     text-align: left;
 }
 
 .categories-header p {
     font-size: 14px;
-    color: #666;
+    color: var(--color-text-dark-lighter);
     text-align: left;
     margin-top: 5px;
 }
@@ -148,8 +173,8 @@ header .logo img {
 
 
 .view-more {
-    background-color: #F7B32C;
-    color: #fff;
+    background-color:var(--color-accent);
+    color: var(--color-text-light);
     border: none;
     padding: 5px 15px;
     border-radius: 25px;
@@ -160,7 +185,7 @@ header .logo img {
 }
 
 .view-more:hover {
-    background-color: #e0a22a;
+    background-color: var(--color-hover);
 }
 
 /* Category Items */
@@ -181,12 +206,13 @@ header .logo img {
 }
 .category-item  p{
     margin-bottom: 1.5rem;
+    color: var(--color-text-dark);
 }
 
 .category-icon {
     width: 120px;
     height: 120px;
-    background-color: #B3B826;
+    background-color: var(--color-secondary);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -197,7 +223,7 @@ header .logo img {
 
 /* Sección de ofertas especiales */
 .special-offers {
-    background-color: #ECECEC;
+    background-color: var(--color-surface);
     text-align: center;
     border-radius: 25px;
     margin: 1rem;
@@ -210,8 +236,8 @@ header .logo img {
 
 /* Encabezado de las ofertas con el temporizador */
 .offers-header {
-    background-color: #CC292E;
-    color: #fff;
+    background-color: var(--color-warn);
+    color: var(--color-text-light);
     padding: 15px 20px;
     border-radius: 25px 25px 0 0;
     display: flex;
@@ -241,8 +267,8 @@ header .logo img {
 }
 
 .timer span {
-    background-color: #4F1A0F;
-    color: #fff;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
     padding: 5px 10px;
     border-radius: 5px;
 }
@@ -256,8 +282,8 @@ header .logo img {
 }
 
 .product-card {
-    background-color: #fff;
-    border: 2px solid #F7B32C;
+    background-color: var(--color-background);
+    border: 2px solid var(--color-accent);
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -278,18 +304,22 @@ header .logo img {
 .product-price {
     padding: 5px;
     font-size: 18px;
-    color: #4F1A0F;
+    color: var(--color-primary);
     font-weight: bold;
-    border: 2px solid #7E7E7E;
+    border: 2px solid var(--color-primary);
     height: 38px;
     border-radius: 10px;
     min-width: 100px;
     text-align: center;
 }
 
+.product-name{
+    color: var(--color-text-dark);
+}
+
 .add-to-cart {
-    background-color: #F7B32C;
-    color: #fff;
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
     border: none;
     padding: 8px 15px;
     border-radius: 20px;
@@ -304,12 +334,12 @@ header .logo img {
 }
 
 .add-to-cart:hover {
-    background-color: #e0a22a;
+    background-color: var(--color-hover);
 }
 
 footer {
-    background-color: #4F1A0F;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
     text-align: center;
 }
 
@@ -335,7 +365,7 @@ footer .logo img {
 }
 
 .footer-links a {
-    color: white;
+    color: var(--color-text-light);
     font-size: 14px;
     text-decoration: none;
 }
@@ -350,7 +380,6 @@ footer .logo img {
 .social-media img {
     width: 24px;
     height: 24px;
-    /* filter: invert(1); */
 }
 
 .contact {
@@ -370,14 +399,14 @@ footer .logo img {
 footer p.copyright {
     margin-top: 20px;
     font-size: 12px;
-    color: #CCCCCC;
+    color: var(--color-text-light);
 }
 
 /* Divider */
 .divider {
     width: 90%;
     height: 1px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: var(--color-background);
     margin: 15px auto;
 }
 .container_copyright{
@@ -479,18 +508,12 @@ footer p.copyright {
     .offer-products {
         grid-template-columns: repeat(4, 1fr);
         gap: 15px;
+        margin: 20px;
     }
 
     .categories {
         grid-template-columns: repeat(4, 1fr);
         justify-content: center;
-    }
-
-    /* Categories Section */
-    .categories-section {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: repeat(3, 1fr);
     }
 
     .carousel {
@@ -531,7 +554,6 @@ footer p.copyright {
         grid-column: span 3;
         text-align: center;
         font-size: 12px;
-        color: #CCCCCC;
         margin-top: 20px;
     }
 }
