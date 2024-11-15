@@ -5,37 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DirectoAMiCasa</title>
-    <link rel="icon" type="image/svg+xml" href="assets/images/logos/icon_logo.svg">
+    <link rel="icon" type="image/svg+xml" href="/src/assets/images/logos/icon_logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=Alatsi&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="src/css/styles.css">
 
 </head>
 
 <body>
     <header>
         <div class="logo">
-            <img src="assets/images/logos/icon_logo.svg" alt="DirectoAMiCasa" class="logo_mobile">
-            <img src="assets/images/logos/logo_desktop.svg" alt="DirectoAMiCasa" class="logo_desktop">
+            <img src="src/assets/images/logos/icon_logo.svg" alt="DirectoAMiCasa" class="logo_mobile">
+            <img src="src/assets/images/logos/logo_desktop.svg" alt="DirectoAMiCasa" class="logo_desktop">
         </div>
-        <div class="search">
+        <div class="search-container">
+            <span class="category-dropdown">Todas las categorías ▼</span>
             <input type="text" placeholder="¿Hola, qué estás buscando?">
-            <img src="assets/images/icons/search.svg" alt="search" class="search-icon">
+            <img src="src/assets/images/icons/search.svg" alt="Buscar" class="search-icon">
         </div>
         <div class="cart">
             <a href="#">
-                <img src="assets/images/icons/person.svg" alt="person">
-                <img src="assets/images/icons/arial.svg" alt="arial">
+                <img src="src/assets/images/icons/person.svg" alt="person">
+                <img src="src/assets/images/icons/arial.svg" alt="arial">
 
             </a>
         </div>
         <div class="cart">
             <a href="#">
-                <img src="assets/images/icons/car.svg" alt="Carrito de compras" class="cart-icon">
+                <img src="src/assets/images/icons/car.svg" alt="Carrito de compras" class="cart-icon">
                 <span class="cart-badge">0</span>
             </a>
         </div>
         <div class="menu_mobile">
-            <a href="#"><img src="assets/images/icons/mobile_menu.svg" alt="menu navegación"></a>
+            <a href="#"><img src="src/assets/images/icons/mobile_menu.svg" alt="menu navegación"></a>
         </div>
     </header>
 
@@ -44,8 +45,8 @@
             <h1>HAZ TU PEDIDO Y RECÍBELO DESDE <span class="hours">2 HORAS</span></h1>
         </section>
         <section class="carousel">
-            <img src="assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg" alt="imagen_carousel_mobile" class="carousel-mobile">
-            <img src="assets/images/carousel/baner_desktop.webp" alt="imagen_carousel_desktop" class="carousel-desktop">
+            <img src="src/assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg" alt="imagen_carousel_mobile" class="carousel-mobile">
+            <img src="src/assets/images/carousel/baner_desktop.webp" alt="imagen_carousel_desktop" class="carousel-desktop">
         </section>
 
         <section class="categories-section">
@@ -61,8 +62,8 @@
 
             <div class="categories-header">
                 <div class="text-content">
-                    <h2>Electro, hogar y más</h2>
-                    <p>Lo último en tecnología, electrohogar, deportes, moda, infantil y más</p>
+                    <h2>Supermercado</h2>
+                    <p>Recibe tus pedidos en solo 2 horas. ¡Descubre nuestra variedad de productos hoy!</p>
                 </div>
                 <div class="button-container">
                     <button class="view-more">Ver más</button>
@@ -83,25 +84,25 @@
         <div class="categories">
             <div class="category-item">
                 <div class="category-icon">
-                    <img src="assets/images/categories/fruta.svg" alt="Frutas">
+                    <img src="src/assets/images/categories/fruta.svg" alt="Frutas">
                 </div>
                 <p>Frutas</p>
             </div>
             <div class="category-item">
                 <div class="category-icon">
-                    <img src="assets/images/categories/vegetales.svg" alt="Vegetales">
+                    <img src="src/assets/images/categories/vegetales.svg" alt="Vegetales">
                 </div>
                 <p>Vegetales</p>
             </div>
             <div class="category-item">
                 <div class="category-icon">
-                    <img src="assets/images/categories/compras.svg" alt="Conservas">
+                    <img src="src/assets/images/categories/compras.svg" alt="Conservas">
                 </div>
                 <p>Conservas</p>
             </div>
             <div class="category-item">
                 <div class="category-icon">
-                    <img src="assets/images/categories/detergente.svg" alt="Detergentes">
+                    <img src="src/assets/images/categories/detergente.svg" alt="Detergentes">
                 </div>
                 <p>Detergentes</p>
             </div>
@@ -113,7 +114,7 @@
 
         <section class="special-offers">
             <div class="offers-header">
-                <h2>¡Sólo por hoy! <img src="assets/images/icons/clock.svg" alt="reloj" class="clock-icon"></h2>
+                <h2>¡Sólo por hoy! <img src="src/assets/images/icons/clock.svg" alt="reloj" class="clock-icon"></h2>
 
                 <div class="timer">
                     <span>05 <small>Hrs</small></span>
@@ -123,63 +124,63 @@
             </div>
             <div class="offer-products">
                 <div class="product-card">
-                    <img src="assets/images/frutas/higos.svg" alt="Higos">
+                    <img src="src/assets/images/frutas/higos.svg" alt="Higos">
                     <p class="product-name">Higos RICA COSECHA x1kg</p>
                     <div class="product-price-wrapper">
                         <p class="product-price">S/ 9.90</p>
                     </div>
                     <button class="add-to-cart">
-                        Agregar <img src="assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
                     </button>
                 </div>
                 <div class="product-card">
-                    <img src="assets/images/frutas/uvas.svg" alt="Uvas">
+                    <img src="src/assets/images/frutas/uvas.svg" alt="Uvas">
                     <p class="product-name">Uvas RICA COSECHA x1kg</p>
                     <div class="product-price-wrapper">
                         <p class="product-price">S/ 9.90</p>
                     </div>
                     <button class="add-to-cart">
-                        Agregar <img src="assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
                     </button>
                 </div>
                 <div class="product-card">
-                    <img src="assets/images/frutas/brocoli.svg" alt="Higos">
+                    <img src="src/assets/images/frutas/brocoli.svg" alt="Higos">
                     <p class="product-name">Brocoli x1kg</p>
                     <div class="product-price-wrapper">
                         <p class="product-price">S/ 9.90</p>
                     </div>
                     <button class="add-to-cart">
-                        Agregar <img src="assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
                     </button>
                 </div>
                 <div class="product-card">
-                    <img src="assets/images/frutas/fresas.svg" alt="Uvas">
+                    <img src="src/assets/images/frutas/fresas.svg" alt="Uvas">
                     <p class="product-name">Fresa x1kg</p>
                     <div class="product-price-wrapper">
                         <p class="product-price">S/ 9.90</p>
                     </div>
                     <button class="add-to-cart">
-                        Agregar <img src="assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
                     </button>
                 </div>
                 <div class="product-card">
-                    <img src="assets/images/frutas/ciruelas.svg" alt="Higos">
+                    <img src="src/assets/images/frutas/ciruelas.svg" alt="Higos">
                     <p class="product-name">Ciruelas x1kg</p>
                     <div class="product-price-wrapper">
                         <p class="product-price">S/ 9.90</p>
                     </div>
                     <button class="add-to-cart">
-                        Agregar <img src="assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
                     </button>
                 </div>
                 <div class="product-card">
-                    <img src="assets/images/frutas/kiwi.svg" alt="Uvas">
+                    <img src="src/assets/images/frutas/kiwi.svg" alt="Uvas">
                     <p class="product-name">kiwi x1kg</p>
                     <div class="product-price-wrapper">
                         <p class="product-price">S/ 9.90</p>
                     </div>
                     <button class="add-to-cart">
-                        Agregar <img src="assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
                     </button>
                 </div>
             </div>
@@ -189,7 +190,7 @@
     <footer>
         <div class="footer-content">
             <div class="logo">
-                <img src="assets/images/logos/logo_white.svg" alt="DirectoAMiCasa">
+                <img src="src/assets/images/logos/logo_white.svg" alt="DirectoAMiCasa">
                 <p>Todo lo que necesitas, directo a tu puerta.</p>
             </div>
 
@@ -207,18 +208,19 @@
 
         </div>
         <div class="social-media">
-            <a href="#"><img src="assets/images/icons/instagram.svg" alt="Instagram"></a>
-            <a href="#"><img src="assets/images/icons/tiktok.svg" alt="TikTok"></a>
-            <a href="#"><img src="assets/images/icons/facebook.svg" alt="Facebook"></a>
-            <a href="#"><img src="assets/images/icons/whatsapp.svg" alt="WhatsApp"></a>
-            <a href="#"><img src="assets/images/icons/youtube.svg" alt="YouTube"></a>
+            <a href="#"><img src="src/assets/images/icons/instagram.svg" alt="Instagram"></a>
+            <a href="#"><img src="src/assets/images/icons/tiktok.svg" alt="TikTok"></a>
+            <a href="#"><img src="src/assets/images/icons/facebook.svg" alt="Facebook"></a>
+            <a href="#"><img src="src/assets/images/icons/whatsapp.svg" alt="WhatsApp"></a>
+            <a href="#"><img src="src/assets/images/icons/youtube.svg" alt="YouTube"></a>
         </div>
         <div class="divider"></div>
         <div class="container_copyright">
-            <p>&copy; 2024 DirectoAMiCasa. Todos los derechos reservados.</p>
+            <p>&copy; 2024 DirectoAMiCasa. Todos los derechos reservados</p>
         </div>
         
     </footer>
 </body>
+<script src="src/js/main.js" defer></script>
 
 </html>

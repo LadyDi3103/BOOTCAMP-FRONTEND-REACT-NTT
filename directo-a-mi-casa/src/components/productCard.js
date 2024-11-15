@@ -1,0 +1,1 @@
+// Renderizado dinámico de productos

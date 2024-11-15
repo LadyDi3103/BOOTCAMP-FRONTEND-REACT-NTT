@@ -1,0 +1,1 @@
+// Funciones comunes como filtros, ordenamiento, etc.
