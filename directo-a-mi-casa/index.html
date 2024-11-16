@@ -5,52 +5,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DirectoAMiCasa</title>
+    <!-- Icono FAVICON de la página -->
     <link rel="icon" type="image/svg+xml" href="/src/assets/images/logos/icon_logo.svg">
+    <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Alatsi&display=swap" rel="stylesheet">
+    <!-- Estilos principales -->
     <link rel="stylesheet" href="src/css/styles.css">
-
 </head>
 
 <body>
     <header>
-        <div class="logo">
+        <!-- Logo -->
+        <div class="logo" id="logo">
             <img src="src/assets/images/logos/icon_logo.svg" alt="DirectoAMiCasa" class="logo_mobile">
             <img src="src/assets/images/logos/logo_desktop.svg" alt="DirectoAMiCasa" class="logo_desktop">
         </div>
+
+        <!-- Buscador -->
         <div class="search-container">
-            <span class="category-dropdown">Todas las categorías ▼</span>
+            <span id="category-dropdown" class="category-dropdown">Ver categorías
+                <img src="src/assets/images/icons/arial.svg" alt="Desplegable">
+            </span>
+            <ul id="category-list" class="category-list hidden"></ul>
             <input type="text" placeholder="¿Hola, qué estás buscando?">
-            <img src="src/assets/images/icons/search.svg" alt="Buscar" class="search-icon">
+            <img src="src/assets/images/icons/search.svg" alt="Ícono buscar" class="search-icon">
         </div>
-        <div class="cart">
-            <a href="#">
+
+        <!-- Carrito y Menú -->
+        <nav>
+            <div class="cart">
+                <button id="load-products-btn" class="cart-text">Ver todos los productos</button>
+            </div>
+
+            <div class="cart">
+
+                <img src="src/assets/images/icons/package.svg" alt="package">
+                <span class="cart-text">Mis pedidos</span>
+
+            </div>
+            <div class="cart">
                 <img src="src/assets/images/icons/person.svg" alt="person">
+                <span class="cart-text">Mi cuenta</span>
                 <img src="src/assets/images/icons/arial.svg" alt="arial">
 
-            </a>
-        </div>
-        <div class="cart">
-            <a href="#">
+            </div>
+            <div class="cart">
+
                 <img src="src/assets/images/icons/car.svg" alt="Carrito de compras" class="cart-icon">
                 <span class="cart-badge">0</span>
-            </a>
-        </div>
+
+            </div>
+        </nav>
+        <!-- Menú móvil -->
         <div class="menu_mobile">
-            <a href="#"><img src="src/assets/images/icons/mobile_menu.svg" alt="menu navegación"></a>
+            <a href="#"><img src="src/assets/images/icons/mobile_menu.svg" alt="Abrir menú móvil"></a>
         </div>
     </header>
 
     <main>
+        <!-- Sección Call-to-Action -->
         <section class="cta">
             <h1>HAZ TU PEDIDO Y RECÍBELO DESDE <span class="hours">2 HORAS</span></h1>
         </section>
+        <!-- Contenedor para productos cargados dinámicamente -->
+        <div id="product-container" class="product-container"></div>
+
+        <!-- Carrusel -->
         <section class="carousel">
-            <img src="src/assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg" alt="imagen_carousel_mobile" class="carousel-mobile">
-            <img src="src/assets/images/carousel/baner_desktop.webp" alt="imagen_carousel_desktop" class="carousel-desktop">
+            <img src="src/assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg" alt="imagen_carousel_mobile"
+                class="carousel-mobile">
+            <img src="src/assets/images/carousel/baner_desktop.webp" alt="imagen_carousel_desktop"
+                class="carousel-desktop">
         </section>
 
+        <!-- Categorías principales -->
         <section class="categories-section">
-            <div class="categories-header">
+            <!-- Tarjetas de categoría -->
+            <div class="category-card">
                 <div class="text-content">
                     <h2>Electro, hogar y más</h2>
                     <p>Lo último en tecnología, electrohogar, deportes, moda, infantil y más</p>
@@ -60,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="categories-header">
+            <div class="category-card">
                 <div class="text-content">
                     <h2>Supermercado</h2>
                     <p>Recibe tus pedidos en solo 2 horas. ¡Descubre nuestra variedad de productos hoy!</p>
@@ -70,7 +101,7 @@
                 </div>
             </div>
 
-            <div class="categories-header">
+            <div class="category-card">
                 <div class="text-content">
                     <h2>Electro, hogar y más</h2>
                     <p>Lo último en tecnología, electrohogar, deportes, moda, infantil y más</p>
@@ -81,7 +112,9 @@
             </div>
         </section>
 
-        <div class="categories">
+        <!-- Listado de categorías -->
+        <section class="categories">
+            <!-- Ítems de categoría -->
             <div class="category-item">
                 <div class="category-icon">
                     <img src="src/assets/images/categories/fruta.svg" alt="Frutas">
@@ -106,12 +139,9 @@
                 </div>
                 <p>Detergentes</p>
             </div>
-        </div>
         </section>
 
-        <!-- 
-        <button class="cta-btn">Ver más</button> -->
-
+        <!-- Ofertas Especiales -->
         <section class="special-offers">
             <div class="offers-header">
                 <h2>¡Sólo por hoy! <img src="src/assets/images/icons/clock.svg" alt="reloj" class="clock-icon"></h2>
@@ -187,6 +217,7 @@
         </section>
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="logo">
@@ -218,9 +249,11 @@
         <div class="container_copyright">
             <p>&copy; 2024 DirectoAMiCasa. Todos los derechos reservados</p>
         </div>
-        
     </footer>
+
+    <!-- Script principal -->
+    <script type="module" src="src/js/main.js"></script>
 </body>
-<script src="src/js/main.js" defer></script>
+
 
 </html>
