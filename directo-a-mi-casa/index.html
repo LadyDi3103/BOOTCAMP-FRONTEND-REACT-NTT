@@ -27,33 +27,30 @@
                 <img src="src/assets/images/icons/arial.svg" alt="Desplegable">
             </span>
             <ul id="category-list" class="category-list hidden"></ul>
-            <input type="text" placeholder="¿Hola, qué estás buscando?">
+            <input type="text" id="search-box" placeholder="¿Hola, qué estás buscando?">
             <img src="src/assets/images/icons/search.svg" alt="Ícono buscar" class="search-icon">
         </div>
 
         <!-- Carrito y Menú -->
         <nav>
             <div class="cart">
-                <button id="load-products-btn" class="cart-text">Ver todos los productos</button>
+                <button id="load-products-btn" class="btn-load-products"><strong>TODOS</strong> los productos</button>
             </div>
 
-            <div class="cart">
-
-                <img src="src/assets/images/icons/package.svg" alt="package">
-                <span class="cart-text">Mis pedidos</span>
-
+            <div class="orders-section">
+                <img src="src/assets/images/icons/package.svg" alt="Paquete" class="orders-icon">
+                <span class="orders-text">Mis pedidos</span>
             </div>
-            <div class="cart">
-                <img src="src/assets/images/icons/person.svg" alt="person">
+
+            <div class="account-section">
+                <img src="src/assets/images/icons/person.svg" alt="Icono de persona" class="account-icon">
                 <span class="cart-text">Mi cuenta</span>
-                <img src="src/assets/images/icons/arial.svg" alt="arial">
-
+                <img src="src/assets/images/icons/arial.svg" alt="Icono de flecha" class="account-arrow">
             </div>
-            <div class="cart">
 
+            <div class="cart">
                 <img src="src/assets/images/icons/car.svg" alt="Carrito de compras" class="cart-icon">
                 <span class="cart-badge">0</span>
-
             </div>
         </nav>
         <!-- Menú móvil -->
@@ -67,15 +64,23 @@
         <section class="cta">
             <h1>HAZ TU PEDIDO Y RECÍBELO DESDE <span class="hours">2 HORAS</span></h1>
         </section>
+        <!-- Contenedor del título de la categoría -->
+        <div id="category-title-container" class="category-title-container">
+            <button class="close-btn" id="close-category-btn">
+                <img src="src/assets/images/icons/close-icon.svg" alt="Cerrar categoría">
+            </button>
+        </div>
         <!-- Contenedor para productos cargados dinámicamente -->
-        <div id="product-container" class="product-container"></div>
+        <div id="dynamic-products" class="products-container">
+            <!-- Sección de productos cargados dinámicamente -->
+        </div>
 
         <!-- Carrusel -->
         <section class="carousel">
-            <img src="src/assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg" alt="imagen_carousel_mobile"
-                class="carousel-mobile">
-            <img src="src/assets/images/carousel/baner_desktop.webp" alt="imagen_carousel_desktop"
-                class="carousel-desktop">
+            <img src="src/assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg" alt="imagen carousel mobile"
+                class="carousel-img carousel-mobile">
+            <img src="src/assets/images/carousel/baner_desktop.webp" alt="imagen carousel desktop"
+                class="carousel-img carousel-desktop">
         </section>
 
         <!-- Categorías principales -->
@@ -152,7 +157,7 @@
                     <span>05 <small>Seg</small></span>
                 </div>
             </div>
-            <div class="offer-products">
+            <div class="products-container">
                 <div class="product-card">
                     <img src="src/assets/images/frutas/higos.svg" alt="Higos">
                     <p class="product-name">Higos RICA COSECHA x1kg</p>

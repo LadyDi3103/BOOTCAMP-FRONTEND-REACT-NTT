@@ -1,4 +1,7 @@
 import {
+    fetchAllProducts
+} from "./api/fetchProducts.js";
+import {
     fetchCategories
 } from "./api/fetchCategories.js";
 import {
@@ -10,15 +13,21 @@ import {
 import {
     renderProducts
 } from "../components/renderProducts.js";
-import { fetchAllProducts } from "./api/fetchProducts.js";
-// Referencias a elementos HTML
+import {
+    initializeCartButtons,
+    updateCartBadge
+} from '../components/cartHandler.js';
+import {
+    filterProducts
+} from '../utils/helpers.js';
+import { resetUIState } from '../utils/uiHelpers.js';
+
+// VARIABLES -> Referencias a elementos HTML
 const categoryDropdown = document.getElementById("category-dropdown");
 const categoryList = document.getElementById("category-list");
 const sections = document.querySelectorAll("main > section:not(.cta)");
 
-
-
-// Función para cargar y mostrar las categorías
+// Fn cargar y mostrar las categorías
 const loadCategories = async () => {
     try {
         const categories = await fetchCategories();
@@ -59,11 +68,9 @@ const loadAllProducts = async () => {
             section.style.display = "none";
         });
 
-        const products  = await fetchAllProducts();
-        console.log("Productos obtenidos:", products);
+        const products = await fetchAllProducts();
 
-        // Renderizar productos en el DOM, o realizar acciones adicionales
-        renderProducts(products);
+        renderProducts(products); // Renderiza productos en el DOM
     } catch (error) {
         console.error("No se pudieron cargar los productos:", error);
     }
@@ -72,7 +79,7 @@ const loadAllProducts = async () => {
 // Evento para manejar clics en las categorías
 const handleCategoryClick = (event) => {
     if (event.target.tagName === "LI") {
-        const selectedCategory = event.target.dataset.categoryUrl; // Asumiendo que el atributo data-category-url está en cada <li>
+        const selectedCategory = event.target.dataset.categoryUrl;
         if (selectedCategory) {
             loadProductsByCategory(selectedCategory);
             categoryList.classList.remove("visible");
@@ -85,7 +92,6 @@ const handleClickOutside = (event) => {
         categoryList.classList.remove("visible");
     }
 };
-
 
 
 // Evento de clic en el botón "Todas las categorías"
@@ -101,15 +107,48 @@ document.getElementById('load-products-btn').addEventListener('click', loadAllPr
 document.addEventListener("click", handleClickOutside);
 categoryList.addEventListener("click", handleCategoryClick);
 
-// Evento para el logo: restaurar las secciones al estado inicial
-document.getElementById('logo').addEventListener('click', () => {
-    console.log("Click en logo:");
-    // Ocultar el contenedor de productos
-    const productsContainer = document.getElementById('product-container');
-    if (productsContainer) {
-        productsContainer.style.display = "none";
+document.getElementById('logo').addEventListener('click', resetUIState);
+
+// Lógica para el botón de cierre
+const closeButton = document.createElement('button');
+closeButton.className = 'close-btn';
+closeButton.innerHTML = '<img src="src/assets/images/icons/close-icon.svg" alt="Cerrar">';
+closeButton.addEventListener('click', resetUIState);
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge();
+    initializeCartButtons();
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const products = await fetchAllProducts();
+        const searchBox = document.getElementById('search-box');
+
+        // Filtrar productos al escribir en el input
+        searchBox.addEventListener('input', (event) => {
+            const query = event.target.value.trim();
+            const filteredProducts = filterProducts(products, query);
+            renderProducts(filteredProducts);
+            sections.forEach((section) => {
+                section.style.display = "none";
+            });
+        });
+
+        // Limpiar el input al perder el foco
+        searchBox.addEventListener('blur', () => {
+            searchBox.value = '';
+        });
+    } catch (error) {
+        console.error('Error al cargar los productos:', error);
     }
-    sections.forEach((section) => {
-        section.style.display = "flex";
-    });
+});
+
+document.getElementById('close-category-btn').addEventListener('click', () => {
+    const categoryContainer = document.getElementById('category-title-container');
+    const productsContainer = document.getElementById('dynamic-products');
+
+    // Oculta las secciones relacionadas
+    categoryContainer.style.display = 'none';
+    productsContainer.style.display = 'none';
 });
