@@ -6,10 +6,10 @@ const cartBadge = document.querySelector('.cart-badge');
 export const updateCartBadge = () => {
     cartBadge.textContent = cartCount;
     
-    if (cartCount > 0) {
-        cartBadge.style.display = 'flex';
+    if (cartBadge) {
+        cartBadge.style.display = cartCount > 0 ? 'flex' : 'none';
     } else {
-        cartBadge.style.display = 'none';
+        console.warn('El elemento cartBadge no está definido.');
     }
 };
 

@@ -1,6 +1,11 @@
 // Lógica para construir y renderizar la lista de productos
-import { initializeCartButtons, updateCartBadge } from '../components/cartHandler.js';
-import { resetUIState } from '../utils/uiHelpers.js';
+import {
+    initializeCartButtons,
+    updateCartBadge
+} from '../components/cartHandler.js';
+import {
+    resetUIState
+} from '../utils/uiHelpers.js';
 
 export const renderProducts = (products) => {
     const container = document.getElementById('dynamic-products');
@@ -111,4 +116,3 @@ export const renderProducts = (products) => {
     initializeCartButtons();
     updateCartBadge();
 };
-

@@ -25,9 +25,35 @@ Este proyecto es parte del Bootcamp Frontend React NTT, donde se exploran concep
 
 La siguiente es la estructura del proyecto DirectoAMiCasa. Cada carpeta y archivo tiene una función específica que contribuye al desarrollo modular y escalable de la aplicación. Esta estructura garantiza que el proyecto sea fácil de navegar y mantener.
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/LadyDi3103/BOOTCAMP-FRONTEND-REACT-NTT/refs/heads/feature/javascript/directo-a-mi-casa/src/assets/images/readme/estructura.png" alt="Estructura de carpetas"  height="auto" width ="300">
-</p>
+### Estructura de Carpetas
+
+```javascript
+```plaintext
+src/
+├── assets/                    # Contiene recursos estáticos como imágenes, fuentes, etc.
+├── components/                # Componentes reutilizables de la interfaz
+│   ├── cartHandler.js         # Manejo del carrito de compras
+│   ├── renderCategories.js    # Lógica para renderizar las categorías
+│   └── renderProducts.js      # Lógica para renderizar productos
+├── css/                       # Archivos de estilos CSS
+│   └── styles.css             # Archivo principal de estilos
+├── js/                        # Lógica principal del proyecto
+│   ├── api/                   # Funciones relacionadas con la interacción con la API
+│   │   ├── fetchCategories.js # Lógica para obtener categorías
+│   │   └── fetchProducts.js   # Lógica para obtener productos
+│   ├── mappers/               # Transformación de datos (mappeo)
+│   │   ├── categoryMapper.js  # Mapeo de datos para las categorías
+│   │   └── productMapper.js   # Mapeo de datos para los productos
+│   └── main.js                # Archivo principal del proyecto
+├── utils/                     # Utilidades y funciones auxiliares
+│   ├── helpers.js             # Funciones de ayuda generales
+│   └── uiHelpers.js           # Funciones para la manipulación del estado de la UI
+├── .gitignore                 # Archivos y carpetas ignorados por Git
+├── index.html                 # Archivo HTML principal
+├── package-lock.json          # Archivo generado automáticamente para las dependencias
+├── package.json               # Archivo de configuración del proyecto y dependencias
+└── README.md                  # Documentación del proyecto  ```
+```
 
 ## 3. Funciones y componentes
 
@@ -68,6 +94,7 @@ La función `resetUIState` (ubicada en `utils/helpers.js`) permite regresar al e
 
 ```javascript
 resetUIState(); // Para resetear la vista actual. 
+
 
 ```
 
@@ -118,14 +145,17 @@ git clone https://github.com/LadyDi3103/BOOTCAMP-FRONTEND-REACT-NTT.git
 npm install
 npm run dev
 http://localhost:5173
+
 ```
 
 ---
+
 ## Manual de Marca
 
 Durante el desarrollo de este proyecto, trabajé en la creación del **Manual de Marca** para garantizar la consistencia visual y de estilo de DirectoAMiCasa. Este documento establece los lineamientos gráficos, colores y tipografías que representan la identidad visual de la aplicación.
 
 ### Imagen del Manual de Marca
+
 <p align="center">
   <img src="src/assets/images/readme/ManualdeMarca.png" alt="Manual de Marca">
 </p>
@@ -133,18 +163,21 @@ Durante el desarrollo de este proyecto, trabajé en la creación del **Manual de
 ### Elementos del Manual de Marca
 
 - **Logos:**
-  - Versión Principal
-  - Solo el Wordmark
-  - Solo el Icono
-  
+
+   - Versión Principal
+   - Solo el Wordmark
+   - Solo el Icono
+
 - **Paleta de Colores:**
-  - **Primary (Marrón):** Hex `#4F1A0F`, RGB `79, 26, 15`
-  - **Secondary (Verde):** Hex `#B3B826`, RGB `179, 184, 38`
-  - **Accent (Amarillo):** Hex `#F7B32C`, RGB `247, 179, 44`
-  - **Background (Gris Claro):** Hex `#F4F4F4`, RGB `244, 244, 244`
-  
+
+   - **Primary (Marrón):** Hex `#4F1A0F`, RGB `79, 26, 15`
+   - **Secondary (Verde):** Hex `#B3B826`, RGB `179, 184, 38`
+   - **Accent (Amarillo):** Hex `#F7B32C`, RGB `247, 179, 44`
+   - **Background (Gris Claro):** Hex `#F4F4F4`, RGB `244, 244, 244`
+
 - **Tipografía Principal:**
-  - **Fuente:** Alatsi
-  - **Usos:** Títulos y contenido general
+
+   - **Fuente:** Alatsi
+   - **Usos:** Títulos y contenido general
 
 El **Manual de Marca** refuerza el diseño y la experiencia del usuario, asegurando que todos los elementos visuales mantengan una coherencia en la presentación de la marca.

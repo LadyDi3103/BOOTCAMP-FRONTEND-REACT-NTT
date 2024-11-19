@@ -20,40 +20,62 @@ import {
 import {
     filterProducts
 } from '../utils/helpers.js';
-import { resetUIState } from '../utils/uiHelpers.js';
+import {
+    resetUIState
+} from '../utils/uiHelpers.js';
 
 // VARIABLES -> Referencias a elementos HTML
 const categoryDropdown = document.getElementById("category-dropdown");
 const categoryList = document.getElementById("category-list");
 const sections = document.querySelectorAll("main > section:not(.cta)");
+const searchBox = document.getElementById('search-box');
+const closeCategoryButton = document.getElementById('close-category-btn');
+
+// Fn para ocultar todas las secciones
+export const hideSections = () => {
+    console.log("Ocultando secciones...");
+    sections.forEach((section) => {
+        section.style.display = "none";
+    });
+};
+
+export const showSections = () => {
+    console.log("Mostrando todas las secciones...");
+    sections.forEach((section) => {
+        section.style.display = "";
+    });
+};
+
+const handleCategoryList = (
+    categories,
+    categoryList,
+    loadProductsByCategory
+) => {
+    if (!categoryList) {
+        console.error("categoryList no está disponible en el DOM.");
+        return;
+    }
+
+    renderCategories(categories, categoryList, loadProductsByCategory);
+    categoryList.classList.add("visible");
+};
 
 // Fn cargar y mostrar las categorías
 const loadCategories = async () => {
     try {
         const categories = await fetchCategories();
-
-        renderCategories(categories, categoryList, loadProductsByCategory);
-        categoryList.classList.add("visible");
+        handleCategoryList(categories, categoryList, loadProductsByCategory);
     } catch (error) {
         console.error("Error al cargar las categorías:", error);
     }
 };
 
-// Función para cargar productos y ocultar otras secciones
+// Fn para cargar productos y ocultar otras secciones
 const loadProductsByCategory = async (categoryUrl) => {
     try {
-        console.log("Iniciando carga de productos para la categoría:", categoryUrl);
-
-        sections.forEach((section) => {
-            section.style.display = "none";
-        });
-
+        hideSections();
         const response = await fetchProductsByCategory(categoryUrl);
         const products = response.products;
-
-        if (!Array.isArray(products)) {
-            throw new Error("La propiedad 'products' no es un array.");
-        }
 
         renderProducts(products);
         categoryList.classList.remove("visible");
@@ -64,13 +86,8 @@ const loadProductsByCategory = async (categoryUrl) => {
 
 const loadAllProducts = async () => {
     try {
-        sections.forEach((section) => {
-            section.style.display = "none";
-        });
-
         const products = await fetchAllProducts();
-
-        renderProducts(products); // Renderiza productos en el DOM
+        renderProducts(products);
     } catch (error) {
         console.error("No se pudieron cargar los productos:", error);
     }
@@ -86,6 +103,7 @@ const handleCategoryClick = (event) => {
         }
     }
 };
+
 // Manejo del clic fuera del dropdown
 const handleClickOutside = (event) => {
     if (!categoryDropdown.contains(event.target) && !categoryList.contains(event.target)) {
@@ -93,62 +111,69 @@ const handleClickOutside = (event) => {
     }
 };
 
-
-// Evento de clic en el botón "Todas las categorías"
-categoryDropdown.addEventListener("click", () => {
-    if (!categoryList.classList.contains("visible")) {
-        loadCategories();
-    } else {
-        categoryList.classList.remove("visible");
+const setupSearchBox = (products) => {
+    if (!searchBox) {
+        console.error("El elemento 'searchBox' no se encontró en el DOM.");
+        return;
     }
-});
 
-document.getElementById('load-products-btn').addEventListener('click', loadAllProducts);
-document.addEventListener("click", handleClickOutside);
-categoryList.addEventListener("click", handleCategoryClick);
+    // Evento para filtrar productos al escribir
+    searchBox.addEventListener('input', (event) => {
+        const query = event.target.value.trim();
+        const filteredProducts = filterProducts(products, query);
+        renderProducts(filteredProducts);
+        hideSections();
+    });
 
-document.getElementById('logo').addEventListener('click', resetUIState);
+    // Evento para limpiar el input al perder el foco
+    searchBox.addEventListener('blur', () => {
+        searchBox.value = '';
+    });
+};
 
-// Lógica para el botón de cierre
-const closeButton = document.createElement('button');
-closeButton.className = 'close-btn';
-closeButton.innerHTML = '<img src="src/assets/images/icons/close-icon.svg" alt="Cerrar">';
-closeButton.addEventListener('click', resetUIState);
+const setupCloseCategoryButton = () => {
+    if (!closeCategoryButton) {
+        console.error("El botón 'close-category-btn' no se encontró en el DOM.");
+        return;
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-    updateCartBadge();
-    initializeCartButtons();
-});
+    closeCategoryButton.addEventListener('click', () => {
+        console.log("Clic en el botón 'X'");
+        resetUIState();
+    });
+}
 
-document.addEventListener('DOMContentLoaded', async () => {
+// Inicializar eventos principales
+const initializeEvents = () => {
+    categoryDropdown?.addEventListener("click", () => {
+        if (!categoryList.classList.contains("visible")) {
+            loadCategories();
+        } else {
+            categoryList.classList.remove("visible");
+        }
+    });
+
+    document.addEventListener("click", handleClickOutside);
+    categoryList.addEventListener("click", handleCategoryClick);
+
+    document.getElementById("logo")?.addEventListener("click", () => {
+        console.log("Clic en el logo");
+        resetUIState();
+    });
+
+    document.getElementById("load-products-btn").addEventListener("click", loadAllProducts);
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
     try {
         const products = await fetchAllProducts();
-        const searchBox = document.getElementById('search-box');
+        setupSearchBox(products);
+        setupCloseCategoryButton();
+        initializeEvents();
+        updateCartBadge();
+        initializeCartButtons();
 
-        // Filtrar productos al escribir en el input
-        searchBox.addEventListener('input', (event) => {
-            const query = event.target.value.trim();
-            const filteredProducts = filterProducts(products, query);
-            renderProducts(filteredProducts);
-            sections.forEach((section) => {
-                section.style.display = "none";
-            });
-        });
-
-        // Limpiar el input al perder el foco
-        searchBox.addEventListener('blur', () => {
-            searchBox.value = '';
-        });
     } catch (error) {
-        console.error('Error al cargar los productos:', error);
+        console.error("Error al inicializar la aplicación:", error);
     }
-});
-
-document.getElementById('close-category-btn').addEventListener('click', () => {
-    const categoryContainer = document.getElementById('category-title-container');
-    const productsContainer = document.getElementById('dynamic-products');
-
-    // Oculta las secciones relacionadas
-    categoryContainer.style.display = 'none';
-    productsContainer.style.display = 'none';
 });

@@ -1,3 +1,5 @@
+import { mapProduct } from "../mappers/productMapper";
+
 export const fetchProductsByCategory = async (categoryUrl) => {
     const response = await fetch(categoryUrl);
     if (!response.ok) {
@@ -19,19 +21,10 @@ export const fetchAllProducts = async () => {
         console.log(data, 'DATA')
 
         // Mapear los productos para devolver solo la información necesaria
-        const products = data.products.map((product) => ({
-            id: product.id,
-            title: product.title,
-            description: product.description,
-            price: product.price,
-            thumbnail: product.thumbnail,
-            category: product.category,
-        }));
-
+        const products = data.products.map(mapProduct);
         return products;
     } catch (error) {
         console.error("Error al obtener los productos:", error);
-        throw error; // Lanzar el error para que sea manejado en la llamada
+        throw error; 
     }
 };
-
