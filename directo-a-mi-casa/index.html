@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DirectoAMiCasa</title>
+    <!-- Icono FAVICON de la página -->
+    <link rel="icon" type="image/svg+xml" href="/src/assets/images/logos/icon_logo.svg">
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Alatsi&display=swap" rel="stylesheet">
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+
+<body>
+    <header>
+        <!-- Logo -->
+        <div class="logo" id="logo">
+            <img src="src/assets/images/logos/icon_logo.svg" alt="DirectoAMiCasa" class="logo_mobile">
+            <img src="src/assets/images/logos/logo_desktop.svg" alt="DirectoAMiCasa" class="logo_desktop">
+        </div>
+
+        <!-- Buscador -->
+        <div class="search-container">
+            <span id="category-dropdown" class="category-dropdown">Ver categorías
+                <img src="src/assets/images/icons/arial.svg" alt="Desplegable">
+            </span>
+            <ul id="category-list" class="category-list hidden"></ul>
+            <input type="text" id="search-box" placeholder="¿Hola, qué estás buscando?">
+            <img src="src/assets/images/icons/search.svg" alt="Ícono buscar" class="search-icon">
+        </div>
+
+        <!-- Carrito y Menú -->
+        <nav>
+            <div class="cart">
+                <button id="load-products-btn" class="btn-load-products"><strong>TODOS</strong> los productos</button>
+            </div>
+
+            <div class="orders-section">
+                <img src="src/assets/images/icons/package.svg" alt="Paquete" class="orders-icon">
+                <span class="orders-text">Mis pedidos</span>
+            </div>
+
+            <div class="account-section">
+                <img src="src/assets/images/icons/person.svg" alt="Icono de persona" class="account-icon">
+                <span class="cart-text">Mi cuenta</span>
+                <img src="src/assets/images/icons/arial.svg" alt="Icono de flecha" class="account-arrow">
+            </div>
+
+            <div class="cart">
+                <img src="src/assets/images/icons/car.svg" alt="Carrito de compras" class="cart-icon">
+                <span class="cart-badge">0</span>
+            </div>
+        </nav>
+        <!-- Menú móvil -->
+        <div class="menu_mobile">
+            <a href="#"><img src="src/assets/images/icons/mobile_menu.svg" alt="Abrir menú móvil"></a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sección Call-to-Action -->
+        <section class="cta">
+            <h1>HAZ TU PEDIDO Y RECÍBELO DESDE <span class="hours">2 HORAS</span></h1>
+        </section>
+        <!-- Contenedor del título de la categoría -->
+        <div id="category-title-container" class="category-title-container">
+            <button class="close-btn" id="close-category-btn">
+                <img src="src/assets/images/icons/close-icon.svg" alt="Cerrar categoría">
+            </button>
+        </div>
+        <!-- Contenedor para productos cargados dinámicamente -->
+        <div id="dynamic-products" class="products-container">
+            <!-- Sección de productos cargados dinámicamente -->
+        </div>
+
+        <!-- Carrusel -->
+        <section class="carousel">
+            <img src="src/assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg" alt="imagen carousel mobile"
+                class="carousel-img carousel-mobile">
+            <img src="src/assets/images/carousel/baner_desktop.webp" alt="imagen carousel desktop"
+                class="carousel-img carousel-desktop">
+        </section>
+
+        <!-- Categorías principales -->
+        <section class="categories-section">
+            <!-- Tarjetas de categoría -->
+            <div class="category-card">
+                <div class="text-content">
+                    <h2>Electro, hogar y más</h2>
+                    <p>Lo último en tecnología, electrohogar, deportes, moda, infantil y más</p>
+                </div>
+                <div class="button-container">
+                    <button class="view-more">Ver más</button>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="text-content">
+                    <h2>Supermercado</h2>
+                    <p>Recibe tus pedidos en solo 2 horas. ¡Descubre nuestra variedad de productos hoy!</p>
+                </div>
+                <div class="button-container">
+                    <button class="view-more">Ver más</button>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="text-content">
+                    <h2>Electro, hogar y más</h2>
+                    <p>Lo último en tecnología, electrohogar, deportes, moda, infantil y más</p>
+                </div>
+                <div class="button-container">
+                    <button class="view-more">Ver más</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Listado de categorías -->
+        <section class="categories">
+            <!-- Ítems de categoría -->
+            <div class="category-item">
+                <div class="category-icon">
+                    <img src="src/assets/images/categories/fruta.svg" alt="Frutas">
+                </div>
+                <p>Frutas</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">
+                    <img src="src/assets/images/categories/vegetales.svg" alt="Vegetales">
+                </div>
+                <p>Vegetales</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">
+                    <img src="src/assets/images/categories/compras.svg" alt="Conservas">
+                </div>
+                <p>Conservas</p>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">
+                    <img src="src/assets/images/categories/detergente.svg" alt="Detergentes">
+                </div>
+                <p>Detergentes</p>
+            </div>
+        </section>
+
+        <!-- Ofertas Especiales -->
+        <section class="special-offers">
+            <div class="offers-header">
+                <h2>¡Sólo por hoy! <img src="src/assets/images/icons/clock.svg" alt="reloj" class="clock-icon"></h2>
+
+                <div class="timer">
+                    <span>05 <small>Hrs</small></span>
+                    <span>05 <small>Min</small></span>
+                    <span>05 <small>Seg</small></span>
+                </div>
+            </div>
+            <div class="products-container">
+                <div class="product-card">
+                    <img src="src/assets/images/frutas/higos.svg" alt="Higos">
+                    <p class="product-name">Higos RICA COSECHA x1kg</p>
+                    <div class="product-price-wrapper">
+                        <p class="product-price">S/ 9.90</p>
+                    </div>
+                    <button class="add-to-cart">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="src/assets/images/frutas/uvas.svg" alt="Uvas">
+                    <p class="product-name">Uvas RICA COSECHA x1kg</p>
+                    <div class="product-price-wrapper">
+                        <p class="product-price">S/ 9.90</p>
+                    </div>
+                    <button class="add-to-cart">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="src/assets/images/frutas/brocoli.svg" alt="Higos">
+                    <p class="product-name">Brocoli x1kg</p>
+                    <div class="product-price-wrapper">
+                        <p class="product-price">S/ 9.90</p>
+                    </div>
+                    <button class="add-to-cart">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="src/assets/images/frutas/fresas.svg" alt="Uvas">
+                    <p class="product-name">Fresa x1kg</p>
+                    <div class="product-price-wrapper">
+                        <p class="product-price">S/ 9.90</p>
+                    </div>
+                    <button class="add-to-cart">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="src/assets/images/frutas/ciruelas.svg" alt="Higos">
+                    <p class="product-name">Ciruelas x1kg</p>
+                    <div class="product-price-wrapper">
+                        <p class="product-price">S/ 9.90</p>
+                    </div>
+                    <button class="add-to-cart">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="src/assets/images/frutas/kiwi.svg" alt="Uvas">
+                    <p class="product-name">kiwi x1kg</p>
+                    <div class="product-price-wrapper">
+                        <p class="product-price">S/ 9.90</p>
+                    </div>
+                    <button class="add-to-cart">
+                        Agregar <img src="src/assets/images/icons/white_car.svg" alt="Carrito" class="cart-icon">
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">
+                <img src="src/assets/images/logos/logo_white.svg" alt="DirectoAMiCasa">
+                <p>Todo lo que necesitas, directo a tu puerta.</p>
+            </div>
+
+            <div class="footer-links">
+                <span class="footer_title">Legales</span>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Protección de datos personales</a>
+                <a href="#">Política de cookies</a>
+            </div>
+            <div class="contact">
+                <span class="footer_title">Contacto</span>
+                <p>Teléfono: 000 000 000</p>
+                <p>Email: soporte@directoAMiCasa.com</p>
+            </div>
+
+        </div>
+        <div class="social-media">
+            <a href="#"><img src="src/assets/images/icons/instagram.svg" alt="Instagram"></a>
+            <a href="#"><img src="src/assets/images/icons/tiktok.svg" alt="TikTok"></a>
+            <a href="#"><img src="src/assets/images/icons/facebook.svg" alt="Facebook"></a>
+            <a href="#"><img src="src/assets/images/icons/whatsapp.svg" alt="WhatsApp"></a>
+            <a href="#"><img src="src/assets/images/icons/youtube.svg" alt="YouTube"></a>
+        </div>
+        <div class="divider"></div>
+        <div class="container_copyright">
+            <p>&copy; 2024 DirectoAMiCasa. Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Script principal -->
+    <script type="module" src="src/js/main.ts"></script>
+</body>
+
+</html>
