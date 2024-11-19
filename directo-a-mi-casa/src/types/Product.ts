@@ -6,3 +6,5 @@ export interface Product {
     thumbnail: string;
     category: string;
 }
+
+export type Products = Product[];

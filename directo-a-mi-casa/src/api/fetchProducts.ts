@@ -1,5 +1,5 @@
-import { mapProduct } from '../../mappers/productMapper';
-import { Product } from '../../types/Product';
+import { mapProduct } from '../mappers/productMapper';
+import { Product } from '../types/Product';
 
 export const fetchProductsByCategory = async (categoryUrl: string): Promise<Product[]> => {
     try {
@@ -36,10 +36,6 @@ export const fetchAllProducts = async (): Promise<Product[]> => {
         }
 
         const data: unknown= await response.json();
-
-        if (!data || typeof data !== "object" || !("products" in data)) {
-            throw new Error("Los datos obtenidos no son válidos");
-        }
 
         // Uso de Mapper
         const products = (data as { products: Product[] }).products.map((product) => mapProduct(product));

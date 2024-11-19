@@ -17,7 +17,6 @@
 * [7. Migración a TypeScript](#7-Migración-a-TypeScript)
 * [8. Manual de Marcat](#7-Manual-de-Marca)
 
-
 ## 1. Introducción
 
 DirectoAMiCasa es una plataforma de e-commerce enfocada en brindar a los usuarios la mejor experiencia al realizar compras desde la comodidad de su hogar. Utilizamos Vanilla JavaScript, HTML5, y CSS3, incorporando buenas prácticas de modularidad y reutilización de código.
@@ -72,6 +71,7 @@ La función `resetUIState` (ubicada en `utils/helpers.js`) permite regresar al e
 ```javascript
 resetUIState(); // Para resetear la vista actual. 
 
+
 ```
 
 ---
@@ -121,10 +121,13 @@ git clone https://github.com/LadyDi3103/BOOTCAMP-FRONTEND-REACT-NTT.git
 npm install
 npm run dev
 http://localhost:5173
+
 ```
+
 ---
 
 ## 7. Migración a TypeScrip
+
 <p align="center">
   <img src="src/assets/images/readme/typescript.png" alt="Imagen vite">
 </p>
@@ -132,22 +135,59 @@ http://localhost:5173
 Con esta migración a TypeScript, el proyecto está mejor organizado, más robusto y preparado para futuras extensiones.
 
 ### Cambios Realizados:
+
 - Se migraron todos los archivos de JavaScript a TypeScript.
 - Se crearon `interfaces` para manejar los datos de productos y categorías.
 - Se implementó un patrón `Mapper` para transformar las respuestas de la API.
 - Se aseguró el uso estricto de tipos, sin uso de `any`.
+- La lógica se separó en módulos claros para mejorar la organización del código.
 
 ### Beneficios:
+
 - Tipado estático para prevenir errores en tiempo de ejecución.
 - Mejor mantenibilidad y escalabilidad.
 - Estructura más clara y organizada del proyecto.
 
+### Nueva Estructura de Carpetas
+
+Con la migración a TypeScript, la estructura del proyecto se ha reorganizado para mejorar la mantenibilidad, escalabilidad y claridad del código.
+
+### Desglose de la Estructura:
+
+```bash
+src/
+├── assets/                 # Recursos estáticos como imágenes, íconos, etc.
+├── components/             # Componentes reutilizables para la interfaz de usuario
+│   ├── cartHandler.ts      # Manejo de la lógica del carrito
+│   ├── renderCategories.ts # Renderización dinámica de categorías
+│   ├── renderProducts.ts   # Renderización dinámica de productos
+├── css/                    # Hojas de estilo (CSS)
+│   ├── styles.css          # Estilos principales del proyecto
+├── mappers/                # Mappers para transformar datos de la API
+│   ├── categoryMapper.ts   # Transformación de datos de categorías
+│   ├── productMapper.ts    # Transformación de datos de productos
+├── api/                    # Lógica de comunicación con APIs externas
+│   ├── fetchCategories.ts  # Función para obtener categorías
+│   ├── fetchProducts.ts    # Función para obtener productos
+├── types/                  # Definición de tipos e interfaces para TypeScript
+│   ├── Category.ts         # Tipos relacionados con categorías
+│   ├── Product.ts          # Tipos relacionados con productos
+├── utils/                  # Utilidades y funciones auxiliares
+│   ├── helpers.ts          # Funciones de ayuda generales
+│   ├── uiHelpers.ts        # Funciones auxiliares para la UI
+├── index.html              # Archivo HTML principal
+└── main.ts                 # Punto de entrada principal de la aplicación
+
+```
+
 ---
+
 ## 8. Manual de Marca
 
 Durante el desarrollo de este proyecto, trabajé en la creación del **Manual de Marca** para garantizar la consistencia visual y de estilo de DirectoAMiCasa. Este documento establece los lineamientos gráficos, colores y tipografías que representan la identidad visual de la aplicación.
 
 ### Imagen del Manual de Marca
+
 <p align="center">
   <img src="src/assets/images/readme/ManualdeMarca.png" alt="Manual de Marca">
 </p>
@@ -155,18 +195,21 @@ Durante el desarrollo de este proyecto, trabajé en la creación del **Manual de
 ### Elementos del Manual de Marca
 
 - **Logos:**
-  - Versión Principal
-  - Solo el Wordmark
-  - Solo el Icono
-  
+
+   - Versión Principal
+   - Solo el Wordmark
+   - Solo el Icono
+
 - **Paleta de Colores:**
-  - **Primary (Marrón):** Hex `#4F1A0F`, RGB `79, 26, 15`
-  - **Secondary (Verde):** Hex `#B3B826`, RGB `179, 184, 38`
-  - **Accent (Amarillo):** Hex `#F7B32C`, RGB `247, 179, 44`
-  - **Background (Gris Claro):** Hex `#F4F4F4`, RGB `244, 244, 244`
-  
+
+   - **Primary (Marrón):** Hex `#4F1A0F`, RGB `79, 26, 15`
+   - **Secondary (Verde):** Hex `#B3B826`, RGB `179, 184, 38`
+   - **Accent (Amarillo):** Hex `#F7B32C`, RGB `247, 179, 44`
+   - **Background (Gris Claro):** Hex `#F4F4F4`, RGB `244, 244, 244`
+
 - **Tipografía Principal:**
-  - **Fuente:** Alatsi
-  - **Usos:** Títulos y contenido general
+
+   - **Fuente:** Alatsi
+   - **Usos:** Títulos y contenido general
 
 El **Manual de Marca** refuerza el diseño y la experiencia del usuario, asegurando que todos los elementos visuales mantengan una coherencia en la presentación de la marca.

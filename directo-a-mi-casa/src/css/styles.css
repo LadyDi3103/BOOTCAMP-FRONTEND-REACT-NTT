@@ -198,33 +198,33 @@ main {
 
 /* Estilos para el botón "Ver todos los productos" */
 .btn-load-products {
-    background-color: var(--color-secondary);
-    color: var(--color-white);
+    background: linear-gradient(90deg, #b3b826, #e0d040);
+    color: var(--color-primary);
+    -webkit-text-stroke: 1px var(--color-primary); 
     border: none;
     border-radius: 20px;
     height: 38px;
     padding: 0 20px;
-    font-size: 13px;
+    font-size: 0.9rem;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
 }
+.btn-load-products strong {   
+    letter-spacing: 0.09rem;
+}
 
 .btn-load-products:hover {
     background-color: var(--color-hover);
-    color: var(--color-white);
-    transform: scale(1.05);
+    transform: scale(1.04);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-load-products:active {
-    transform: scale(0.95); /* Reduce ligeramente el tamaño */
+    transform: scale(0.95); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.btn-load-products {
-    background: linear-gradient(90deg, #b3b826, #e0d040);
-}
 .cart-badge {
     position: absolute;
     top: -15px;

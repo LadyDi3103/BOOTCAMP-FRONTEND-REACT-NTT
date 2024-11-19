@@ -1,12 +1,13 @@
-import { fetchAllProducts } from "./api/fetchProducts";
-import { fetchCategories } from "./api/fetchCategories";
-import { fetchProductsByCategory } from "./api/fetchProducts";
-import { renderCategories } from "../components/renderCategories";
-import { renderProducts } from "../components/renderProducts";
-import { initializeCartButtons, updateCartBadge } from '../components/cartHandler';
-import { filterProducts } from '../utils/helpers';
-import { resetUIState } from '../utils/uiHelpers';
-import { Product } from '../types/Product';
+import { fetchAllProducts } from "./src/api/fetchProducts";
+import { fetchCategories } from "./src/api/fetchCategories";
+import { fetchProductsByCategory } from "./src/api/fetchProducts";
+import { renderCategories } from "./src/components/renderCategories";
+import { renderProducts } from "./src/components/renderProducts";
+import { initializeCartButtons, updateCartBadge } from './src/components/cartHandler';
+import { filterProducts } from './src/utils/helpers';
+import { resetUIState } from './src/utils/uiHelpers';
+import { Product } from './src/types/Product';
+import { Category } from "./src/types/Category";
 
 // VARIABLES -> Referencias a elementos HTML
 const categoryDropdown = document.getElementById("category-dropdown") as HTMLElement | null;
@@ -24,12 +25,26 @@ const hideSections = (): void => {
     });
 };
 
+
+const handleCategoryList = (
+    categories: Category[], 
+    categoryList: HTMLElement | null, 
+    loadProductsByCategory: (url: string) => void
+): void => {
+    if (!categoryList) {
+        console.error("categoryList no está disponible en el DOM.");
+        return;
+    }
+
+    renderCategories(categories, categoryList, loadProductsByCategory);
+    categoryList.classList.add("visible");
+};
+
 // Fn cargar y mostrar las categorías
 const loadCategories = async (): Promise<void> => {
     try {
         const categories = await fetchCategories();
-        renderCategories(categories, categoryList, loadProductsByCategory);
-        categoryList!.classList.add("visible");
+        handleCategoryList(categories, categoryList, loadProductsByCategory);
     } catch (error) {
         console.error("Error al cargar las categorías:", error);
     }
