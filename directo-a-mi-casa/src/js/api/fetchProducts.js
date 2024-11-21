@@ -18,7 +18,6 @@ export const fetchAllProducts = async () => {
 
         // Parsear los datos JSON obtenidos desde la API
         const data = await response.json();
-        console.log(data, 'DATA')
 
         // Mapear los productos para devolver solo la información necesaria
         const products = data.products.map(mapProduct);

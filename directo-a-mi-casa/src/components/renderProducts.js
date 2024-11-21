@@ -23,7 +23,6 @@ export const renderProducts = (products) => {
     while (categoryTitleContainer.firstChild) {
         categoryTitleContainer.removeChild(categoryTitleContainer.firstChild);
     }
-    console.log("Contenedores limpiados.");
 
     if (products.length > 0) {
         // Crear el contenedor de título de categoría con botón de cierre
@@ -108,8 +107,6 @@ export const renderProducts = (products) => {
         // Añade tarjeta al contenedor
         container.appendChild(productCard);
     });
-
-    console.log("Productos renderizados correctamente en el DOM.");
 
     container.style.display = "grid";
     categoryTitleContainer.style.display = "block";
