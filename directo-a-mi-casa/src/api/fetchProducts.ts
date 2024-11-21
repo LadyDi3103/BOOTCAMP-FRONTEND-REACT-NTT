@@ -8,9 +8,11 @@ export const fetchProductsByCategory = async (categoryUrl: string): Promise<Prod
             throw new Error("Error al obtener productos para esta categoría");
         }
 
+        // por qu'e unknow? por qu'e no un tipado?
         const data: unknown = await response.json();
 
         // Verificar si la respuesta tiene la estructura correcta
+        // por qu'e es necesario esta validaci'on?
         if (typeof data !== 'object' || data === null || !('products' in data)) {
             throw new Error("Los datos obtenidos no son válidos");
         }

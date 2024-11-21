@@ -1,7 +1,9 @@
 import { Category } from "../types/Category";
 
 // Lógica para construir y renderizar la lista de categorías.
-export const renderCategories = (categories: Category[], categoryList: HTMLElement, onCategoryClick: (url: string) => void): void => {
+type CategoryClick = (url: string) => void;
+
+export const renderCategories = (categories: Category[], categoryList: HTMLElement, onCategoryClick: CategoryClick): void => {
     // Limpiar el contenido existente en vez de innerHTML
     while (categoryList.firstChild) {
         categoryList.removeChild(categoryList.firstChild);
