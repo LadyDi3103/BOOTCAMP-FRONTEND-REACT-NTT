@@ -77,6 +77,7 @@ const loadAllProducts = async (): Promise<void> => {
 // Evento para manejar clics en las categorías
 const handleCategoryClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
+    // no palabras m'agicas, en todo caso usemos un enum y agreguemos este valor all'i
     if (target.tagName === "LI") {
         const selectedCategory = target.dataset.categoryUrl;
         if (selectedCategory) {
