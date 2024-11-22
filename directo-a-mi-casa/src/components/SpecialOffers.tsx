@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from '../app/context/CartContext';
 
 const SpecialOffers: React.FC = () => {
+
+const {products, setProducts, addProduct } = useContext(CartContext)
+
+// console.log('products', products);
     return (
         <section className="special-offers">
             <div className="offers-header">
@@ -33,7 +38,7 @@ const SpecialOffers: React.FC = () => {
                     <div className="product-price-wrapper">
                         <p className="product-price">S/ 9.90</p>
                     </div>
-                    <button className="add-to-cart">
+                    <button className="add-to-cart" onClick={addProduct}>
                         Agregar{' '}
                         <img
                             src="/src/assets/images/icons/white_car.svg"

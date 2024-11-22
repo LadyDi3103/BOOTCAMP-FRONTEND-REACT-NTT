@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import carIcon from '/src/assets/images/icons/car.svg';
+
 // import './CartHandler.css';
 
 const CartHandler: React.FC = () => {
@@ -13,7 +13,7 @@ const CartHandler: React.FC = () => {
     return (
         <div className="cart">
             {/* Badge del carrito */}
-            <img src={carIcon} alt="Carrito de compras" className="cart-icon" />
+            {/* <img src={carIcon} alt="Carrito de compras" className="cart-icon" /> */}
             <span
                 className="cart-badge"
                 style={{ display: cartCount > 0 ? 'flex' : 'none' }}

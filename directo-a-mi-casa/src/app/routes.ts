@@ -1,9 +1,10 @@
 
 export const enum ModuleRoutes{
-    Home = '',
-    // Home = 'home',
+    MainLayout = '',
+    HomePage  = 'home',
     Login = 'login',
     Resumen = 'resumen',
-    Categories = 'categories',
-    Init = 'productos',
+    Categories = 'categorias',
+    ProductsPage = "/product",
+    Init = 'todos-los-productos',
 }

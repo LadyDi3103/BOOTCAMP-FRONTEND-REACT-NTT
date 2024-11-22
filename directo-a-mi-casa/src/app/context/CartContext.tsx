@@ -1,30 +1,49 @@
-import { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useReducer, ReactNode, useContext } from 'react';
+import { CartState, Action, initialState, cartReducer } from './cartReducer';
+
 
 interface CartContextProps {
-  showCart: boolean;
-  toggleCart: () => void;
-}
+    state: CartState;
+    dispatch: React.Dispatch<Action>;
+  }
+  
+  const CartContext = createContext<CartContextProps>({
+    state: initialState,
+    dispatch: () => null,
+  });
 
-const CartContext = createContext<CartContextProps | undefined>(undefined);
+
+
+
+// export const CartContext = createContext<CartContextProps>({
+//     products: [],
+//     addProduct: () => {},
+//     totalProducts: 0,
+// });
+
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [showCart, setShowCart] = useState(false);
+    // const [products, setProducts] = useState<Product[]>([]);
+    const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  const toggleCart = () => {
-    setShowCart((prev) => !prev);
-  };
 
-  return (
-    <CartContext.Provider value={{ showCart, toggleCart }}>
-      {children}
-    </CartContext.Provider>
-  );
-};
+    // const addProduct = (newProduct: Product) => {
+    //     setProducts([...products, newProduct])
+    // }
 
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
-};
+    // const totalProducts = products.reduce((total, product) => total + product.quantity, 0);
+
+    // return (
+    //     <CartContext.Provider value={{ products, addProduct, totalProducts }}>
+    //         {children}
+    //     </CartContext.Provider>
+    // )
+    return (
+        <CartContext.Provider value={{ state, dispatch }}>
+          {children}
+        </CartContext.Provider>
+      );
+}
+
+// Hook para usar el contexto del carrito
+export const useCart = () => useContext(CartContext);

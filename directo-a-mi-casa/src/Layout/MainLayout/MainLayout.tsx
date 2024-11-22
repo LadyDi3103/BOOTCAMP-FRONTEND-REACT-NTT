@@ -1,29 +1,28 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useContext } from 'react';
 import '../MainLayout/MainLayout.css';
 import { Link } from 'react-router-dom';
 import { ModuleRoutes } from '../../app/routes';
 import carIcon from '/src/assets/images/icons/car.svg';
 import Footer from '../Footer';
 import CallToAction from '../../components/CallToAction';
-import CategoryTitleContainer from '../../components/CategoryTitleContainer';
-// import DynamicProducts from '../../components/DynamicProducts';
 import Carousel from '../../components/Carousel';
 import CategoriesSection from '../../components/CategoriesSection';
 import SpecialOffers from '../../components/SpecialOffers';
 import CategoryItem from '../../components/CategoryItem';
 import CartHandler from '../../components/cartHandler';
-
+import { CartContext } from '../../app/context/CartContext';
 
 interface MainLayoutI extends PropsWithChildren {}
 
 const MainLayout: React.FC<MainLayoutI>  = ({ children }) => {
-
+    const {products} = useContext(CartContext)
+    console.log('Contador de productos', products?.length);
     return (
         <>
         <header>
             {/* Logo */}
             <div className="logo" id="logo">
-            <Link to={ModuleRoutes.Home}>
+            <Link to={ModuleRoutes.MainLayout}>
                 <img
                     src="/src/assets/images/logos/icon_logo.svg"
                     alt="DirectoAMiCasa"
@@ -59,7 +58,7 @@ const MainLayout: React.FC<MainLayoutI>  = ({ children }) => {
             {/* Carrito y Menú */}
             <nav>
                 <div className="cart">
-                <Link to={ModuleRoutes.ProductsPage}>
+                <Link to={ModuleRoutes.Init}>
                     <button id="load-products-btn" className="btn-load-products">
                         <strong>TODOS</strong> los productos
                     </button>
@@ -92,7 +91,7 @@ const MainLayout: React.FC<MainLayoutI>  = ({ children }) => {
                 <div className="cart">
                     <Link to={ModuleRoutes.Resumen}>
                         <img src={carIcon} alt="Carrito de compras" className="cart-icon" />
-                        <span className="cart-badge">0</span>
+                        <span className="cart-badge">{products?.length}</span>
                     </Link>
                 </div>
                 <CartHandler />
@@ -112,12 +111,10 @@ const MainLayout: React.FC<MainLayoutI>  = ({ children }) => {
         <main>
             <CallToAction />
             {children}
-            <CategoryTitleContainer />
             <Carousel />
             <CategoriesSection />
             <CategoryItem />
             <SpecialOffers />
-      
         </main>
         <Footer />
         </>

@@ -8,6 +8,7 @@ import App from './App.tsx'
 import MainLayout from './Layout/MainLayout/MainLayout.tsx';
 import { CartProvider } from './app/context/CartContext.tsx';
 
+
 createRoot(document.getElementById('root')as HTMLElement).render(
   <StrictMode>
     <CartProvider>

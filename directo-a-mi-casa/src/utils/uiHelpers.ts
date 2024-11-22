@@ -1,3 +1,5 @@
+
+
 export const resetUIState = (): void => {
     console.log("Restaurando el estado inicial de la UI...");
 
@@ -25,3 +27,5 @@ export const resetUIState = (): void => {
         section.style.display = "flex";
     });
 };
+
+
