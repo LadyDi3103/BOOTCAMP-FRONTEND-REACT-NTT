@@ -1,14 +1,14 @@
 import React from 'react';
 
 // Definimos las propiedades de un ítem de categoría
-interface CategoryItemProps {
+interface ProductCardProps {
     icon: string;
     alt: string;
     name: string;
 }
 
 // Componente individual para cada ítem de categoría
-const CategoryItem: React.FC<CategoryItemProps> = ({ icon, alt, name }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ icon, alt, name }) => {
     return (
         <div className="category-item">
             <div className="category-icon">
@@ -32,7 +32,7 @@ const CategoriesList: React.FC = () => {
     return (
         <section className="categories">
             {categories.map((category, index) => (
-                <CategoryItem
+                <ProductCard
                     key={index}
                     icon={category.icon}
                     alt={category.alt}

@@ -1,18 +1,41 @@
+import { FC } from "react";
 import { Category } from "../app/domain/Category";
 
-// Lógica para construir y renderizar la lista de categorías.
-export const renderCategories = (categories: Category[], categoryList: HTMLElement, onCategoryClick: (url: string) => void): void => {
-    // Limpiar el contenido existente en vez de innerHTML
-    while (categoryList.firstChild) {
-        categoryList.removeChild(categoryList.firstChild);
-    }
+interface RenderCategoriesProps {
+    categories: Category[];
+    onCategoryClick: (url: string) => void;
+    selectedCategory?: string | null;
+}
 
-    // Crear y añadir cada categoría a la lista
-    categories.forEach((category:Category) => {
-        const li = document.createElement("li");
-        li.textContent = category.name;
-        li.dataset.url = category.url;
-        li.addEventListener("click", () => onCategoryClick(category.url));
-        categoryList.appendChild(li);
-    });
+const RenderCategories: FC<RenderCategoriesProps> = ({
+    categories,
+    onCategoryClick,
+    selectedCategory,
+}) => {
+
+    if (!categories || categories.length === 0) {
+        return <p className="no-categories">No hay categorías disponibles.</p>;
+    }
+    return (
+        <ul className="category-list" role="menu" aria-label="Lista de categorías">
+            {categories.map((category) => (
+                <li
+                    key={category.id}
+                    className={`category-item ${selectedCategory === category.name ? "selected-category" : ""
+                        }`}
+                    onClick={() => onCategoryClick(category.url)}
+                    role="menuitem"
+                    tabIndex={0} // Para permitir navegación con teclado
+                    onKeyDown={(e) => e.key === "Enter" && onCategoryClick(category.url)} // Acceso con Enter
+                    aria-label={`Categoría ${category.name}`}
+                >
+                    {category.name}
+                </li>
+            ))}
+        </ul>
+
+
+    );
 };
+
+export default RenderCategories;

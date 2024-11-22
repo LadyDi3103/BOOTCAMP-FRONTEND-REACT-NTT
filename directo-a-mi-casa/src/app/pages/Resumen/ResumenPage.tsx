@@ -1,134 +1,162 @@
-import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
-
-
+import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
+import './Resumen.css';
+import { Product } from '../../domain/Product';
 
 const ResumenPage = () => {
-    const { state, dispatch } = useCart();
-    const [form, setForm] = useState({
-      nombre: '',
-      apellidos: '',
-      distrito: '',
-      direccion: '',
-      referencia: '',
-      celular: '',
+  const { state, dispatch } = useCart();
+  const [form, setForm] = useState({
+    nombre: '',
+    apellidos: '',
+    distrito: '',
+    direccion: '',
+    referencia: '',
+    celular: '',
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  /**
+ * Falta 🔴 validar que exista un producto para que el usuario pueda enviar el formulario 
+ */
+  console.log('Estado del carrito:', state.products);
+
+  const normalizeProduct = (product: Partial<Product>): Product => ({
+    id: product.id || 0,
+    title: product.title || '',
+    name: product.name || '',
+    description: product.description || '',
+    price: product.price || 0,
+    thumbnail: product.thumbnail || '',
+    category: product.category || '',
+    quantity: Number(product.quantity) || 0,
+  });
+
+  state.products = state.products.map(normalizeProduct);
+
+  const handleIncrement = (productId: number) => {
+    dispatch({ type: 'INCREMENT_QUANTITY', productId });
+  };
+
+  const handleDecrement = (productId: number) => {
+    dispatch({ type: 'DECREMENT_QUANTITY', productId });
+  };
+
+  const handleRemove = (productId: number) => {
+    dispatch({ type: 'REMOVE_PRODUCT', productId });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    if (value.trim() === '') {
+      setErrors({ ...errors, [name]: 'Campo obligatorio' });
+    } else {
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors: { [key: string]: string } = {};
+    Object.keys(form).forEach(key => {
+      if (form[key as keyof typeof form].trim() === '') {
+        newErrors[key] = 'Campo obligatorio';
+      }
     });
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  
-    const handleIncrement = (productId: string) => {
-      dispatch({ type: 'INCREMENT_QUANTITY', productId });
-    };
-  
-    const handleDecrement = (productId: string) => {
-      dispatch({ type: 'DECREMENT_QUANTITY', productId });
-    };
-  
-    const handleRemove = (productId: string) => {
-      dispatch({ type: 'REMOVE_PRODUCT', productId });
-    };
-  
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
-      setForm({ ...form, [name]: value });
-      if (value.trim() === '') {
-        setErrors({ ...errors, [name]: 'Campo obligatorio' });
-      } else {
-        setErrors({ ...errors, [name]: '' });
-      }
-    };
-  
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      const newErrors: { [key: string]: string } = {};
-      Object.keys(form).forEach(key => {
-        if (form[key as keyof typeof form].trim() === '') {
-          newErrors[key] = 'Campo obligatorio';
-        }
-      });
-      if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-        return;
-      }
-      alert('Su pedido se registró con éxito');
-      console.log(form);
-      dispatch({ type: 'CLEAR_CART' });
-    };
-  
-    const total = state.products.reduce((sum, product) => sum + product.price * product.quantity, 0);
-    return (
-        <>
-            <CategoryTitleContainer
-                title={'Resumen de Órden'}
-            />
-                  <table>
-        <thead>
-          <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state.products.map(product => (
-            <tr key={product.id}>
-              <td><img src={product.image} alt={product.name} width="50" /></td>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
-              <td>
-                <button onClick={() => handleDecrement(product.id)}>-</button>
-                {product.quantity}
-                <button onClick={() => handleIncrement(product.id)}>+</button>
-              </td>
-              <td><button onClick={() => handleRemove(product.id)}>Eliminar</button></td>
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    alert('Su pedido se registró con éxito');
+    console.log('Formulario enviado:', form);
+    dispatch({ type: 'CLEAR_CART' });
+  };
+
+  const total = state.products
+    .reduce((sum, product) => sum + product.price * (Number(product.quantity) || 0), 0)
+    .toFixed(2);
+  return (
+    <>
+      <CategoryTitleContainer
+        title={'Resumen de Órden'}
+      />
+      <div className="order-summary">
+        <table>
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Eliminar</th>
             </tr>
+          </thead>
+          <tbody>
+            {state.products.map(product => (
+              <tr key={product.id}>
+                <td><img src={product.thumbnail} alt={product.name} width="80" /></td>
+                <td>{product.title}</td>
+                <td>{product.price}</td>
+                <td>
+                  <div className="quantity-controls">
+                    <button className="quantity-btn decrement" onClick={() => handleDecrement(product.id)}>-</button>
+                    <span>{product.quantity}</span>
+                    <button className="quantity-btn increment" onClick={() => handleIncrement(product.id)}>+</button>
+                  </div>
+                </td>
+                <td>
+                  <button className="delete-btn" onClick={() => handleRemove(product.id)}>Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="total-container">
+          <span>Total a pagar:</span> <strong>S/{total}</strong>
+        </div>
+
+        <form onSubmit={handleSubmit} className="order-form">
+          {['nombre', 'apellidos', 'distrito', 'direccion', 'referencia', 'celular'].map((field) => (
+            <div className="form-group" key={field}>
+              <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+              <input
+                type="text"
+                name={field}
+                value={form[field as keyof typeof form]}
+                onChange={handleChange}
+              />
+              {errors[field] && <span className="error-message">{errors[field]}</span>}
+            </div>
           ))}
-        </tbody>
-      </table>
-      <div>Total a pagar: {total}</div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nombre</label>
-          <input type="text" name="nombre" value={form.nombre} onChange={handleChange} />
-          {errors.nombre && <span>{errors.nombre}</span>}
-        </div>
-        <div>
-          <label>Apellidos</label>
-          <input type="text" name="apellidos" value={form.apellidos} onChange={handleChange} />
-          {errors.apellidos && <span>{errors.apellidos}</span>}
-        </div>
-        <div>
-          <label>Distrito</label>
-          <select name="distrito" value={form.distrito} onChange={handleChange}>
-            <option value="">Seleccione un distrito</option>
-            {/* Aquí cargarías los distritos desde un hook personalizado */}
-          </select>
-          {errors.distrito && <span>{errors.distrito}</span>}
-        </div>
-        <div>
-          <label>Dirección</label>
-          <input type="text" name="direccion" value={form.direccion} onChange={handleChange} />
-          {errors.direccion && <span>{errors.direccion}</span>}
-        </div>
-        <div>
-          <label>Referencia</label>
-          <input type="text" name="referencia" value={form.referencia} onChange={handleChange} />
-          {errors.referencia && <span>{errors.referencia}</span>}
-        </div>
-        <div>
-          <label>Celular</label>
-          <input type="text" name="celular" value={form.celular} onChange={handleChange} />
-          {errors.celular && <span>{errors.celular}</span>}
-        </div>
-        <button type="submit">Comprar</button>
-      </form>
+          <div className='btn__form'>
+            <button type="submit" className="btn_order__submit">
+              <img
+                src="src/assets/images/icons/white_car.svg"
+                alt="Carrito"
+                className="cart-icon"
+                onError={(e) => {
+                  console.error("Error al cargar el icono del carrito:", e);
+                }}
+              />
+              Ordenar
+            </button>
 
-            
-        </>
+            <button
+              type="button"
+              className="btn_order__cancelar"
+              onClick={() => dispatch({ type: 'CLEAR_CART' })}
+            >
+              Cancelar Orden
+            </button>
+          </div>
 
-    )
+        </form>
+      </div>
+    </>
+
+  )
 
 };
 

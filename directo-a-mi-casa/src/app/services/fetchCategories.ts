@@ -1,15 +1,16 @@
-import { mapCategory } from "../mappers/categoryMapper";
-import { Categories } from "../types/Category";
+import { mapCategory } from "../../mappers/categoryMapper";
+import { Category } from '../domain/Category';
 
 
-export const fetchCategories = async (): Promise<Categories> => {
+export const fetchCategories = async (): Promise<Category[]> => {
     try {
         const response = await fetch("https://dummyjson.com/products/categories");
         if (!response.ok) {
             throw new Error("Error al obtener las categorías");
         }
 
-        const data: unknown[] = await response.json();
+        const data: Category[] = await response.json();
+        console.log(data);
 
          // Uso de Mapper
         const categories = data.map(mapCategory);

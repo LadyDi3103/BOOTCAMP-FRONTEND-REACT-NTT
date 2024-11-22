@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { productRequest } from "../../services/fetchProducts";
-import ProductCard from "../../../components/ProductCard/ProductCard";
+import ProductCard from "../../../shared/components/ProductCard/ProductCard";
 import { Product } from "../../domain/Product";
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
 // import "./Init.css";
@@ -49,10 +49,9 @@ const Init: React.FC = () => {
 
       {/* Mostrar productos si no hay error y se cargaron datos */}
       {!loading && !error && (
+
         <div>
-          <CategoryTitleContainer
-            title={`${products.length} Productos`}
-          />
+          <CategoryTitleContainer title={`${products.length} Productos`} />
           {products.length > 0 ? (
             <div className="products-container">
               {products.map((product) => (

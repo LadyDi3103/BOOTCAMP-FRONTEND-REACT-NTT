@@ -1,6 +1,6 @@
 import React from "react";
 import { Product } from "../../app/domain/Product";
-import ProductCardContainer from "../CardContainer/ProductCardContainer";
+import ProductCardContainer from "../../shared/components/CardContainer/ProductCardContainer";
 
 interface ProductListProps {
   products: Product[];

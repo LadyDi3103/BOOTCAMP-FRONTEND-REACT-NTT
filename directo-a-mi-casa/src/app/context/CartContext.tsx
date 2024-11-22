@@ -1,49 +1,37 @@
 import React, { createContext, useReducer, ReactNode, useContext } from 'react';
-import { CartState, Action, initialState, cartReducer } from './cartReducer';
+import { CartState, Action, initialState, cartReducer } from './CartReducer';
+import { Product } from '../domain/Product';
 
-
-interface CartContextProps {
-    state: CartState;
-    dispatch: React.Dispatch<Action>;
+export interface CartContextProps {
+    state: CartState,
+    dispatch: React.Dispatch<Action>,
+    addProduct: (product: Product) => void;
   }
   
-  const CartContext = createContext<CartContextProps>({
-    state: initialState,
-    dispatch: () => null,
-  });
-
-
-
-
-// export const CartContext = createContext<CartContextProps>({
-//     products: [],
-//     addProduct: () => {},
-//     totalProducts: 0,
-// });
-
-
-export const CartProvider = ({ children }: { children: ReactNode }) => {
-    // const [products, setProducts] = useState<Product[]>([]);
+  export const CartContext = createContext<CartContextProps | undefined>(undefined);
+  // Proveedor del contexto del carrito
+  export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, initialState);
+  
+  // Función para agregar productos al carrito
+  const addProduct = (newProduct: Product) => {
+    dispatch({ type: "ADD_PRODUCT", product: newProduct });
+  };
 
-
-    // const addProduct = (newProduct: Product) => {
-    //     setProducts([...products, newProduct])
-    // }
-
-    // const totalProducts = products.reduce((total, product) => total + product.quantity, 0);
-
-    // return (
-    //     <CartContext.Provider value={{ products, addProduct, totalProducts }}>
-    //         {children}
-    //     </CartContext.Provider>
-    // )
     return (
-        <CartContext.Provider value={{ state, dispatch }}>
+        <CartContext.Provider value={{ state, dispatch, addProduct}}>
           {children}
         </CartContext.Provider>
       );
 }
 
-// Hook para usar el contexto del carrito
-export const useCart = () => useContext(CartContext);
+// Hook para acceder al contexto del carrito
+export const useCart = (): CartContextProps => {
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error("useCart debe usarse dentro de un CartProvider");
+  }
+
+  return context;
+};

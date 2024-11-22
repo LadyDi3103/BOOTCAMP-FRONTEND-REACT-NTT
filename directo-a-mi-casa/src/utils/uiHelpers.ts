@@ -1,5 +1,3 @@
-
-
 export const resetUIState = (): void => {
     console.log("Restaurando el estado inicial de la UI...");
 
