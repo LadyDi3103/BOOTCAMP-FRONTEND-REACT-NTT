@@ -5,7 +5,7 @@
     background-color: var(--color-background);
     padding: 20px;
     height: 100vh;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
 }
   
   .producto-card {
@@ -76,4 +76,87 @@
   
   .btn_order__submit:hover {
     background-color: var(--color-hover);
+  }
+
+  .container_price_btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+  .review-items-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 1rem; 
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .review-item {
+    flex: 1 1 calc(25% - 1rem); 
+    max-width: 300px; 
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #ffffff;
+    text-align: center;
+  }
+  .producto-reviews {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-top: 1px solid #ddd;
+    background-color: #f9f9f9;
+    min-width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .producto-reviews h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .review-item {
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background-color: #ffffff;
+  }
+  
+  .review-item .review-author {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  
+  .review-item .review-date {
+    font-size: 0.9rem;
+    color: #999;
+    margin-bottom: 0.5rem;
+  }
+  
+  .review-item .review-comment {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .review-item .review-rating {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  
+  .review-item .review-rating span {
+    color: #ffc107; 
+    font-size: 1.2rem;
+  }
+  
+  .no-reviews {
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+    margin-top: 1rem;
   }

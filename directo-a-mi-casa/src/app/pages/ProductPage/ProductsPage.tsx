@@ -2,7 +2,6 @@ import CategoryTitleContainer from "../../../shared/components/CategoryTitleCont
 import './ProductPage.css';
 import CallToAction from "../../../components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
-import ReviewsList from "../../../components/ReviewList";
 import { useCart } from "../../context/CartContext";
 import { useEffect } from "react";
 
@@ -10,15 +9,14 @@ import { useEffect } from "react";
 const ProductPage: React.FC = () => {
   const { state, fetchProductDetails } = useProducts();
   const { addProduct } = useCart();
-
   const selectedProduct = state.selectedProduct;
 
   useEffect(() => {
-    if (selectedProduct?.id) {
+    if (selectedProduct?.id && !state.productDetails?.id) {
       console.log("Fetching details for product ID:", selectedProduct.id);
       fetchProductDetails(selectedProduct.id);
     }
-  }, [selectedProduct, fetchProductDetails]);
+  }, [selectedProduct, state.productDetails,fetchProductDetails]);
 
   if (!state.productDetails) {
     return <p>Cargando detalles del producto...</p>;
@@ -53,6 +51,7 @@ const ProductPage: React.FC = () => {
             <p className="producto-category">
               <strong>Categoría:</strong> {category}
             </p>
+            <div className="container_price_btn">
             <div className="producto-price-container">
               <span className="producto-price">S/{price.toFixed(2)}</span>
             </div>
@@ -63,15 +62,33 @@ const ProductPage: React.FC = () => {
             >
               Agregar al Carrito
             </button>
+            </div>
+
           </div>
         </div>
         <div className="producto-reviews">
-            <h2>Reseñas del Producto</h2>
-            <ReviewsList reviews={reviews} />
+          <h2>Reseñas del Producto</h2>
+          <div className="review-items-container">
+            {reviews && reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <div className="review-item" key={index}>
+                  <div className="review-author">{review.reviewerName}</div>
+                  <div className="review-date">{new Date(review.date).toLocaleDateString()}</div>
+                  <div className="review-comment">{review.comment}</div>
+                  <div className="review-rating">
+                    <span>⭐</span>
+                    <span>{review.rating}/5</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="no-reviews">No hay reseñas disponibles para este producto.</p>
+            )}
           </div>
+        </div>
       </div>
     </div>
   );
-};
+}  
 
 export default ProductPage;

@@ -3,6 +3,7 @@ import { Product, ProductState, ProductAction } from '../domain/Product';
 import { productRequest } from '../services/fetchProducts';
 import { initialProductState, productReducer } from './ProductReducer';
 import { ProductDetails } from '../domain/ProductDetail';
+import { getTopNLowestPricedProducts } from '../../utils/helpers';
 
 
 interface ProductContextProps {
@@ -22,26 +23,35 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
   // const [products, setProducts] = useState<Product[]>([]);
   // const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
-  const fetchProducts  = async () => {
-      try {
+  const fetchProducts = async () => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
       const data: Product[] = await productRequest.fetchAllProducts();
       dispatch({ type: "SET_PRODUCTS", payload: data });
-      // setProducts(data);
+
+      // Calcular ofertas especiales y almacenarlas
+      const topOffers = getTopNLowestPricedProducts(data, 10);
+      dispatch({ type: "SET_SPECIAL_OFFERS", payload: topOffers });
     } catch (error) {
-      console.error('Error al cargar todos los productos:', error);
+      dispatch({ type: "SET_ERROR", payload: error.message });
+      console.error("Error al cargar productos:", error);
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   };
 
   const fetchProductDetails = async (productId: number) => {
     try {
+      dispatch({ type: "SET_LOADING", payload: true });
       const data: ProductDetails = await productRequest.fetchSingleProduct(productId);
-      console.log("Detalles del producto:", data);
       dispatch({ type: "SET_PRODUCT_DETAILS", payload: data });
     } catch (error) {
+      dispatch({ type: "SET_ERROR", payload: error.message });
       console.error("Error al cargar detalles del producto:", error);
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   };
-
 
   const fetchCategoryProducts = async (categoryUrl: string) => {
     try {
@@ -53,9 +63,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
       console.error('Error al cargar productos filtrados por categoría:', error);
     }
   };
-
-
-
 
   const setSelectedProduct = (product: Product | null) => {
     dispatch({ type: "SET_SELECTED_PRODUCT", payload: product });

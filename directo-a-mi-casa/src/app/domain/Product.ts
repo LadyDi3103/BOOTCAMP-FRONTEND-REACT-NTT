@@ -13,15 +13,21 @@ export interface Product {
 
 export interface ProductState {
     products: Product[];
+    specialOffers: Product[];
     filteredProducts: Product[];
     selectedProduct: Product | null;
     productDetails: ProductDetails | null;
+    loading: false,
+    error: string | null;
 }
 
-export type ProductAction =
-    | { type: "SET_PRODUCTS"; payload: Product[] }
-    | { type: "SET_FILTERED_PRODUCTS"; payload: Product[] }
-    | { type: "SET_SELECTED_PRODUCT"; payload: Product | null}
-    | { type: "SET_PRODUCT_DETAILS"; payload: ProductDetails | null }
+    export type ProductAction =
+  | { type: "SET_LOADING"; payload: boolean } 
+  | { type: "SET_ERROR"; payload: string } 
+  | { type: "SET_PRODUCTS"; payload: Product[] } 
+  | { type: "SET_FILTERED_PRODUCTS"; payload: Product[] } 
+  | { type: "SET_SPECIAL_OFFERS"; payload: Product[] } 
+  | { type: "SET_SELECTED_PRODUCT"; payload: Product } 
+  | { type: "SET_PRODUCT_DETAILS"; payload: ProductDetails }
 
 export type Products = Product[];
