@@ -17,6 +17,8 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
 
   switch (action.type) {
     case "ADD_PRODUCT": {
+      console.log("Productos actuales antes de agregar:", state.products);
+      
       const existingProduct = state.products.find(
         (product) => product.id === action.product.id
       );
