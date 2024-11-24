@@ -5,3 +5,6 @@ export interface Category {
 }
 
 export type Categories = Category[];
+
+export type CategoryString = string;
+export type CategoryStrings = CategoryString[];

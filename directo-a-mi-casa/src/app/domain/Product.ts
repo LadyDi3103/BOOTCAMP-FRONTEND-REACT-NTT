@@ -1,3 +1,4 @@
+import { CategoryStrings } from './Category';
 import { ProductDetails } from './ProductDetail';
 
 export interface Product {
@@ -13,6 +14,7 @@ export interface Product {
 
 export interface ProductState {
     products: Product[];
+    categories: CategoryStrings[];
     specialOffers: Product[];
     filteredProducts: Product[];
     selectedProduct: Product | null;
@@ -23,11 +25,13 @@ export interface ProductState {
 
     export type ProductAction =
   | { type: "SET_LOADING"; payload: boolean } 
-  | { type: "SET_ERROR"; payload: string } 
-  | { type: "SET_PRODUCTS"; payload: Product[] } 
+  | { type: "SET_ERROR"; payload: string | null } 
+  | { type: "SET_PRODUCTS"; payload: Product[] }
+  | { type: "SET_CATEGORIES"; payload: CategoryStrings[] } 
   | { type: "SET_FILTERED_PRODUCTS"; payload: Product[] } 
   | { type: "SET_SPECIAL_OFFERS"; payload: Product[] } 
   | { type: "SET_SELECTED_PRODUCT"; payload: Product } 
   | { type: "SET_PRODUCT_DETAILS"; payload: ProductDetails }
+
 
 export type Products = Product[];

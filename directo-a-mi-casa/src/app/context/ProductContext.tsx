@@ -1,16 +1,13 @@
-import React, { createContext, useContext, useReducer, ReactNode  } from 'react';
+import React, { createContext, useContext, useReducer, ReactNode, useEffect  } from 'react';
 import { Product, ProductState, ProductAction } from '../domain/Product';
 import { productRequest } from '../services/fetchProducts';
 import { initialProductState, productReducer } from './ProductReducer';
 import { ProductDetails } from '../domain/ProductDetail';
 import { getTopNLowestPricedProducts } from '../../utils/helpers';
 
-
 interface ProductContextProps {
   state: ProductState;
-  // filteredProducts: Product[];
   dispatch: React.Dispatch<ProductAction>;
-  fetchProducts: () => Promise<void>;
   fetchCategoryProducts: (categoryUrl: string) => Promise<void>;
   fetchProductDetails: (productId: number) => Promise<void>;
   setSelectedProduct: (product: Product | null) => void;
@@ -20,26 +17,34 @@ const ProductContext = createContext<ProductContextProps | undefined>(undefined)
 
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialProductState);
-  // const [products, setProducts] = useState<Product[]>([]);
-  // const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
-  const fetchProducts = async () => {
-    try {
+  /**
+   * Cargar productos al inicializar la aplicación.
+   */
+  useEffect(() => {
+    const loadInitialProducts = async () => {
       dispatch({ type: "SET_LOADING", payload: true });
-      const data: Product[] = await productRequest.fetchAllProducts();
-      dispatch({ type: "SET_PRODUCTS", payload: data });
+      try {
+        const products = await productRequest.fetchAllProducts();
+        const categories = await productRequest.fetchAllCategories();
+        console.log('CATEGORAS',categories)
+        const topOffers = getTopNLowestPricedProducts(products, 9);
 
-      // Calcular ofertas especiales y almacenarlas
-      const topOffers = getTopNLowestPricedProducts(data, 10);
-      dispatch({ type: "SET_SPECIAL_OFFERS", payload: topOffers });
-    } catch (error) {
-      dispatch({ type: "SET_ERROR", payload: error.message });
-      console.error("Error al cargar productos:", error);
-    } finally {
-      dispatch({ type: "SET_LOADING", payload: false });
-    }
-  };
+        dispatch({ type: "SET_PRODUCTS", payload: products });
+        dispatch({ type: "SET_CATEGORIES", payload: categories });
+        dispatch({ type: "SET_SPECIAL_OFFERS", payload: topOffers });
+      } catch (error) {
+        dispatch({ type: "SET_ERROR", payload: error.message });
+      } finally {
+        dispatch({ type: "SET_LOADING", payload: false });
+      }
+    };
+    loadInitialProducts();
+  }, []);
 
+  /**
+   * Cargar detalles de un producto.
+   */
   const fetchProductDetails = async (productId: number) => {
     try {
       dispatch({ type: "SET_LOADING", payload: true });
@@ -53,31 +58,39 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   };
 
-  const fetchCategoryProducts = async (categoryUrl: string) => {
+  /**
+   * Cargar los productos por categoria.
+   */
+  const fetchCategoryProducts = async (category: string) => {
+    dispatch({ type: "SET_LOADING", payload: true });
     try {
-      const data = await productRequest.fetchProductsByCategory(categoryUrl);
-      console.log(`Productos filtrados por categoría (${categoryUrl}):`, data);
+      const data = await productRequest.fetchProductsByCategory(category);
+      console.log(`Productos filtrados por categoría (${category}):`, data);
       dispatch({ type: "SET_FILTERED_PRODUCTS", payload: data });
       // setFilteredProducts(data); // Actualiza el estado de productos filtrados
     } catch (error) {
-      console.error('Error al cargar productos filtrados por categoría:', error);
+      console.error("Error al cargar productos por categoría:", error);
+      dispatch({ type: "SET_ERROR", payload: error.message });
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   };
 
+  /**
+   * Seleccionar un producto.
+   */
   const setSelectedProduct = (product: Product | null) => {
     dispatch({ type: "SET_SELECTED_PRODUCT", payload: product });
   };
 
   return (
-    // <ProductContext.Provider value={{ products, filteredProducts, fetchCategoryProducts }}>
     <ProductContext.Provider 
     value={{ 
       state, 
-      dispatch, 
-      fetchProducts, 
+      dispatch,
       fetchCategoryProducts, 
       fetchProductDetails,
-      setSelectedProduct 
+      setSelectedProduct,
       }}
       >
       {children}

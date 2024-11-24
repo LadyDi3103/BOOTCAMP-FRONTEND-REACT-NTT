@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Category } from "../app/domain/Category";
+import { Category} from "../app/domain/Category";
 
 interface RenderCategoriesProps {
     categories: Category[];
-    onCategoryClick: (url: string) => void;
+    onCategoryClick: (categoryName: string) => void;
     selectedCategory?: string | null;
 }
 
@@ -21,12 +21,13 @@ const RenderCategories: FC<RenderCategoriesProps> = ({
             {categories.map((category) => (
                 <li
                     key={category.id}
-                    className={`category-item ${selectedCategory === category.name ? "selected-category" : ""
+                    className={`category-item ${
+                        selectedCategory === category.name ? "selected-category" : ""
                         }`}
-                    onClick={() => onCategoryClick(category.url)}
+                    onClick={() => onCategoryClick(category.name)}
                     role="menuitem"
-                    tabIndex={0} // Para permitir navegación con teclado
-                    onKeyDown={(e) => e.key === "Enter" && onCategoryClick(category.url)} // Acceso con Enter
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && onCategoryClick(category.url)}
                     aria-label={`Categoría ${category.name}`}
                 >
                     {category.name}

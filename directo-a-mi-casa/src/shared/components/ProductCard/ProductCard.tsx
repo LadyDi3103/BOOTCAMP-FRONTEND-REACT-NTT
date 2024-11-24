@@ -1,6 +1,5 @@
 import React from "react";
 import { Product } from "../../../app/domain/Product";
-// import { useCart } from '../../../app/context/CartContext';
 import { useProductNavigation  } from '../../hooks/useProductNavigation';
 import { useProducts } from "../../../app/context/ProductContext";
 import { useCart } from "../../../app/context/CartContext";
@@ -34,9 +33,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product}) => {
 
   const handleNavigate = () => {
     setSelectedProduct(product);
-    console.log("Producto seleccionado:🩵", product);
     onNavigate(title);
-    console.log('LLAMANDO HANDLE NAVIGATE');
   };
 
   return (
@@ -66,10 +63,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product}) => {
           src="src/assets/images/icons/white_car.svg"
           alt="Carrito"
           className="cart-icon"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "/path/to/placeholder.png"; 
-            console.error("Error al cargar el icono del carrito:", e);
-          }}
         />
       </button>
     </div>

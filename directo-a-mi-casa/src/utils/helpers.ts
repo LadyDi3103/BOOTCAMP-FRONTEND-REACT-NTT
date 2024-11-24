@@ -8,6 +8,7 @@ import { Product } from "../app/domain/Product";
  */
 export const filterProducts = (products: Product[], query: string): Product[] => {
   if (!query) return products; // Si no hay query, retorna todos los productos
+  
   return products.filter((product) =>
     product.title.toLowerCase().includes(query.toLowerCase())
   );

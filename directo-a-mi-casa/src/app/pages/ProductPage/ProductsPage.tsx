@@ -4,7 +4,7 @@ import CallToAction from "../../../components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 import { useCart } from "../../context/CartContext";
 import { useEffect } from "react";
-
+// 🔴🩵 verificar ya que no funciona el agregar producto 
 
 const ProductPage: React.FC = () => {
   const { state, fetchProductDetails } = useProducts();
@@ -31,7 +31,7 @@ const ProductPage: React.FC = () => {
     category,
     reviews,
   } = state.productDetails;
-
+console.log (state.productDetails, '💖💖💖💖💖')
   return (
     <div>
       <CallToAction />
@@ -57,7 +57,7 @@ const ProductPage: React.FC = () => {
             </div>
             <button
               className="btn_order__submit"
-              onClick={() => addProduct(state.productDetails!)}
+              onClick={() => addProduct(selectedProduct)}
               disabled={!state.productDetails}
             >
               Agregar al Carrito

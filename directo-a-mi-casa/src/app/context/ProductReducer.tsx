@@ -1,7 +1,14 @@
+/**
+ * REDUCER sirve para actualizar el estado
+ * 
+ * 
+ * 
+ */
 import { ProductState, ProductAction } from "../domain/Product";
 
 export const initialProductState: ProductState = {
     products: [],
+    categories: [],
     specialOffers: [],
     filteredProducts: [],
     selectedProduct: null,
@@ -23,6 +30,9 @@ export const productReducer = (
 
         case "SET_PRODUCTS":
             return { ...state, products: action.payload, loading: false, error: null };
+
+        case "SET_CATEGORIES":
+            return { ...state, categories: action.payload, loading: false, error: null };
 
         case "SET_FILTERED_PRODUCTS":
             return { ...state, filteredProducts: action.payload, loading: false, error: null };

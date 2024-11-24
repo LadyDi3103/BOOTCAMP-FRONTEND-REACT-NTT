@@ -2,9 +2,13 @@
 import environment from '../../environments/environment';
 import { mapProductDetail } from '../../mappers/productDetailMapper';
 import { mapProduct } from '../../mappers/productMapper';
+import { CategoryStrings } from '../domain/Category';
 import { Product } from '../domain/Product';
 import { ProductDetails } from '../domain/ProductDetail';
 
+  /**
+   * Cargar TODOS los productos desde la API.
+   */
 const fetchAllProducts = async (): Promise<Product[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.PRODUCTS_ENDPOINT}`);
@@ -13,8 +17,6 @@ const fetchAllProducts = async (): Promise<Product[]> => {
         }
 
         const data = await response.json();
-        console.log(data, 'DATA fetch all products');
-
         const products = data.products.map(mapProduct);
 
         return products;
@@ -24,14 +26,19 @@ const fetchAllProducts = async (): Promise<Product[]> => {
     }
 };
 
-export const fetchAllCategories = async (): Promise<string[]> => {
+   /**
+   * Cargar todas las categorías desde la API.
+   */
+export const fetchAllCategories = async (): Promise<CategoryStrings[]> => {
     try {
-        const response = await fetch(`${environment.API_BASE_URL}${environment.CATEGORIES_ENDPOINT}`);
+        const response = await fetch(`${environment.API_BASE_URL}${environment.CATEGORIES_LIST_ENDPOINT}`);
+
         if (!response.ok) {
             throw new Error("Error al obtener las categorías");
         }
 
-        const categories: string[] = await response.json();
+        const categories: CategoryStrings[] = await response.json();
+        console.log("categoriesFETCHED:", categories);
         return categories;
     } catch (error) {
         console.error("Error al obtener las categorías:", error);

@@ -1,22 +1,22 @@
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ModuleRoutes } from "../../app/routes";
 import carIcon from "/src/assets/images/icons/car.svg";
-import { Category } from "../../app/domain/Category";
-import { fetchCategories } from "../../app/services/fetchCategories";
-import { useEffect, useState } from "react";
-import { filterProducts } from "../../utils/helpers";
-import { Product } from '../../app/domain/Product';
-import { useCart } from "../../app/context/CartContext";
+import { useProducts } from "../../app/context/ProductContext";
 import RenderCategories from "../../components/RenderCategories";
-
+import { filterProducts } from "../../utils/helpers";
+import { Product } from "../../app/domain/Product";
+import {CategoryStrings } from "../../app/domain/Category";
 const Header = () => {
-    const { state } = useCart(); // Accedemos a state desde el contexto
-    const products = state.products;
-    const [searchQuery, setSearchQuery] = useState<string>("");
-    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
-    const [categories, setCategories] = useState<Category[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const { state: productState } = useProducts();
+    const { products, categories} = productState;
+
+    console.log ('categories desde el producState',categories);// llega en array
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryStrings | null>(null);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); 
 
     console.log('Contador de productos', products?.length);
 
@@ -27,39 +27,23 @@ const Header = () => {
     // Mostrar/ocultar dropdown de categorías
     const toggleDropdown = () => setDropdownVisible(!isDropdownVisible);
 
-    // Cargar categorías al montar el componente
-    useEffect(() => {
-        const loadCategories = async () => {
-            try {
-                const fetchedCategories = await fetchCategories();
-                setCategories(fetchedCategories);
-            } catch (error) {
-                console.error("Error al cargar las categorías:", error);
-            }
-        };
-        loadCategories();
-    }, []);
-    // Manejar clic en una categoría
     const handleCategoryClick = (category: string) => {
         setSelectedCategory(category);
-
-        // Filtrar productos por categoría
-        const filtered = products.filter(
-            (product) => product.category.toLowerCase() === category.toLowerCase()
-        );
-        setFilteredProducts(filtered);
         setDropdownVisible(false);
-    };
+        console.log(`Categoría seleccionada: ${category}`);
+      };
 
     // Filtrar productos al cambiar el texto de búsqueda
     useEffect(() => {
-        const filtered = filterProducts(products, searchQuery);
-        setFilteredProducts(filtered);
-    }, [products, searchQuery]);
+    if (products) {
+      const filtered = filterProducts(products, searchQuery);
+      setFilteredProducts(filtered);
+    }
+}, [products, searchQuery]);
 
-
-
-
+    // if (loading) return <p>Cargando categorías...</p>;
+    // if (error) return <p>Error al cargar categorías: {error}</p>;
+  
     return (
         <header>
             {/* Logo */}
@@ -91,9 +75,9 @@ const Header = () => {
                 </span>
                 {isDropdownVisible && (
                     <RenderCategories
-                        categories={categories}
-                        onCategoryClick={handleCategoryClick}
-                        selectedCategory={selectedCategory}
+                    Category={categories || []}
+                    onCategoryClick={handleCategoryClick}
+                    selectedCategory ={selectedCategory}
                     />
                 )}
                 <input
