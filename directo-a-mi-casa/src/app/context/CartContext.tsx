@@ -1,11 +1,12 @@
 import React, { createContext, useReducer, ReactNode, useContext } from 'react';
-import { CartState, Action, initialState, cartReducer } from './CartReducer';
+import { CartState, initialState, cartReducer } from './CartReducer';
 import { Product } from '../domain/Product';
-
+import { Action } from '../domain/cartActions.types';
 export interface CartContextProps {
     state: CartState,
     dispatch: React.Dispatch<Action>,
     addProduct: (product: Product) => void;
+    getProductById: (productId: number | string) => Product | undefined;
   }
   
   export const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -14,12 +15,28 @@ export interface CartContextProps {
     const [state, dispatch] = useReducer(cartReducer, initialState);
   
   // Función para agregar productos al carrito
-  const addProduct = (newProduct: Product) => {
+    const addProduct = (newProduct: Product) => {
+      if (!newProduct || !newProduct.id) {
+        console.error("Producto inválido:", newProduct);
+        return;
+      }
+      
     dispatch({ type: "ADD_PRODUCT", product: newProduct });
   };
 
+  const getProductById = (productId: number | string): Product | undefined => {
+    return state.products.find((product) => product.id === productId);
+  };
+
     return (
-        <CartContext.Provider value={{ state, dispatch, addProduct}}>
+        <CartContext.Provider 
+        value={{ 
+          state, 
+          dispatch, 
+          addProduct,
+          getProductById
+          }}
+          >
           {children}
         </CartContext.Provider>
       );
@@ -35,3 +52,4 @@ export const useCart = (): CartContextProps => {
 
   return context;
 };
+

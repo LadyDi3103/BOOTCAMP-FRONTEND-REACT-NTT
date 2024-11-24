@@ -3,6 +3,7 @@ import { productRequest } from "../../services/fetchProducts";
 import ProductCard from "../../../shared/components/ProductCard/ProductCard";
 import { Product } from "../../domain/Product";
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
+import CallToAction from "../../../components/CallToAction/CallToAction";
 // import "./Init.css";
 
 const Init: React.FC = () => {
@@ -41,6 +42,7 @@ const Init: React.FC = () => {
 
   return (
     <>
+      <CallToAction />
       {/* Mensaje de carga */}
       {loading && <div className="loader">Cargando productos...</div>}
 

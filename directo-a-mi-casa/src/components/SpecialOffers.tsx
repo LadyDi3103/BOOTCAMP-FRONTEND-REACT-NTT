@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useCart } from '../app/context/CartContext';
+// import { useCart } from '../app/context/CartContext';
 import { useProducts } from '../app/context/ProductContext';
 import { Product } from '../app/domain/Product';
 import { getTopNLowestPricedProducts } from '../utils/helpers';
@@ -7,11 +7,11 @@ import ProductCard from '../shared/components/ProductCard/ProductCard';
 
 
 const SpecialOffers: React.FC = () => {
-    const { state } = useCart();
+    // const { state } = useCart();
     const { products } = useProducts();
     const [offers, setOffers] = useState<Product[]>([]);
 
-    console.log('Productos en el carrito:', state.products);
+    // console.log('Productos en el carrito:', state.products);
 
     useEffect(() => {
         const topOffers = getTopNLowestPricedProducts(products, 10);

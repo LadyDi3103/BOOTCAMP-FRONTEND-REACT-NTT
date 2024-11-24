@@ -4,7 +4,8 @@ export const enum ModuleRoutes{
     HomePage  = 'home',
     Login = 'login',
     Resumen = 'resumen',
-    Categories = 'categorias',
+    CategoriesPage = 'categorias',
     ProductsPage = "/product",
-    Init = 'todos-los-productos',
+    Init = '/todos-los-productos',
+    // MainLayout = "MainLayout",
 }

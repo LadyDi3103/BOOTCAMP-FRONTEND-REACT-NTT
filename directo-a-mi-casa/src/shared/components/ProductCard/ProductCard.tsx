@@ -1,16 +1,22 @@
 import React from "react";
 import { Product } from "../../../app/domain/Product";
-import { useCart } from '../../../app/context/CartContext';
+// import { useCart } from '../../../app/context/CartContext';
 import { useProductNavigation  } from '../../hooks/useProductNavigation';
+import { useProducts } from "../../../app/context/ProductContext";
+import { useCart } from "../../../app/context/CartContext";
+
 interface ProductCardProps {
   product: Product;
 }
 
 // Componente a reutilizar
 const ProductCard: React.FC<ProductCardProps> = ({ product}) => {
-  const { title, thumbnail, price, category } = product;
+  const { title, thumbnail, price, category, id } = product;
   const { onNavigate } = useProductNavigation();
+  const { setSelectedProduct } = useProducts();
   const { addProduct } = useCart();
+  
+
   // Validación de propiedades
   if (!product) {
     console.error("El producto no está definido.");
@@ -27,11 +33,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product}) => {
   };
 
   const handleNavigate = () => {
+    setSelectedProduct(product);
+    console.log("Producto seleccionado:🩵", product);
     onNavigate(title);
+    console.log('LLAMANDO HANDLE NAVIGATE');
   };
 
   return (
-    <div className="product-card" onClick={handleNavigate}>
+    <div data-id={id} className="product-card" onClick={handleNavigate}>
       {/* Imagen del producto */}
       <img
         className="product-image"

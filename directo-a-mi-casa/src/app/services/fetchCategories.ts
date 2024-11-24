@@ -10,7 +10,6 @@ export const fetchCategories = async (): Promise<Category[]> => {
         }
 
         const data: Category[] = await response.json();
-        console.log(data);
 
          // Uso de Mapper
         const categories = data.map(mapCategory);

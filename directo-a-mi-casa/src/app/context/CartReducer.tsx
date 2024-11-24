@@ -1,19 +1,14 @@
 import { Product } from "../domain/Product";
+import { Action } from '../domain/cartActions.types';
 
-// Estado inicial del carrito
 export interface CartState {
   products: Product[];
+  selectedProduct: Product | null;
 }
-
-export type Action =
-  | { type: "ADD_PRODUCT"; product: Product }
-  | { type: "REMOVE_PRODUCT"; productId: string | number }
-  | { type: "INCREMENT_QUANTITY"; productId: string | number }
-  | { type: "DECREMENT_QUANTITY"; productId: string | number }
-  | { type: "CLEAR_CART" };
 
 export const initialState: CartState = {
   products: [],
+  selectedProduct: null,
 };
 
 export const cartReducer = (state: CartState, action: Action): CartState => {
@@ -90,10 +85,7 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
       };
 
     default: {
-      // Validación de exhaustividad sin warning
-      ((exhaustiveCheck: never) => {
-        console.error("Tipo de acción desconocido:", exhaustiveCheck);
-      })(action);
+      console.error("Tipo de acción desconocido:", action);
       return state;
   }
 };
