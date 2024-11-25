@@ -21,6 +21,7 @@ export interface CartContextProps {
         return;
       }
       
+      
     dispatch({ type: "ADD_PRODUCT", product: newProduct });
   };
 
