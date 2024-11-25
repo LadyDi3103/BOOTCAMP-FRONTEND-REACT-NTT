@@ -1,0 +1,25 @@
+:root {
+  /* Colores primarios */
+  --color-primary: #4F1A0F; /* Marrón */
+  --color-secondary: #B3B826; /* Verde */
+  --color-accent: #F7B32C; /* Amarillo */
+
+  /* Fondo */
+  --color-background: #F4F4F4; /* Gris Claro */
+  --color-white: #FFFFFF; /* Blanco */
+  --color-surface: #ECECEC; /* Superficies */
+
+  /* Estados */
+  --color-hover: #e0a22a; /* Hover - Amarillo Oscuro */
+  --color-warn: #CC292E; /* Warn - Rojo */
+
+  /* Tipografía */
+  --color-text-light: white;
+  --color-text-dark: #4F1A0F;
+  --color-text-dark-lighter: #666;
+
+  /* Espaciados y bordes */
+  --padding-small: 15px;
+  --padding-medium: 20px;
+  --border-radius: 8px;
+}
