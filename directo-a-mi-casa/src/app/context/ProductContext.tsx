@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, ReactNode, useEffect  } from 'react';
+import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 import { Product, ProductState, ProductAction } from '../domain/Product';
 import { productRequest } from '../services/fetchProducts';
 import { initialProductState, productReducer } from './ProductReducer';
@@ -10,7 +10,8 @@ interface ProductContextProps {
   dispatch: React.Dispatch<ProductAction>;
   fetchCategoryProducts: (categoryUrl: string) => Promise<void>;
   fetchProductDetails: (productId: number) => Promise<void>;
-  setSelectedProduct: (product: Product | null) => void;
+  setSelectedProduct: (product: Product) => void;
+  resetProducts: () => void;
 }
 
 const ProductContext = createContext<ProductContextProps | undefined>(undefined);
@@ -27,7 +28,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
       try {
         const products = await productRequest.fetchAllProducts();
         const categories = await productRequest.fetchAllCategories();
-        console.log('CATEGORAS',categories)
         const topOffers = getTopNLowestPricedProducts(products, 9);
 
         dispatch({ type: "SET_PRODUCTS", payload: products });
@@ -39,6 +39,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
         dispatch({ type: "SET_LOADING", payload: false });
       }
     };
+
     loadInitialProducts();
   }, []);
 
@@ -65,9 +66,10 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     dispatch({ type: "SET_LOADING", payload: true });
     try {
       const data = await productRequest.fetchProductsByCategory(category);
+      // Filtrar productos basados en la categoría usando `allProducts`
       console.log(`Productos filtrados por categoría (${category}):`, data);
+
       dispatch({ type: "SET_FILTERED_PRODUCTS", payload: data });
-      // setFilteredProducts(data); // Actualiza el estado de productos filtrados
     } catch (error) {
       console.error("Error al cargar productos por categoría:", error);
       dispatch({ type: "SET_ERROR", payload: error.message });
@@ -79,20 +81,29 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
   /**
    * Seleccionar un producto.
    */
-  const setSelectedProduct = (product: Product | null) => {
+  const setSelectedProduct = (product: Product) => {
     dispatch({ type: "SET_SELECTED_PRODUCT", payload: product });
   };
 
+  /**
+ * Restablecer productos al estado original.
+ */
+  const resetProducts = () => {
+    dispatch({ type: "SET_FILTERED_PRODUCTS", payload: state.allProducts });
+    console.log("Productos restablecidos a todos los originales:", state.allProducts);
+  };
+
   return (
-    <ProductContext.Provider 
-    value={{ 
-      state, 
-      dispatch,
-      fetchCategoryProducts, 
-      fetchProductDetails,
-      setSelectedProduct,
+    <ProductContext.Provider
+      value={{
+        state,
+        dispatch,
+        fetchCategoryProducts,
+        fetchProductDetails,
+        setSelectedProduct,
+        resetProducts,
       }}
-      >
+    >
       {children}
     </ProductContext.Provider>
   );

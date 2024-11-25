@@ -18,20 +18,16 @@ const Header = () => {
 
     const navigate = useNavigate();
 
-    console.log('availableProducts desde el producState', availableProducts);
-    console.log('categories desde el producState', categories);
-    console.log("Estado del contexto de productos:", productContextState);
-
-    const [searchQuery, setSearchQuery] = useState<string>("");
-    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>(""); // Búsqueda del usuario
+    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false); // Estado del dropdown
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // Categoría seleccionada
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>(availableProducts); // Productos filtrados
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const totalQuantity=cartProducts.reduce((sum, product) => sum + (product?.quantity || 0), 0); 
-
-    console.log("Contador de productos en el carrito:", cartProducts?.length);
+    console.log("Productos disponibles:", availableProducts);
+    console.log("Productos filtrados:", filteredProducts);
+    console.log("Categorías:", categories);
 
     // Manejar cambios en el input de búsqueda
     const handleSearchChange = useCallback(
@@ -39,9 +35,8 @@ const Header = () => {
             const query = e.target.value;
             setSearchQuery(query);
             if (availableProducts) {
-                const filtered = filterProducts(availableProducts, query); 
+                const filtered = filterProducts(availableProducts, query); // Filtrar productos
                 setFilteredProducts(filtered);
-                console.log("Productos filtrados:", filtered);
             }
             console.log("Texto de búsqueda actualizado:", query);
         },
@@ -53,14 +48,15 @@ const Header = () => {
         setDropdownVisible((prev) => !prev);
     }, []);
 
+    // Manejar clic en una categoría
     const handleCategoryClick = useCallback(
         async (categoryName: string) => {
             setSelectedCategory(categoryName);
-            setDropdownVisible(false);
-            navigate(ModuleRoutes.Init);
+            setDropdownVisible(false); // Cierra el menú desplegable
+            navigate(ModuleRoutes.Init); // Navega al Init
             console.log(`Categoría seleccionada: ${categoryName}`);
             try {
-                await fetchCategoryProducts(categoryName);
+                await fetchCategoryProducts(categoryName); // Actualiza productos por categoría
             } catch (error) {
                 console.error("Error al obtener productos por categoría:", error);
             }
@@ -68,12 +64,11 @@ const Header = () => {
         [navigate, fetchCategoryProducts]
     );
 
-    // Cierra el menú si el usuario hace clic fuera del componente 🙌🙌🙌
+    // Cerrar el menú si el usuario hace clic fuera del componente
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setDropdownVisible(false);
-                console.log("Cerrando dropdown al hacer clic fuera del componente.");
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -82,19 +77,24 @@ const Header = () => {
         };
     }, []);
 
-    if (error) return <p>Error al cargar categorías: {error}</p>;
+    // Sincronizar productos filtrados con el contexto global
+    useEffect(() => {
+        if (!searchQuery) {
+            setFilteredProducts(availableProducts); // Mostrar todos si no hay búsqueda
+        }
+    }, [availableProducts, searchQuery]);
 
-    /**
-* Resetea los productos y navega al Init
-*/
+    // Resetear productos y navegar al Init
     const resetAndNavigate = () => {
-        resetProducts();
-        navigate(ModuleRoutes.Init);
+        resetProducts(); // Resetea productos al estado original
+        navigate(ModuleRoutes.Init); // Navega al Init
     };
+
+    if (loading) return <p>Cargando categorías...</p>;
+    if (error) return <p>Error al cargar categorías: {error}</p>;
 
     return (
         <header>
-            {/* Logo */}
             <div className="logo" id="logo">
                 <Link to={ModuleRoutes.Home}>
                     <img
@@ -110,7 +110,6 @@ const Header = () => {
                 </Link>
             </div>
 
-            {/* Buscador */}
             <div className="search-container">
                 <span
                     id="category-dropdown"
@@ -120,7 +119,6 @@ const Header = () => {
                     Ver categorías
                     <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
                 </span>
-                {/* Mostrar lista de categorías si el dropdown está visible */}
                 {isDropdownVisible && (
                     <RenderCategories
                         categories={categories || []}
@@ -142,7 +140,6 @@ const Header = () => {
                 />
             </div>
 
-            {/* Carrito y Menú */}
             <nav>
                 <div className="cart">
                     <button
@@ -180,13 +177,11 @@ const Header = () => {
                 <div className="cart">
                     <Link to={ModuleRoutes.Resumen}>
                         <img src={carIcon} alt="Carrito de compras" className="cart-icon" />
-                        <span className="cart-badge">{totalQuantity}</span>
+                        <span className="cart-badge">{cartProducts?.length}</span>
                     </Link>
                 </div>
-
             </nav>
 
-            {/* Menú móvil */}
             <div className="menu_mobile">
                 <a href="#">
                     <img

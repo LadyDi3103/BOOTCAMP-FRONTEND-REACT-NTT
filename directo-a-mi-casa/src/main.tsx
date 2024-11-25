@@ -15,9 +15,9 @@ createRoot(document.getElementById('root') as HTMLElement).render(
     <ProductProvider>
       <CartProvider>
         <BrowserRouter basename="/">
-        <Header />
-            <App />
-            <Footer />
+          <Header />
+          <App />
+          <Footer />
         </BrowserRouter>
       </CartProvider>
     </ProductProvider>

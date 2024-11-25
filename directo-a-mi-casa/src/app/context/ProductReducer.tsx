@@ -8,9 +8,9 @@ import { ProductState, ProductAction } from "../domain/Product";
 
 export const initialProductState: ProductState = {
     products: [],
+    allProducts: [],
     categories: [],
     specialOffers: [],
-    filteredProducts: [],
     selectedProduct: null,
     productDetails: null,
     loading: false,
@@ -29,13 +29,22 @@ export const productReducer = (
             return { ...state, error: action.payload };
 
         case "SET_PRODUCTS":
-            return { ...state, products: action.payload, loading: false, error: null };
+            return { 
+                ...state, 
+                allProducts: action.payload,
+                products: action.payload,
+                loading: false, 
+                error: null };
 
         case "SET_CATEGORIES":
             return { ...state, categories: action.payload, loading: false, error: null };
 
         case "SET_FILTERED_PRODUCTS":
-            return { ...state, filteredProducts: action.payload, loading: false, error: null };
+            return { 
+                ...state, 
+                products: action.payload, 
+                loading: false, 
+                error: null };
 
         case "SET_SPECIAL_OFFERS":
             return { ...state, specialOffers: action.payload, loading: false, error: null };

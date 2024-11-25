@@ -7,7 +7,6 @@ import ProductsPage from './app/pages/ProductPage/ProductsPage';
 import Init from './app/pages/Init/Init';
 import Login from './app/pages/Login/Login';
 import ResumenPage from './app/pages/Resumen/ResumenPage';
-import CategoriesPage from './app/pages/Categories/CategoriesPage';
 import Home from './app/pages/Home/Home';
 
 const App: React.FC = () => {
@@ -18,7 +17,7 @@ const App: React.FC = () => {
       <Route path={ModuleRoutes.Home} element={<Home />} />
       <Route path={ModuleRoutes.Init} element={<Init />} />
       <Route path={`${ModuleRoutes.ProductsPage}/:productId`} element={<ProductsPage />} />
-      <Route path={`${ModuleRoutes.CategoriesPage}/:categoryName`} element={<CategoriesPage />} />
+      {/* <Route path={`${ModuleRoutes.CategoriesPage}/:categoryName`} element={<CategoriesPage />} /> */}
       {/* <Route path="/search" element={<SearchPage />} /> */}
       <Route path={ModuleRoutes.Resumen} element={<ResumenPage />} />
       {/* Redirección a la ruta principal si no se encuentra */}

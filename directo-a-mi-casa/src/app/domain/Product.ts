@@ -16,7 +16,7 @@ export interface ProductState {
     products: Product[];
     categories: CategoryStrings[];
     specialOffers: Product[];
-    filteredProducts: Product[];
+    allProducts: Product[]
     selectedProduct: Product | null;
     productDetails: ProductDetails | null;
     loading: false,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useProducts } from '../app/context/ProductContext';
-import ProductCard from '../shared/components/ProductCard/ProductCard';
+import { useProducts } from '../../app/context/ProductContext';
+import ProductCard from '../../shared/components/ProductCard/ProductCard';
 
 const SpecialOffers: React.FC = () => {
     const { state } = useProducts();

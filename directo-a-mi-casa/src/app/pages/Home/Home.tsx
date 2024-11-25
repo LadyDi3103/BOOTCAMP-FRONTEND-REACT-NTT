@@ -1,9 +1,9 @@
 import "../Home/Home.css";
 import CallToAction from "../../../components/CallToAction/CallToAction";
-import Carousel from "../../../components/Carousel";
+import Carousel from "../../../components/Carousel/Carousel";
 import CategoriesSection from "../../../components/CategorySection/CategoriesSection";
 import CategoryItem from "../../../components/CategoryItem/CategoryItem";
-import SpecialOffers from "../../../components/SpecialOffers";
+import SpecialOffers from "../../../components/SpecialOffers/SpecialOffers";
 
 
 const Home = () => {

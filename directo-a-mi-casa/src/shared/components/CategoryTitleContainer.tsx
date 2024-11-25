@@ -2,14 +2,14 @@ import React from 'react';
 import { usePageNavigation } from "../../utils/navigationHelpers";
 
 interface CategoryTitleContainerProps {
-    title: string; 
-  }
+    title: string;
+}
 
-const CategoryTitleContainer: React.FC<CategoryTitleContainerProps> =  ({
+const CategoryTitleContainer: React.FC<CategoryTitleContainerProps> = ({
     title
-  })  => {
+}) => {
     const { closePage } = usePageNavigation();
-    
+
     return (
         <div className="category-title-container">
             <h2 className="category-title">{title}</h2>

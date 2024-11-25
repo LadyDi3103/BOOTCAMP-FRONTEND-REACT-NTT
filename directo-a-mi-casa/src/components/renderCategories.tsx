@@ -15,8 +15,6 @@ const RenderCategories: FC<RenderCategoriesProps> = ({
         return <p className="no-categories">No hay categorías disponibles.</p>;
     }
 
-
-
     return (
         <ul className="category-list" role="menu" aria-label="Lista de categorías">
             {categories.map((category) => (

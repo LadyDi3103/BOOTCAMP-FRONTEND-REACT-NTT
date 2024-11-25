@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 const ProductPage: React.FC = () => {
   const { state, fetchProductDetails } = useProducts();
-  const { addProduct } = useCart();
+  const { addProduct, selectedProducts } = useCart();
   const selectedProduct = state.selectedProduct;
 
   useEffect(() => {
