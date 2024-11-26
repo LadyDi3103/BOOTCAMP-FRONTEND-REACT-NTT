@@ -1,3 +1,5 @@
+// no console
+// remover variables sin usar
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";

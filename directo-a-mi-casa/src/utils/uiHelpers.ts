@@ -1,3 +1,5 @@
+// no es recomendable manipular directamente un elemento html para eso usemos estilos personalizados con condiciones o estilos en tiempo de ejecuci'on.
+// no se usa en ningun lado
 export const resetUIState = (): void => {
     console.log("Restaurando el estado inicial de la UI...");
 

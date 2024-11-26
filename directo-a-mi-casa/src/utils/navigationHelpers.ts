@@ -38,6 +38,7 @@ export const useAuth = () => {
   const logout = () => {
     console.log("Cerrando sesión...");
     // Elimina tokens o información de autenticación
+    // las keys deberian estar en enum
     localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
     // Redirige al usuario a la página de login

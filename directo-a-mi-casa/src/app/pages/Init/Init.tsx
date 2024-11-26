@@ -1,3 +1,4 @@
+// si el c'odigo esta bien estructurado no es necesario especificar lo que hace cada l'inea con comentario
 import ProductCard from "../../../shared/components/ProductCard/ProductCard";
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
 import CallToAction from "../../../components/CallToAction/CallToAction";
@@ -9,7 +10,7 @@ const Init: React.FC = () => {
   const { state } = useProducts();
   const { loading, error } = state;
 
-  console.log('CONSOLELOG ALL PRODUCTS', state.allProducts)
+  console.log('CONSOLELOG ALL PRODUCTS', state.allProducts) // no console
 
   return (
     <>

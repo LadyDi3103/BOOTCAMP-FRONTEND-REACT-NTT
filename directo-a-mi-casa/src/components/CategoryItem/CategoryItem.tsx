@@ -21,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ icon, alt, name }) => {
 
 // Componente principal para la sección de listado de categorías
 const CategoriesList: React.FC = () => {
-    // Definimos las categorías como un arreglo de objetos
+    // valores fijos deben estar fuera porque no son necesarios volverse a renderizar
     const categories = [
         { icon: '/src/assets/images/categories/fruta.svg', alt: 'Frutas', name: 'Frutas' },
         { icon: '/src/assets/images/categories/vegetales.svg', alt: 'Vegetales', name: 'Vegetales' },
