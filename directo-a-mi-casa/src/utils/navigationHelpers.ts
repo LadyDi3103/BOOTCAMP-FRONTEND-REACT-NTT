@@ -11,7 +11,7 @@ export const usePageNavigation = () => {
    */
   const closePage = () => {
     console.log("Cerrando página...");
-    navigate(-1); // Vuelve a la página anterior
+    navigate('/');
   };
 
   /**

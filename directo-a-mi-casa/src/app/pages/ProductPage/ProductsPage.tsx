@@ -1,37 +1,29 @@
+import React, { useEffect } from "react";
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
 import './ProductPage.css';
 import CallToAction from "../../../components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 import { useCart } from "../../context/CartContext";
-import { useEffect } from "react";
+
 // 🔴🩵 verificar ya que no funciona el agregar producto 
 
 const ProductPage: React.FC = () => {
-  const { state, fetchProductDetails } = useProducts();
-  const { addProduct, selectedProducts } = useCart();
+  const { state, clearProductDetails } = useProducts();
+  const { addProduct } = useCart();
   const selectedProduct = state.selectedProduct;
-
-  useEffect(() => {
-    if (selectedProduct?.id && !state.productDetails?.id) {
-      console.log("Fetching details for product ID:", selectedProduct.id);
-      fetchProductDetails(selectedProduct.id);
-    }
-  }, [selectedProduct, state.productDetails,fetchProductDetails]);
-
-  if (!state.productDetails) {
-    return <p>Cargando detalles del producto...</p>;
-  }
 
 
   const {
-    title,
-    description,
-    price,
-    images,
-    category,
-    reviews,
+    title = "Producto no encontrado",
+    description = "Descripción no disponible",
+    price = 0,
+    images = "/src/assets/images/placeholder.png", // Imagen de placeholder
+    category = "Sin categoría",
+    reviews = [],
   } = state.productDetails;
+
 console.log (state.productDetails, '💖💖💖💖💖')
+
   return (
     <div>
       <CallToAction />

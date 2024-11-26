@@ -17,8 +17,8 @@ export interface ProductState {
     categories: CategoryStrings[];
     specialOffers: Product[];
     allProducts: Product[]
-    selectedProduct: Product | null;
-    productDetails: ProductDetails | null;
+    selectedProduct: Product[];
+    productDetails: ProductDetails[];
     loading: false,
     error: string | null;
 }
@@ -30,8 +30,11 @@ export interface ProductState {
   | { type: "SET_CATEGORIES"; payload: CategoryStrings[] } 
   | { type: "SET_FILTERED_PRODUCTS"; payload: Product[] } 
   | { type: "SET_SPECIAL_OFFERS"; payload: Product[] } 
-  | { type: "SET_SELECTED_PRODUCT"; payload: Product } 
-  | { type: "SET_PRODUCT_DETAILS"; payload: ProductDetails }
-
+  | { type: "SET_SELECTED_PRODUCT"; payload: Product []} 
+  | { type: "CLEAR_SELECTED_PRODUCT"; payload: Product[] } 
+  | { type: "SET_PRODUCT_DETAILS"; payload: ProductDetails[] }
+  | { type: "CLEAR_PRODUCT_DETAILS"; payload: ProductDetails[] }
+  
+  
 
 export type Products = Product[];

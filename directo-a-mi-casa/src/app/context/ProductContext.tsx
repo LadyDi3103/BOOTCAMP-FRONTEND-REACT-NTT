@@ -12,6 +12,7 @@ interface ProductContextProps {
   fetchProductDetails: (productId: number) => Promise<void>;
   setSelectedProduct: (product: Product) => void;
   resetProducts: () => void;
+  clearProductDetails: () => void;
 }
 
 const ProductContext = createContext<ProductContextProps | undefined>(undefined);
@@ -82,7 +83,13 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
    * Seleccionar un producto.
    */
   const setSelectedProduct = (product: Product) => {
+    fetchProductDetails(product.id);
     dispatch({ type: "SET_SELECTED_PRODUCT", payload: product });
+    dispatch({ type: "SET_PRODUCT_DETAILS", payload: product });
+    
+    if (!state.productDetails) {
+      return <p>Cargando detalles del producto...</p>;
+    }
   };
 
   /**
@@ -91,6 +98,11 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
   const resetProducts = () => {
     dispatch({ type: "SET_FILTERED_PRODUCTS", payload: state.allProducts });
     console.log("Productos restablecidos a todos los originales:", state.allProducts);
+  };
+  
+  const clearProductDetails = () => {
+    dispatch({ type: "CLEAR_PRODUCT_DETAILS" });
+    console.log("Detalles del producto limpiados.");
   };
 
   return (
@@ -102,6 +114,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
         fetchProductDetails,
         setSelectedProduct,
         resetProducts,
+        clearProductDetails,
       }}
     >
       {children}

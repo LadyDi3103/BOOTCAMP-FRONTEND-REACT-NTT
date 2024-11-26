@@ -34,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product}) => {
   const handleNavigate = () => {
     setSelectedProduct(product);
     onNavigate(title);
+
   };
 
   return (

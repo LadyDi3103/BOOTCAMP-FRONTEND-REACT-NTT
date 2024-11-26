@@ -9,8 +9,6 @@ const Init: React.FC = () => {
   const { state } = useProducts();
   const { loading, error } = state;
 
-  console.log('CONSOLELOG ALL PRODUCTS', state.allProducts)
-
   return (
     <>
       <CallToAction />

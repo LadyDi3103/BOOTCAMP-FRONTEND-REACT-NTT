@@ -5,21 +5,20 @@ import { ModuleRoutes } from "../../app/routes";
 import carIcon from "/src/assets/images/icons/car.svg";
 import { useProducts } from "../../app/context/ProductContext";
 import { useCart } from "../../app/context/CartContext";
-import RenderCategories from "../../components/RenderCategories";
 import { filterProducts } from "../../utils/helpers";
 import { Product } from "../../app/domain/Product";
+import RenderCategories from "../../components/renderCategories";
+
 
 const Header = () => {
     const { state: cartState } = useCart();
-    const { state: productContextState, fetchCategoryProducts, resetProducts } = useProducts();
+    const { state: productContextState, fetchCategoryProducts, resetProducts, dispatch } = useProducts();
 
     const { products: cartProducts } = cartState;
-    const { products: availableProducts, categories, loading, error } = productContextState;
+    const { categories, loading, error } = productContextState;
 
     const navigate = useNavigate();
 
-    console.log('availableProducts desde el producState', availableProducts);
-    console.log('categories desde el producState', categories);
     console.log("Estado del contexto de productos:", productContextState);
 
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -31,22 +30,40 @@ const Header = () => {
 
     const totalQuantity=cartProducts.reduce((sum, product) => sum + (product?.quantity || 0), 0); 
 
-    console.log("Contador de productos en el carrito:", cartProducts?.length);
+// Manejar cambios en el input de búsqueda
+const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+        const query = e.target.value.trim(); // Elimina espacios al inicio y final
+        setSearchQuery(query); // Actualiza el estado del texto ingresado
 
-    // Manejar cambios en el input de búsqueda
-    const handleSearchChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            const query = e.target.value;
-            setSearchQuery(query);
-            if (availableProducts) {
-                const filtered = filterProducts(availableProducts, query); 
-                setFilteredProducts(filtered);
-                console.log("Productos filtrados:", filtered);
-            }
+        if (query) {
+            // Si hay texto, filtra los productos
+            const newFilteredProducts = filterProducts(productContextState.allProducts, query); 
+
+            // Actualiza los productos filtrados en el estado local y global
+            setFilteredProducts(newFilteredProducts);
+            dispatch({ type: "SET_FILTERED_PRODUCTS", payload: newFilteredProducts });
+
             console.log("Texto de búsqueda actualizado:", query);
-        },
-        [availableProducts]
-    );
+            console.log("Productos filtrados:", newFilteredProducts);
+
+            // Navega al componente Init solo si hay resultados filtrados
+            if (newFilteredProducts.length > 0) {
+                navigate(ModuleRoutes.Init);
+            } else {
+                console.log("No se encontraron productos para la búsqueda.");
+            }
+        } else {
+            // Si no hay texto, restablece los productos al estado inicial
+            const resetProducts = productContextState.allProducts || [];
+            setFilteredProducts(resetProducts);
+            dispatch({ type: "SET_FILTERED_PRODUCTS", payload: resetProducts });
+
+            console.log("No hay texto en el buscador. Productos restablecidos.");
+        }
+    },
+    [productContextState.allProducts, navigate, dispatch]
+);
 
     // Mostrar/ocultar dropdown de categorías
     const toggleDropdown = useCallback(() => {
