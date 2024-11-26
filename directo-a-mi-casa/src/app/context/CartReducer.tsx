@@ -1,16 +1,28 @@
 import { Product } from "../domain/Product";
 import { Action } from '../domain/cartActions.types';
 
+/**
+ * Interfaz del estado del carrito.
+ */
 export interface CartState {
   products: Product[];
   selectedProduct: Product | null;
 }
 
+/**
+ * Estado inicial del carrito.
+ */
 export const initialState: CartState = {
   products: [],
   selectedProduct: null,
 };
 
+/**
+ * Reducer para manejar las acciones relacionadas con el carrito.
+ * @param state - El estado actual del carrito.
+ * @param action - La acción que se va a procesar.
+ * @returns El nuevo estado del carrito.
+ */
 export const cartReducer = (state: CartState, action: Action): CartState => {
   console.log("Acción recibida:", action.type);
   console.log("Estado actual antes de la acción:", state);
@@ -89,6 +101,6 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
     default: {
       console.error("Tipo de acción desconocido:", action);
       return state;
+    }
   }
 };
-}

@@ -6,7 +6,7 @@ import { Product } from '../../domain/Product';
 import CallToAction from '../../../components/CallToAction/CallToAction';
 import { FormState } from '../../domain/FormState';
 
-
+// Estado inicial del formulario
 const initialFormState: FormState = {
   nombre: '',
   apellidos: '',
@@ -16,6 +16,10 @@ const initialFormState: FormState = {
   celular: '',
 };
 
+/**
+ * Componente ResumenPage
+ * Muestra el resumen de productos en el carrito y un formulario de compra.
+ */
 const ResumenPage: React.FC = () => {
   const { state, dispatch } = useCart();
   const [form, setForm] = useState<FormState>(initialFormState);
@@ -23,6 +27,7 @@ const ResumenPage: React.FC = () => {
 
   console.log('Estado del carrito:', state.products);
 
+  // Normaliza un producto asegurando valores predeterminados
   const normalizeProduct = (product: Partial<Product>): Product => ({
     id: product.id || 0,
     title: product.title || '',
@@ -34,20 +39,25 @@ const ResumenPage: React.FC = () => {
     quantity: Number(product.quantity) || 0,
   });
 
+  // Lista de productos normalizados
   const products = state.products.map(normalizeProduct);
 
+  // Incrementa la cantidad de un producto en el carrito
   const handleIncrement = (productId: number): void => {
     dispatch({ type: 'INCREMENT_QUANTITY', productId });
   };
 
+  // Decrementa la cantidad de un producto en el carrito
   const handleDecrement = (productId: number): void => {
     dispatch({ type: 'DECREMENT_QUANTITY', productId });
   };
 
+  // Elimina un producto del carrito
   const handleRemove = (productId: number): void => {
     dispatch({ type: 'REMOVE_PRODUCT', productId });
   };
 
+  // Maneja los cambios en los campos del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
     setForm((prevForm) => ({
@@ -55,22 +65,18 @@ const ResumenPage: React.FC = () => {
       [name]: value,
     }));
 
-    if (value.trim() === '') {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: 'Campo obligatorio',
-      }));
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: '',
-      }));
-    }
+    // Valida si el campo está vacío
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value.trim() === '' ? 'Campo obligatorio' : '',
+    }));
   };
 
+  // Maneja el envío del formulario
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
 
+    // Validación de campos del formulario
     const validationErrors: Partial<FormState> = {};
     Object.keys(form).forEach((key) => {
       if (form[key as keyof FormState].trim() === '') {
@@ -83,11 +89,13 @@ const ResumenPage: React.FC = () => {
       return;
     }
 
+    // Acción tras envío exitoso
     alert('Su pedido se registró con éxito');
     console.log('Formulario enviado:', form);
     dispatch({ type: 'CLEAR_CART' });
   };
 
+  // Calcula el total del carrito
   const total = products
     .reduce((sum, product) => sum + product.price * (Number(product.quantity) || 0), 0)
     .toFixed(2);
@@ -98,6 +106,7 @@ const ResumenPage: React.FC = () => {
       <CategoryTitleContainer title="Resumen de Órden" />
 
       {state.products.length === 0 ? (
+        // Mensaje cuando el carrito está vacío
         <div className="empty-cart-message">
           <p>No tienes productos en tu carrito. ¡Añade algo para continuar!</p>
           <div className="empty-cart-illustration">
@@ -106,6 +115,7 @@ const ResumenPage: React.FC = () => {
         </div>
       ) : (
         <>
+          {/* Resumen de productos en el carrito */}
           <div className="order-summary">
             <table>
               <thead>
@@ -167,6 +177,7 @@ const ResumenPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Formulario de compra */}
           <div className="order-form-container">
             <form onSubmit={handleSubmit} className="order-form">
               <div className="form-header">
@@ -200,8 +211,7 @@ const ResumenPage: React.FC = () => {
                     </span>
                   )}
                 </div>
-              )
-              )}
+              ))}
               <div className="btn__form">
                 <button type="submit" className="btn__order btn_order__submit">
                   <img
@@ -231,6 +241,6 @@ const ResumenPage: React.FC = () => {
       )}
     </>
   );
-}
+};
 
 export default ResumenPage;

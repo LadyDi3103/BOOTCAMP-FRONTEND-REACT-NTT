@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * Componente CallToAction
+ * Muestra un mensaje destacado para incentivar pedidos rápidos con entrega desde 2 horas.
+ */
 const CallToAction: React.FC = () => {
     return (
         <section className="cta">

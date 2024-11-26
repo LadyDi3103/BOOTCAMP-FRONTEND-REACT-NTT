@@ -1,26 +1,41 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+
+// Estilos globales de la aplicación
 import './App.css';
+
+// Importación de rutas
 import { ModuleRoutes } from './app/routes';
 
+// Importación de páginas
 import ProductsPage from './app/pages/ProductPage/ProductsPage';
 import Init from './app/pages/Init/Init';
 import Login from './app/pages/Login/Login';
 import ResumenPage from './app/pages/Resumen/ResumenPage';
 import Home from './app/pages/Home/Home';
 
+/**
+ * Componente principal que define el sistema de enrutamiento de la aplicación.
+ */
 const App: React.FC = () => {
   return (
     <Routes>
-      {/* Define las rutas */}
+      {/* Página de inicio de sesión */}
       <Route path={ModuleRoutes.Login} element={<Login />} />
+
+      {/* Página principal (Home) */}
       <Route path={ModuleRoutes.Home} element={<Home />} />
+
+      {/* Página de inicio inicial */}
       <Route path={ModuleRoutes.Init} element={<Init />} />
+
+      {/* Página de productos (con ID dinámico en la URL) */}
       <Route path={`${ModuleRoutes.ProductsPage}/:productId`} element={<ProductsPage />} />
-      {/* <Route path={`${ModuleRoutes.CategoriesPage}/:categoryName`} element={<CategoriesPage />} /> */}
-      {/* <Route path="/search" element={<SearchPage />} /> */}
+
+      {/* Página de resumen del carrito */}
       <Route path={ModuleRoutes.Resumen} element={<ResumenPage />} />
-      {/* Redirección a la ruta principal si no se encuentra */}
+
+      {/* Redirección para rutas no encontradas */}
       <Route path="*" element={<Navigate to={ModuleRoutes.Home} replace />} />
     </Routes>
   );

@@ -1,13 +1,15 @@
 import React from 'react';
 
-// Definimos las propiedades de un ítem de categoría
+/**
+ * Componente ProductCard
+ * Muestra un ítem individual de categoría con ícono y nombre.
+ */
 interface ProductCardProps {
     icon: string;
     alt: string;
     name: string;
 }
 
-// Componente individual para cada ítem de categoría
 const ProductCard: React.FC<ProductCardProps> = ({ icon, alt, name }) => {
     return (
         <div className="category-item">
@@ -19,9 +21,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ icon, alt, name }) => {
     );
 };
 
-// Componente principal para la sección de listado de categorías
+/**
+ * Componente CategoriesList
+ * Renderiza una lista de categorías utilizando el componente ProductCard.
+ */
 const CategoriesList: React.FC = () => {
-    // Definimos las categorías como un arreglo de objetos
     const categories = [
         { icon: '/src/assets/images/categories/fruta.svg', alt: 'Frutas', name: 'Frutas' },
         { icon: '/src/assets/images/categories/vegetales.svg', alt: 'Vegetales', name: 'Vegetales' },

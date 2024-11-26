@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
 import './ProductPage.css';
 import CallToAction from "../../../components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 import { useCart } from "../../context/CartContext";
+import { Review } from "../../domain/ProductDetail";
 
-// 🔴🩵 verificar ya que no funciona el agregar producto 
-
+/**
+ * Componente ProductPage
+ * Renderiza los detalles del producto seleccionado, incluyendo reseñas y un botón para agregar al carrito.
+ */
 const ProductPage: React.FC = () => {
-  const { state, clearProductDetails } = useProducts();
+  const { state } = useProducts();
   const { addProduct } = useCart();
   const selectedProduct = state.selectedProduct;
+  const productDetails = state.productDetails;
 
-
+  // Extrae detalles del producto o usa valores predeterminados si faltan
   const {
     title = "Producto no encontrado",
     description = "Descripción no disponible",
@@ -20,16 +24,16 @@ const ProductPage: React.FC = () => {
     images = "/src/assets/images/placeholder.png", // Imagen de placeholder
     category = "Sin categoría",
     reviews = [],
-  } = state.productDetails;
-
-console.log (state.productDetails, '💖💖💖💖💖')
+  } = productDetails;
 
   return (
     <div>
       <CallToAction />
+      {/* Título de la página con el nombre del producto */}
       <CategoryTitleContainer title={`Detalles del Producto: ${title}`} />
       <div className="producto-container">
         <div className="producto-card">
+          {/* Imagen del producto */}
           <div className="producto-imagen">
             <img
               src={`${images}`}
@@ -38,31 +42,38 @@ console.log (state.productDetails, '💖💖💖💖💖')
             />
           </div>
           <div className="producto-detalle">
+            {/* Detalles del producto */}
             <h1 className="producto-title">{title}</h1>
             <p className="producto-description">{description}</p>
             <p className="producto-category">
               <strong>Categoría:</strong> {category}
             </p>
             <div className="container_price_btn">
-            <div className="producto-price-container">
-              <span className="producto-price">S/{price.toFixed(2)}</span>
+              <div className="producto-price-container">
+                <span className="producto-price">S/{price.toFixed(2)}</span>
+              </div>
+              {/* Botón para agregar al carrito */}
+              <button
+                className="btn_order__submit"
+                onClick={() => addProduct(selectedProduct!)}
+                disabled={!state.productDetails}
+              >
+                Agregar
+                <img
+                  src="/src/assets/images/icons/white_car.svg"
+                  alt="Carrito"
+                  className="cart-icon"
+                />
+              </button>
             </div>
-            <button
-              className="btn_order__submit"
-              onClick={() => addProduct(selectedProduct)}
-              disabled={!state.productDetails}
-            >
-              Agregar al Carrito
-            </button>
-            </div>
-
           </div>
         </div>
+        {/* Sección de reseñas del producto */}
         <div className="producto-reviews">
           <h2>Reseñas del Producto</h2>
           <div className="review-items-container">
             {reviews && reviews.length > 0 ? (
-              reviews.map((review, index) => (
+              reviews.map((review: Review, index: number) => (
                 <div className="review-item" key={index}>
                   <div className="review-author">{review.reviewerName}</div>
                   <div className="review-date">{new Date(review.date).toLocaleDateString()}</div>
@@ -81,6 +92,6 @@ console.log (state.productDetails, '💖💖💖💖💖')
       </div>
     </div>
   );
-}  
+}
 
 export default ProductPage;

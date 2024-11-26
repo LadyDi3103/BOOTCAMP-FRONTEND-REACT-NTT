@@ -1,3 +1,7 @@
+/**
+ * Componente Header
+ * Este componente maneja la barra de navegación principal, incluyendo el buscador, el carrito de compras y la navegación por categorías.
+ */
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -7,69 +11,76 @@ import { useProducts } from "../../app/context/ProductContext";
 import { useCart } from "../../app/context/CartContext";
 import { filterProducts } from "../../utils/helpers";
 import { Product } from "../../app/domain/Product";
-import RenderCategories from "../../components/renderCategories";
-
+import RenderCategories from "../../components/RenderCategories/renderCategories";
 
 const Header = () => {
     const { state: cartState } = useCart();
     const { state: productContextState, fetchCategoryProducts, resetProducts, dispatch } = useProducts();
 
     const { products: cartProducts } = cartState;
-    const { categories, loading, error } = productContextState;
+    const { categories, error } = productContextState;
 
     const navigate = useNavigate();
 
     console.log("Estado del contexto de productos:", productContextState);
 
-    const [searchQuery, setSearchQuery] = useState<string>("");
-    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>(""); // Estado para la consulta de búsqueda
+    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false); // Estado para mostrar/ocultar el dropdown
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // Categoría seleccionada
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Productos filtrados
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const totalQuantity=cartProducts.reduce((sum, product) => sum + (product?.quantity || 0), 0); 
+    // Calcular la cantidad total de productos en el carrito
+    const totalQuantity = cartProducts.reduce((sum, product) => sum + (product?.quantity || 0), 0);
 
-// Manejar cambios en el input de búsqueda
-const handleSearchChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-        const query = e.target.value.trim(); // Elimina espacios al inicio y final
-        setSearchQuery(query); // Actualiza el estado del texto ingresado
+    /**
+     * Maneja los cambios en el input de búsqueda
+     * Filtra los productos en tiempo real según la consulta ingresada.
+     */
+    const handleSearchChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const query = e.target.value.trim();
+            setSearchQuery(query);
 
-        if (query) {
-            // Si hay texto, filtra los productos
-            const newFilteredProducts = filterProducts(productContextState.allProducts, query); 
+            if (query) {
+                // Si hay texto, filtra los productos
+                const newFilteredProducts = filterProducts(productContextState.allProducts, query);
 
-            // Actualiza los productos filtrados en el estado local y global
-            setFilteredProducts(newFilteredProducts);
-            dispatch({ type: "SET_FILTERED_PRODUCTS", payload: newFilteredProducts });
+                // Actualiza los productos filtrados en el estado local y global
+                setFilteredProducts(newFilteredProducts);
+                dispatch({ type: "SET_FILTERED_PRODUCTS", payload: newFilteredProducts });
 
-            console.log("Texto de búsqueda actualizado:", query);
-            console.log("Productos filtrados:", newFilteredProducts);
+                console.log("Texto de búsqueda actualizado:", query);
+                console.log("Productos filtrados:", newFilteredProducts);
 
-            // Navega al componente Init solo si hay resultados filtrados
-            if (newFilteredProducts.length > 0) {
-                navigate(ModuleRoutes.Init);
+                // Navega al componente Init solo si hay resultados filtrados
+                if (newFilteredProducts.length > 0) {
+                    navigate(ModuleRoutes.Init);
+                }
             } else {
-                console.log("No se encontraron productos para la búsqueda.");
+                // Si no hay texto, restablece los productos al estado inicial
+                const resetProducts = productContextState.allProducts || [];
+                setFilteredProducts(resetProducts);
+                dispatch({ type: "SET_FILTERED_PRODUCTS", payload: resetProducts });
+
+                console.log("No hay texto en el buscador. Productos restablecidos.");
             }
-        } else {
-            // Si no hay texto, restablece los productos al estado inicial
-            const resetProducts = productContextState.allProducts || [];
-            setFilteredProducts(resetProducts);
-            dispatch({ type: "SET_FILTERED_PRODUCTS", payload: resetProducts });
+        },
+        [productContextState.allProducts, navigate, dispatch]
+    );
 
-            console.log("No hay texto en el buscador. Productos restablecidos.");
-        }
-    },
-    [productContextState.allProducts, navigate, dispatch]
-);
-
-    // Mostrar/ocultar dropdown de categorías
+    /**
+     * Alterna la visibilidad del dropdown de categorías
+     */
     const toggleDropdown = useCallback(() => {
         setDropdownVisible((prev) => !prev);
     }, []);
 
+    /**
+     * Maneja la selección de una categoría
+     * Filtra los productos según la categoría seleccionada.
+     */
     const handleCategoryClick = useCallback(
         async (categoryName: string) => {
             setSelectedCategory(categoryName);
@@ -85,7 +96,9 @@ const handleSearchChange = useCallback(
         [navigate, fetchCategoryProducts]
     );
 
-    // Cierra el menú si el usuario hace clic fuera del componente 🙌🙌🙌
+    /**
+     * Cierra el menú dropdown al hacer clic fuera de él.
+     */
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -99,11 +112,13 @@ const handleSearchChange = useCallback(
         };
     }, []);
 
+    // Manejo de errores
     if (error) return <p>Error al cargar categorías: {error}</p>;
 
     /**
-* Resetea los productos y navega al Init
-*/
+     * Resetea los productos y navega al Init
+     * Restaura los productos al estado inicial y redirige al inicio.
+     */
     const resetAndNavigate = () => {
         resetProducts();
         navigate(ModuleRoutes.Init);
@@ -200,7 +215,6 @@ const handleSearchChange = useCallback(
                         <span className="cart-badge">{totalQuantity}</span>
                     </Link>
                 </div>
-
             </nav>
 
             {/* Menú móvil */}

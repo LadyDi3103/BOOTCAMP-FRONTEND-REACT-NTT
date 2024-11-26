@@ -1,4 +1,3 @@
-
 import environment from '../../environments/environment';
 import { mapProductDetail } from '../../mappers/productDetailMapper';
 import { mapProduct } from '../../mappers/productMapper';
@@ -6,39 +5,30 @@ import { CategoryStrings } from '../domain/Category';
 import { Product } from '../domain/Product';
 import { ProductDetails } from '../domain/ProductDetail';
 
-  /**
-   * Cargar TODOS los productos desde la API.
-   */
+/**
+ * Obtiene todos los productos desde la API.
+ */
 const fetchAllProducts = async (): Promise<Product[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.PRODUCTS_ENDPOINT}`);
-        if (!response.ok) {
-            throw new Error("Error al obtener TODOS los productos");
-        }
-
+        if (!response.ok) throw new Error("Error al obtener todos los productos");
         const data = await response.json();
-        const products = data.products.map(mapProduct);
-
-        return products;
+        return data.products.map(mapProduct);
     } catch (error) {
         console.error("Error al obtener los productos:", error);
         throw error;
     }
 };
 
-   /**
-   * Cargar todas las categorías desde la API.
-   */
+/**
+ * Obtiene todas las categorías desde la API.
+ */
 export const fetchAllCategories = async (): Promise<CategoryStrings[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.CATEGORIES_LIST_ENDPOINT}`);
-
-        if (!response.ok) {
-            throw new Error("Error al obtener las categorías");
-        }
-
+        if (!response.ok) throw new Error("Error al obtener las categorías");
         const categories: CategoryStrings[] = await response.json();
-        console.log("categoriesFETCHED:", categories);
+        console.log("Categorías obtenidas:", categories);
         return categories;
     } catch (error) {
         console.error("Error al obtener las categorías:", error);
@@ -46,43 +36,43 @@ export const fetchAllCategories = async (): Promise<CategoryStrings[]> => {
     }
 };
 
+/**
+ * Obtiene productos filtrados por categoría.
+ */
 export const fetchProductsByCategory = async (category: string): Promise<Product[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.SINGLE_CATEGORY_ENDPOINT}${category}`);
-        if (!response.ok) {
-            throw new Error(`Error al obtener productos de la categoría ${category}`);
-        }
-
+        if (!response.ok) throw new Error(`Error al obtener productos de la categoría ${category}`);
         const data = await response.json();
-        return data.products.map(mapProduct); // Aplica el mapper
+        return data.products.map(mapProduct);
     } catch (error) {
         console.error("Error al obtener productos por categoría:", error);
         throw error;
     }
 };
 
+/**
+ * Obtiene los detalles de un producto por ID.
+ */
 const fetchSingleProduct = async (id: number): Promise<ProductDetails> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.SINGLE_PRODUCT_ENDPOINT}/${id}`);
-        if (!response.ok) {
-            throw new Error("Error al obtener TODOS los productos");
-        }
-
+        if (!response.ok) throw new Error("Error al obtener el producto");
         const data = await response.json();
-        const productDetails = mapProductDetail(data);
-        return productDetails;
+        return mapProductDetail(data);
     } catch (error) {
-        console.error("Error al obtener los productos:", error);
+        console.error("Error al obtener los detalles del producto:", error);
         throw error;
     }
 };
 
+/**
+ * Obtiene productos paginados con límite y desplazamiento.
+ */
 export const fetchPaginatedProducts = async (limit: number, skip: number): Promise<Product[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.PRODUCTS_ENDPOINT}?limit=${limit}&skip=${skip}`);
-        if (!response.ok) {
-            throw new Error("Error al obtener productos paginados");
-        }
+        if (!response.ok) throw new Error("Error al obtener productos paginados");
         const data = await response.json();
         return data.products;
     } catch (error) {
@@ -91,12 +81,13 @@ export const fetchPaginatedProducts = async (limit: number, skip: number): Promi
     }
 };
 
+/**
+ * Obtiene productos filtrados con parámetros específicos.
+ */
 export const fetchFilteredProducts = async (limit: number, skip: number, select: string): Promise<Product[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.PRODUCTS_ENDPOINT}?limit=${limit}&skip=${skip}&select=${select}`);
-        if (!response.ok) {
-            throw new Error("Error al obtener productos filtrados");
-        }
+        if (!response.ok) throw new Error("Error al obtener productos filtrados");
         const data = await response.json();
         return data.products;
     } catch (error) {
@@ -105,12 +96,13 @@ export const fetchFilteredProducts = async (limit: number, skip: number, select:
     }
 };
 
+/**
+ * Obtiene productos ordenados según un criterio y orden (ascendente o descendente).
+ */
 export const fetchSortedProducts = async (sortBy: string, order: 'asc' | 'desc'): Promise<Product[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.PRODUCTS_ENDPOINT}?sortBy=${sortBy}&order=${order}`);
-        if (!response.ok) {
-            throw new Error("Error al ordenar productos");
-        }
+        if (!response.ok) throw new Error("Error al ordenar productos");
         const data = await response.json();
         return data.products;
     } catch (error) {
@@ -119,6 +111,9 @@ export const fetchSortedProducts = async (sortBy: string, order: 'asc' | 'desc')
     }
 };
 
+/**
+ * Exporta todas las funciones de solicitud relacionadas con productos.
+ */
 export const productRequest = {
     fetchAllProducts,
     fetchAllCategories,
