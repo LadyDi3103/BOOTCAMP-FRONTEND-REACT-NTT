@@ -38,6 +38,7 @@ export const fetchAllCategories = async (): Promise<CategoryStrings[]> => {
         }
 
         const categories: CategoryStrings[] = await response.json();
+        // no console
         console.log("categoriesFETCHED:", categories);
         return categories;
     } catch (error) {

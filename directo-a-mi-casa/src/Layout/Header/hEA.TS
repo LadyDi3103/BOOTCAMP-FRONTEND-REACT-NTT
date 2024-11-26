@@ -1,3 +1,5 @@
+//nombre del archivo extra;o
+// hay muchas funciones y variables que no se usan
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";

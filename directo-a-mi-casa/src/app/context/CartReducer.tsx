@@ -1,3 +1,4 @@
+// no console
 import { Product } from "../domain/Product";
 import { Action } from '../domain/cartActions.types';
 
@@ -25,6 +26,7 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
 
       if (existingProduct) {
         console.log("Producto ya en el carrito, incrementando cantidad.");
+        // usemos llaves para mejorar la legibilidad
         return {
           ...state,
           products: state.products.map((product) =>
@@ -54,6 +56,7 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
 
     case "INCREMENT_QUANTITY": {
       console.log("Incrementando cantidad del producto con ID:", action.productId);
+      // laves para mejorar la legibilidad
       return {
         ...state,
         products: state.products.map((product) =>

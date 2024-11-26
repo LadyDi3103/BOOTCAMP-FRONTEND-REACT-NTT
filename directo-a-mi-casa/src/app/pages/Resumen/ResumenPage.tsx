@@ -1,3 +1,4 @@
+// remover importaciones no usadas
 import React, { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
@@ -21,6 +22,7 @@ const ResumenPage: React.FC = () => {
   const [form, setForm] = useState<FormState>(initialFormState);
   const [errors, setErrors] = useState<Partial<FormState>>({});
 
+  // no console
   console.log('Estado del carrito:', state.products);
 
   const normalizeProduct = (product: Partial<Product>): Product => ({
@@ -73,6 +75,7 @@ const ResumenPage: React.FC = () => {
 
     const validationErrors: Partial<FormState> = {};
     Object.keys(form).forEach((key) => {
+      // solo valida si estan vac'ios
       if (form[key as keyof FormState].trim() === '') {
         validationErrors[key as keyof FormState] = 'Campo obligatorio';
       }

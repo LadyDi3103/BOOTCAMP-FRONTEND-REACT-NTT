@@ -15,6 +15,7 @@ const CategoryCard: React.FC<{ title: string; description: string }> = ({ title,
 };
 
 const CategoriesSection: React.FC = () => {
+    // valors fijos fuera
     const categories = [
         {
             title: 'Electro, hogar y más',
@@ -31,6 +32,7 @@ const CategoriesSection: React.FC = () => {
     ];
 
     return (
+        /* los estilos deber'ian estar al mismo nivel del componente para poder reutilizarlos de lo contrario ser'a dificil llevarlo a otro proyecto */
         <section className="categories-section">
             {categories.map((category, index) => (
                 <CategoryCard

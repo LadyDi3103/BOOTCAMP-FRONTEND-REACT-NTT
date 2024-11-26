@@ -1,3 +1,5 @@
+// las llamadas a los servicios deben hacerse en otro archivo
+// no console
 import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 import { Product, ProductState, ProductAction } from '../domain/Product';
 import { productRequest } from '../services/fetchProducts';
@@ -92,6 +94,8 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     dispatch({ type: "SET_FILTERED_PRODUCTS", payload: state.allProducts });
     console.log("Productos restablecidos a todos los originales:", state.allProducts);
   };
+
+  // la idea es que el provider solo exponga el estado en memoria y el despachador y sea el consumidor quien ejecute a demanda las funciones importadas desde otro archivo si lo ponemos aqu'i siempre cargamos las funciones asi no la usemos.
 
   return (
     <ProductContext.Provider

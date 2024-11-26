@@ -8,11 +8,13 @@ import { useEffect } from "react";
 
 const ProductPage: React.FC = () => {
   const { state, fetchProductDetails } = useProducts();
+  // remover lo que no se usa
   const { addProduct, selectedProducts } = useCart();
   const selectedProduct = state.selectedProduct;
 
   useEffect(() => {
     if (selectedProduct?.id && !state.productDetails?.id) {
+      // no console
       console.log("Fetching details for product ID:", selectedProduct.id);
       fetchProductDetails(selectedProduct.id);
     }
