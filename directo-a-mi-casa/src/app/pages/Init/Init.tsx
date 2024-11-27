@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCard from "../../../shared/components/ProductCard/ProductCard";
-import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
-import CallToAction from "../../../components/CallToAction/CallToAction";
+import CategoryTitleContainer from "../../../shared/components/CategoryTitleBar/CategoryTitleBar";
+import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 
 /**
@@ -14,10 +14,8 @@ const Init: React.FC = () => {
 
   return (
     <>
-      {/* Sección de llamado a la acción */}
       <CallToAction />
 
-      {/* Indicador de carga */}
       {loading && <div className="loader">Cargando productos...</div>}
 
       {/* Mensaje de error */}
@@ -26,10 +24,8 @@ const Init: React.FC = () => {
       {/* Renderizado de productos */}
       {!loading && !error && (
         <div>
-          {/* Título con el número de productos disponibles */}
           <CategoryTitleContainer title={`${state.products.length || 0} Productos`} />
 
-          {/* Si hay productos, renderizarlos; de lo contrario, mostrar un mensaje */}
           {state.products.length > 0 ? (
             <div className="products-container">
               {state.products.map((product) => (

@@ -28,7 +28,7 @@ export const fetchAllCategories = async (): Promise<CategoryStrings[]> => {
         const response = await fetch(`${environment.API_BASE_URL}${environment.CATEGORIES_LIST_ENDPOINT}`);
         if (!response.ok) throw new Error("Error al obtener las categorías");
         const categories: CategoryStrings[] = await response.json();
-        console.log("Categorías obtenidas:", categories);
+
         return categories;
     } catch (error) {
         console.error("Error al obtener las categorías:", error);
@@ -111,9 +111,6 @@ export const fetchSortedProducts = async (sortBy: string, order: 'asc' | 'desc')
     }
 };
 
-/**
- * Exporta todas las funciones de solicitud relacionadas con productos.
- */
 export const productRequest = {
     fetchAllProducts,
     fetchAllCategories,

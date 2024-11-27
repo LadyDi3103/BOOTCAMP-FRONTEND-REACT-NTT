@@ -1,7 +1,7 @@
 import React from "react";
-import CategoryTitleContainer from "../../../shared/components/CategoryTitleContainer";
+import CategoryTitleContainer from "../../../shared/components/CategoryTitleBar/CategoryTitleBar";
 import './ProductPage.css';
-import CallToAction from "../../../components/CallToAction/CallToAction";
+import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 import { useCart } from "../../context/CartContext";
 import { Review } from "../../domain/ProductDetail";
@@ -16,12 +16,11 @@ const ProductPage: React.FC = () => {
   const selectedProduct = state.selectedProduct;
   const productDetails = state.productDetails;
 
-  // Extrae detalles del producto o usa valores predeterminados si faltan
   const {
     title = "Producto no encontrado",
     description = "Descripción no disponible",
     price = 0,
-    images = "/src/assets/images/placeholder.png", // Imagen de placeholder
+    images = "/src/assets/images/placeholder.png", 
     category = "Sin categoría",
     reviews = [],
   } = productDetails;

@@ -20,10 +20,6 @@ const ProductContext = createContext<ProductContextProps | undefined>(undefined)
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialProductState);
 
-  /**
-   * Cargar productos al inicializar la aplicación.
-   * Realiza peticiones para obtener todos los productos, categorías y ofertas destacadas.
-   */
   useEffect(() => {
     const loadInitialProducts = async () => {
       dispatch({ type: "SET_LOADING", payload: true });
@@ -70,7 +66,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     dispatch({ type: "SET_LOADING", payload: true });
     try {
       const data = await productRequest.fetchProductsByCategory(category);
-      console.log(`Productos filtrados por categoría (${category}):`, data);
 
       dispatch({ type: "SET_FILTERED_PRODUCTS", payload: data });
     } catch (error) {
@@ -81,10 +76,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   };
 
-  /**
-   * Seleccionar un producto.
-   * Marca un producto como seleccionado y carga sus detalles.
-   */
   const setSelectedProduct = (product: Product) => {
     fetchProductDetails(product.id);
     dispatch({ type: "SET_SELECTED_PRODUCT", payload: product });
@@ -95,22 +86,14 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   };
 
-  /**
-   * Restablecer productos al estado original.
-   * Vuelve a mostrar todos los productos sin filtros.
-   */
+
   const resetProducts = () => {
     dispatch({ type: "SET_FILTERED_PRODUCTS", payload: state.allProducts });
-    console.log("Productos restablecidos a todos los originales:", state.allProducts);
+  
   };
 
-  /**
-   * Limpiar los detalles del producto.
-   * Borra la información del producto seleccionado.
-   */
   const clearProductDetails = () => {
     dispatch({ type: "CLEAR_PRODUCT_DETAILS" });
-    console.log("Detalles del producto limpiados.");
   };
 
   return (
@@ -130,10 +113,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
   );
 };
 
-/**
- * Hook personalizado para acceder al contexto de productos.
- * Asegura que el hook solo se utilice dentro del `ProductProvider`.
- */
 export const useProducts = (): ProductContextProps => {
   const context = useContext(ProductContext);
 

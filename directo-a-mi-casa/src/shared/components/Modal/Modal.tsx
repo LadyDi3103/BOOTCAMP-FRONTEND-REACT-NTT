@@ -1,36 +1,61 @@
 import React from 'react';
+import './Modal.css';
 
-/**
- * Props que recibe el componente Modal.
- * - `isOpen`: Booleano que indica si el modal está abierto.
- * - `onClose`: Función que se ejecuta al cerrar el modal.
- * - `message`: Mensaje que se muestra dentro del modal.
- */
 interface ModalProps {
-    isOpen: boolean; // Define si el modal debe mostrarse.
-    onClose: () => void; // Función de cierre del modal.
-    message: string; // Mensaje que se muestra en el modal.
+    isOpen: boolean;
+    modalMessage: string;
+    onClose: () => void;
+    onConfirm?: () => void;
+    confirmText?: string;
+    cancelText?: string;
+    singleButton?: boolean;
+    singleButtonText?: string;
 }
 
-/**
- * Componente Modal.
- * Muestra un mensaje en una ventana emergente (modal) con la opción de cerrarla.
- */
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, message }) => {
-    // Si el modal no está abierto, no renderiza nada.
+const Modal: React.FC<ModalProps> = ({
+    isOpen,
+    modalMessage,
+    onClose,
+    onConfirm,
+    confirmText,
+    cancelText,
+    singleButton = false,
+    singleButtonText,
+}) => {
     if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">
+
             {/* Contenido del modal */}
             <div className="modal-content">
                 {/* Mensaje que se muestra */}
-                <p>{message}</p>
+                <h3>{modalMessage}</h3>
+                <div className="modal-actions">
+                    {singleButton ? (
+                        <button className="btn__order btn_order__submit" onClick={onClose}>
+                            {singleButtonText}
+                        </button>
+                    ) : (
+                        <>
+                            {onConfirm && (
+                                <button
+                                    className="btn__order btn_order__cancelar"
+                                    onClick={onConfirm}
+                                >
+                                    {confirmText}
+                                </button>
+                            )}
+                            <button
+                                className="btn__order btn_order__submit"
+                                onClick={onClose}
+                            >
+                                {cancelText}
+                            </button>
+                        </>
+                    )}
+                </div>
 
-                {/* Botón para cerrar el modal */}
-                <button onClick={onClose} className="modal-close-btn">
-                    Cerrar
-                </button>
             </div>
         </div>
     );

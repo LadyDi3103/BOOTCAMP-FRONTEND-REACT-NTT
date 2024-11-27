@@ -14,7 +14,6 @@ export const useProductNavigation = () => {
       return;
     }
     const formattedProductTitle = productTitle.replace(/\s+/g, '-');
-    console.log("Navegando al producto:", formattedProductTitle);
     navigate(`${ModuleRoutes.ProductsPage}/${encodeURIComponent(formattedProductTitle)}`);
   };
 

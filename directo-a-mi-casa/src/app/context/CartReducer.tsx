@@ -1,17 +1,11 @@
 import { Product } from "../domain/Product";
 import { Action } from '../domain/cartActions.types';
 
-/**
- * Interfaz del estado del carrito.
- */
 export interface CartState {
   products: Product[];
   selectedProduct: Product | null;
 }
 
-/**
- * Estado inicial del carrito.
- */
 export const initialState: CartState = {
   products: [],
   selectedProduct: null,
@@ -24,19 +18,15 @@ export const initialState: CartState = {
  * @returns El nuevo estado del carrito.
  */
 export const cartReducer = (state: CartState, action: Action): CartState => {
-  console.log("Acción recibida:", action.type);
-  console.log("Estado actual antes de la acción:", state);
 
   switch (action.type) {
-    case "ADD_PRODUCT": {
-      console.log("Productos actuales antes de agregar:", state.products);
-      
+
+    case "ADD_PRODUCT": {   
       const existingProduct = state.products.find(
         (product) => product.id === action.product.id
       );
 
       if (existingProduct) {
-        console.log("Producto ya en el carrito, incrementando cantidad.");
         return {
           ...state,
           products: state.products.map((product) =>
@@ -47,7 +37,6 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
         };
       }
 
-      console.log("Producto agregado:", action.product);
       return {
         ...state,
         products: [...state.products, { ...action.product, quantity: 1 }],
@@ -55,7 +44,6 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
     }
 
     case "REMOVE_PRODUCT": {
-      console.log("Producto eliminado con ID:", action.productId);
       return {
         ...state,
         products: state.products.filter(
@@ -65,7 +53,6 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
     }
 
     case "INCREMENT_QUANTITY": {
-      console.log("Incrementando cantidad del producto con ID:", action.productId);
       return {
         ...state,
         products: state.products.map((product) =>
@@ -77,7 +64,6 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
     }
 
     case "DECREMENT_QUANTITY": {
-      console.log("Decrementando cantidad del producto con ID:", action.productId);
       return {
         ...state,
         products: state.products.map((product) =>
@@ -92,7 +78,6 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
     }
 
     case "CLEAR_CART":
-      console.log("Carrito limpiado");
       return {
         ...state,
         products: [],
