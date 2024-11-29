@@ -10,10 +10,9 @@
     "preview": "vite preview",
     "test": "jest",
     "coverage": "jest --coverage",
-    "test: file": "jest --watchAll --collectCoverageFrom='src/**/*.{js,jsx}'"
+    "test:file": "jest --watchAll --collectCoverageFrom='src/**/*.{js,jsx}'"
   },
   "dependencies": {
-    "process": "^0.11.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0"

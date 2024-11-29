@@ -33,16 +33,16 @@ export interface ProductState {
  * Tipos de acciones que el reducer puede manejar.
  */
 export type ProductAction =
-  | { type: "SET_LOADING"; payload: boolean } // Establece el estado de carga.
-  | { type: "SET_ERROR"; payload: string | null } // Establece el mensaje de error.
-  | { type: "SET_PRODUCTS"; payload: Product[] } // Establece la lista de productos.
-  | { type: "SET_CATEGORIES"; payload: CategoryStrings[] } // Establece las categorías.
-  | { type: "SET_FILTERED_PRODUCTS"; payload: Product[] } // Establece los productos filtrados.
-  | { type: "SET_SPECIAL_OFFERS"; payload: Product[] } // Establece las ofertas especiales.
-  | { type: "SET_SELECTED_PRODUCT"; payload: Product[]} // Establece el producto seleccionado.
-  | { type: "CLEAR_SELECTED_PRODUCT" } // Limpia el producto seleccionado.
-  | { type: "SET_PRODUCT_DETAILS"; payload: ProductDetails[]} // Establece los detalles del producto.
-  | { type: "CLEAR_PRODUCT_DETAILS" }; // Limpia los detalles del producto.
+  | { type: "SET_LOADING"; payload: boolean } 
+  | { type: "SET_ERROR"; payload: string | null } 
+  | { type: "SET_PRODUCTS"; payload: Product[] } 
+  | { type: "SET_CATEGORIES"; payload: CategoryStrings[] }
+  | { type: "SET_FILTERED_PRODUCTS"; payload: Product[] }
+  | { type: "SET_SPECIAL_OFFERS"; payload: Product[] } 
+  | { type: "SET_SELECTED_PRODUCT"; payload: Product[]} 
+  | { type: "CLEAR_SELECTED_PRODUCT" } 
+  | { type: "SET_PRODUCT_DETAILS"; payload: [ProductDetails]} 
+  | { type: "CLEAR_PRODUCT_DETAILS" }; 
 
 /**
  * Tipo de alias para un array de productos.
