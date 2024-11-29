@@ -1,15 +1,15 @@
-import { mapProduct } from "@/mappers/productMapper";
 import { Product } from "@/app/domain/Product";
 import { allProductsResponseMock } from "../__mocks__/mock__AllProductsResponse";
 import { ListCategoriesResponseMock } from "../__mocks__/mock__ListCategoriesResponse";
-import { fetchAllCategories, fetchAllProducts, fetchFilteredProducts, fetchPaginatedProducts, fetchProductsByCategory, fetchSingleProduct, fetchSortedProducts } from "../fetchProducts";
 import { categoryProductsResponseMock } from "../__mocks__/mock__CategoryProductsResponse";
-import environment from "@/environments/environment";
 import { mapProductDetail } from "@/mappers/productDetailMapper";
 import { singleProductResponseMock } from "../__mocks__/mock__singleProductResponse";
 import { paginatedProductsResponseMock } from "../__mocks__/mock__paginatedProductsResponseMock";
 import { filteredProductsResponseMock } from "../__mocks__/mock__filteredProductsResponse";
 import { sortedProductsAscResponseMock, sortedProductsDescResponseMock } from "../__mocks__/mock__sortedProductsResponse";
+import environment from '../../../../environments/environment';
+import { mapProduct } from "@/mappers/product.mapper";
+import { fetchAllCategories, fetchAllProducts, fetchFilteredProducts, fetchPaginatedProducts, fetchProductsByCategory, fetchSingleProduct, fetchSortedProducts } from "../fetchProducts";
 
 
 const mockFetch = (data: unknown, status = 200, ok = true): jest.Mock => {
@@ -29,11 +29,11 @@ const mockFetch = (data: unknown, status = 200, ok = true): jest.Mock => {
   return fn;
 };
 
-jest.mock("../../../mappers/productDetailMapper", () => ({
+jest.mock("@/mappers/productDetailMapper", () => ({
   mapProductDetail: jest.fn(),
 }));
 
-jest.mock("../../../mappers/productMapper", () => ({
+jest.mock("@/mappers/product.mapper", () => ({
   mapProduct: jest.fn(),
 }));
 

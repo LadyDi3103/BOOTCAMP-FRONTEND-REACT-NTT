@@ -17,10 +17,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { setSelectedProduct } = useProducts();
   const { addProduct } = useCart();
 
-  if (!product) {
-    console.error("El producto no está definido.");
-    return null; 
-
   if (!title || !thumbnail || !price || !category) {
     console.error("Faltan propiedades en el producto:", product);
   }
@@ -74,6 +70,5 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     </div>
   );
 };
-}
 
 export default ProductCard;

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 import { Product, ProductState, ProductAction } from '../domain/Product';
-import { productRequest } from '../services/fetchProducts';
+import { productRequest } from '../services/products/fetchProducts';
 import { initialProductState, productReducer } from './ProductReducer';
 import { ProductDetails } from '../domain/ProductDetail';
 import { getTopNLowestPricedProducts } from '../../utils/helpers';

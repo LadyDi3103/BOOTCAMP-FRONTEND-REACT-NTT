@@ -1,9 +1,9 @@
-import environment from '../../environments/environment';
-import { mapProductDetail } from '../../mappers/productDetailMapper';
-import { mapProduct } from '../../mappers/productMapper';
-import { CategoryStrings } from '../domain/Category';
-import { Product } from '../domain/Product';
-import { ProductDetails } from '../domain/ProductDetail';
+import environment from '@/environments/environment';
+import { mapProductDetail } from '@/mappers/productDetailMapper';
+import { ProductDetails } from '../../domain/ProductDetail';
+import { mapProduct } from '@/mappers/product.mapper';
+import { Product } from '@/app/domain/Product';
+import { CategoryStrings } from '@/app/domain/Category';
 
 /**
  * Obtiene todos los productos desde la API.

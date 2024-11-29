@@ -7,12 +7,9 @@ import { ProductDetails } from './ProductDetail';
 export interface Product {
   id: number;
   title: string;
-  name?: string;
-  description: string;
   price: number;
   thumbnail: string;
   category: string;
-  quantity?: number; // Cantidad opcional (usada en el carrito, por ejemplo).
 }
 
 /**
