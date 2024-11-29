@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { ModuleRoutes } from './app/routes';
+import { ModuleRoutes } from './app/routes/routes';
 import ProductsPage from './app/pages/ProductPage/ProductsPage';
 import Init from './app/pages/Init/Init';
 import Login from './app/pages/Login/Login';

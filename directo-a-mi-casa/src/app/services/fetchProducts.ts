@@ -8,7 +8,7 @@ import { ProductDetails } from '../domain/ProductDetail';
 /**
  * Obtiene todos los productos desde la API.
  */
-const fetchAllProducts = async (): Promise<Product[]> => {
+export const fetchAllProducts = async (): Promise<Product[]> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.PRODUCTS_ENDPOINT}`);
         if (!response.ok) throw new Error("Error al obtener todos los productos");
@@ -54,7 +54,7 @@ export const fetchProductsByCategory = async (category: string): Promise<Product
 /**
  * Obtiene los detalles de un producto por ID.
  */
-const fetchSingleProduct = async (id: number): Promise<ProductDetails> => {
+export const fetchSingleProduct = async (id: number): Promise<ProductDetails> => {
     try {
         const response = await fetch(`${environment.API_BASE_URL}${environment.SINGLE_PRODUCT_ENDPOINT}/${id}`);
         if (!response.ok) throw new Error("Error al obtener el producto");

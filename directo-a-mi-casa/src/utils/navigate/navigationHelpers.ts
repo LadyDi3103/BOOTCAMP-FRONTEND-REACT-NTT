@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ModuleRoutes } from "../../app/routes";
+import { ModuleRoutes } from "../../app/routes/routes";
 
 /**
  * Hook que maneja la navegación de la página.

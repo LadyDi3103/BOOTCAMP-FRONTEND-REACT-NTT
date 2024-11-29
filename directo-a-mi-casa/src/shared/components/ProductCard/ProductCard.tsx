@@ -17,13 +17,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { setSelectedProduct } = useProducts();
   const { addProduct } = useCart();
 
-  /**
-   * Validaciones de las propiedades del producto.
-   */
   if (!product) {
     console.error("El producto no está definido.");
-    return null; // No renderiza si el producto no está definido.
-  }
+    return null; 
 
   if (!title || !thumbnail || !price || !category) {
     console.error("Faltan propiedades en el producto:", product);
@@ -34,16 +30,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
    * @param e Evento del clic.
    */
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evita que el clic propague al contenedor principal.
-    addProduct(product); // Agrega el producto al carrito.
+    e.stopPropagation(); 
+    addProduct(product);
   };
 
   /**
    * Maneja la navegación a la página de detalles del producto.
    */
   const handleNavigate = () => {
-    setSelectedProduct(product); // Establece el producto seleccionado en el contexto.
-    onNavigate(title); // Navega a la página de detalles del producto.
+    setSelectedProduct(product); 
+    onNavigate(title); 
   };
 
   return (
@@ -78,5 +74,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     </div>
   );
 };
+}
 
 export default ProductCard;

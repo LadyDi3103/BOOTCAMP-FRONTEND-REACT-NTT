@@ -1,6 +1,5 @@
 import { ProductDetails } from '../app/domain/ProductDetail';
 
-
 export function mapProductDetail(data: ProductDetails): ProductDetails {
     return {
         id: data.id,
