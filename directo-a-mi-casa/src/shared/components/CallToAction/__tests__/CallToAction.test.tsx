@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CallToAction from '../CallToAction';
 
-describe.only('CallToAction Component', () => {
+describe('CallToAction Component', () => {
   it('should render the heading text correctly', () => {
 
     render(<CallToAction />);

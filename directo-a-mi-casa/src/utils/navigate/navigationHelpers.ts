@@ -23,7 +23,6 @@ export const useAuth = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    console.log("Cerrando sesión...");
     localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
     navigate(ModuleRoutes.Login);

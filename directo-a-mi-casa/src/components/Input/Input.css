@@ -1,0 +1,87 @@
+.input-disabled {
+  background: var(--secondary-disabled) !important;
+}
+.input:not([type="color"]):not([type="submit"]):not([type="range"]) {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 38px;
+  background-color: var(--color-surface);
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.input:not([type="color"]):not([type="submit"]):not([type="range"])::placeholder {
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--muted-light);
+}
+.input::-webkit-outer-spin-button, .input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+textarea {
+  padding: 20px;
+  background-color: var(--secondary-transparent);
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--bright);
+  height: 150px;
+  resize: none;
+  width: 100%;
+}
+textarea::placeholder {
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--muted-light);
+}
+textarea::-webkit-scrollbar {
+  width: 2px;
+}
+textarea::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 20px;
+}
+.input-time {
+  flex: 1;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 58px;
+  background-color: var(--bright);
+  border: none;
+  outline: none;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--secondary);
+}
+.input-time-disabled {
+  background: var(--muted-light) !important;
+}
+.input-time .react-time-picker__wrapper {
+  border: none !important;
+}
+.input-phone {
+  display: flex;
+  align-items: center;
+}
+.input-phone__dropdown {
+  height: 58px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.input-date {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--bright);
+  height: 58px;
+  border: none;
+}

@@ -8,187 +8,228 @@ import { filterProducts } from "../../utils/helpers";
 import RenderCategories from "../../components/RenderCategories/renderCategories";
 
 const Header = () => {
-    const { state: cartState } = useCart();
-    const { state: productContextState, fetchCategoryProducts, resetProducts, dispatch } = useProducts();
+  const { state: cartState } = useCart();
+  const {
+    state: productContextState,
+    fetchCategoryProducts,
+    resetProducts,
+    dispatch,
+  } = useProducts();
 
-    const { products: cartProducts } = cartState;
-    const { categories, allProducts, error } = productContextState;
+  const { products: cartProducts } = cartState;
+  const { categories, allProducts, error } = productContextState;
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [searchQuery, setSearchQuery] = useState<string>("");
-    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-    const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isAccountDropdownVisible, setAccountDropdownVisible] =
+    useState<boolean>(false);
+  const [accountSelectedCategory, setAccountSelectedCategory] = useState<
+    string | null
+  >(null);
 
-    const totalQuantity = cartProducts.reduce((sum, product) => sum + (product?.quantity || 0), 0);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const handleSearchChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            const query = e.target.value.trim();
-            setSearchQuery(query);
+  const totalQuantity = cartProducts.reduce(
+    (sum, product) => sum + (product?.quantity || 0),
+    0
+  );
 
-            if (query) {
-                const filteredProducts = filterProducts(allProducts, query);
-                dispatch({ type: "SET_FILTERED_PRODUCTS", payload: filteredProducts });
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const query = e.target.value.trim();
+      setSearchQuery(query);
 
-                // Navega al componente Init solo si hay resultados filtrados
-                if (filteredProducts.length > 0) {
-                    navigate(ModuleRoutes.Init);
-                }
-            } else {
-                dispatch({ type: "SET_FILTERED_PRODUCTS", payload: allProducts });
-            }
-        },
-        [allProducts, navigate, dispatch]
-    );
+      if (query) {
+        const filteredProducts = filterProducts(allProducts, query);
+        dispatch({ type: "SET_FILTERED_PRODUCTS", payload: filteredProducts });
 
-    const toggleDropdown = useCallback(() => {
-        setDropdownVisible((prev) => !prev);
-    }, []);
+        // Navega al componente Init solo si hay resultados filtrados
+        if (filteredProducts.length > 0) {
+          navigate(ModuleRoutes.Init);
+        }
+      } else {
+        dispatch({ type: "SET_FILTERED_PRODUCTS", payload: allProducts });
+      }
+    },
+    [allProducts, navigate, dispatch]
+  );
 
-    const handleCategoryClick = useCallback(
-        async (categoryName: string) => {
-            setSelectedCategory(categoryName);
-            setDropdownVisible(false);
-            navigate(ModuleRoutes.Init);
+  const toggleDropdown = useCallback(() => {
+    setDropdownVisible((prev) => !prev);
+  }, []);
 
-            try {
-                await fetchCategoryProducts(categoryName);
-            } catch (error) {
-                console.error("Error al obtener productos por categoría:", error);
-            }
-        },
-        [navigate, fetchCategoryProducts]
-    );
+  const toggleAccountDropdown = useCallback(() => {
+    setAccountDropdownVisible((prev) => !prev);
+  }, []);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setDropdownVisible(false);
-            }
-        };
+  const handleCategoryClick = useCallback(
+    async (categoryName: string) => {
+      setSelectedCategory(categoryName);
+      setDropdownVisible(false);
+      navigate(ModuleRoutes.Init);
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-    
- 
+      try {
+        await fetchCategoryProducts(categoryName);
+      } catch (error) {
+        console.error("Error al obtener productos por categoría:", error);
+      }
+    },
+    [navigate, fetchCategoryProducts]
+  );
 
-    const resetAndNavigate = () => {
-        resetProducts();
-        navigate(ModuleRoutes.Init);
+  const handleAccountCategoryClick = useCallback(
+    async (categoryName: string) => {
+      if (categoryName === "Login") {
+        setAccountSelectedCategory(categoryName);
+        setAccountDropdownVisible(false);
+        navigate(ModuleRoutes.Login);
+      }
+    },
+    [navigate]
+  );
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownVisible(false);
+      }
     };
 
-    if (error) return <p>Error al cargar categorías: {error}</p>;
-    
-    return (
-        <header>
-            {/* Logo */}
-            <div className="logo" id="logo">
-                <Link to={ModuleRoutes.Home}>
-                    <img
-                        src="/src/assets/images/logos/icon_logo.svg"
-                        alt="DirectoAMiCasa"
-                        className="logo_mobile"
-                    />
-                    <img
-                        src="/src/assets/images/logos/logo_desktop.svg"
-                        alt="DirectoAMiCasa"
-                        className="logo_desktop"
-                    />
-                </Link>
-            </div>
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
-            {/* Buscador */}
-            <div className="search-container">
-                <span
-                    id="category-dropdown"
-                    className={`category-dropdown ${isDropdownVisible ? "active" : ""}`}
-                    onClick={toggleDropdown}
-                >
-                    Ver categorías
-                    <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
-                </span>
-                {/* Mostrar lista de categorías si el dropdown está visible */}
-                {isDropdownVisible && (
-                    <RenderCategories
-                        categories={categories || []}
-                        onCategoryClick={handleCategoryClick}
-                        selectedCategory={selectedCategory}
-                    />
-                )}
-                <input
-                    type="text"
-                    id="search-box"
-                    placeholder="¿Hola, qué estás buscando?"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                />
-                <img
-                    src="/src/assets/images/icons/search.svg"
-                    alt="Ícono buscar"
-                    className="search-icon"
-                />
-            </div>
+  const resetAndNavigate = () => {
+    resetProducts();
+    navigate(ModuleRoutes.Init);
+  };
 
-            {/* Carrito y Menú */}
-            <nav>
-                <div className="cart">
-                    <button
-                        id="load-products-btn"
-                        className="btn-load-products"
-                        onClick={resetAndNavigate}
-                    >
-                        TODOS los productos
-                    </button>
-                </div>
+  if (error) return <p>Error al cargar categorías: {error}</p>;
 
-                <div className="orders-section">
-                    <img
-                        src="/src/assets/images/icons/package.svg"
-                        alt="Paquete"
-                        className="orders-icon"
-                    />
-                    <span className="orders-text">Mis pedidos</span>
-                </div>
+  return (
+    <header>
+      {/* Logo */}
+      <div className="logo" id="logo">
+        <Link to={ModuleRoutes.Home}>
+          <img
+            src="/src/assets/images/logos/icon_logo.svg"
+            alt="DirectoAMiCasa"
+            className="logo_mobile"
+          />
+          <img
+            src="/src/assets/images/logos/logo_desktop.svg"
+            alt="DirectoAMiCasa"
+            className="logo_desktop"
+          />
+        </Link>
+      </div>
 
-                <div className="account-section">
-                    <img
-                        src="/src/assets/images/icons/person.svg"
-                        alt="Icono de persona"
-                        className="account-icon"
-                    />
-                    <span className="cart-text">Mi cuenta</span>
-                    <img
-                        src="/src/assets/images/icons/arial.svg"
-                        alt="Icono de flecha"
-                        className="account-arrow"
-                    />
-                </div>
+      {/* Buscador */}
+      <div className="search-container">
+        <span
+          id="category-dropdown"
+          className={`category-dropdown ${isDropdownVisible ? "active" : ""}`}
+          onClick={toggleDropdown}
+        >
+          Ver categorías
+          <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
+        </span>
+        {/* Mostrar lista de categorías si el dropdown está visible */}
+        {isDropdownVisible && (
+          <RenderCategories
+            className="relative-below"
+            categories={categories || []}
+            onCategoryClick={handleCategoryClick}
+            selectedCategory={selectedCategory}
+          />
+        )}
+        <input
+          type="text"
+          id="search-box"
+          placeholder="¿Hola, qué estás buscando?"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+        <img
+          src="/src/assets/images/icons/search.svg"
+          alt="Ícono buscar"
+          className="search-icon"
+        />
+      </div>
 
-                <div className="cart">
-                    <Link to={ModuleRoutes.Resumen}>
-                        <img src={carIcon} alt="Carrito de compras" className="cart-icon" />
-                        <span className="cart-badge">{totalQuantity}</span>
-                    </Link>
-                </div>
-            </nav>
+      {/* Carrito y Menú */}
+      <nav>
+        <div className="cart">
+          <button
+            id="load-products-btn"
+            className="btn-load-products"
+            onClick={resetAndNavigate}
+          >
+            TODOS los productos
+          </button>
+        </div>
 
-            {/* Menú móvil */}
-            <div className="menu_mobile">
-                <a href="#">
-                    <img
-                        src="/src/assets/images/icons/mobile_menu.svg"
-                        alt="Abrir menú móvil"
-                    />
-                </a>
-            </div>
-        </header>
-    );
+        <div className="orders-section">
+          <img
+            src="/src/assets/images/icons/package.svg"
+            alt="Paquete"
+            className="orders-icon"
+          />
+          <span className="orders-text">Mis pedidos</span>
+        </div>
+
+        <div className="account-section">
+          <img
+            src="/src/assets/images/icons/person.svg"
+            alt="Icono de persona"
+            className="account-icon"
+          />
+          <span
+            id="category-dropdown"
+            className={`category-dropdown ${isDropdownVisible ? "active" : ""}`}
+            onClick={toggleAccountDropdown}
+          >
+            Mi cuenta
+            <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
+          </span>
+          {isAccountDropdownVisible && (
+            <RenderCategories
+              className="relative-below"
+              categories={["Login"]}
+              onCategoryClick={handleAccountCategoryClick}
+              selectedCategory={accountSelectedCategory}
+            />
+          )}
+        </div>
+
+        <div className="cart">
+          <Link to={ModuleRoutes.Resumen}>
+            <img src={carIcon} alt="Carrito de compras" className="cart-icon" />
+            <span className="cart-badge">{totalQuantity}</span>
+          </Link>
+        </div>
+      </nav>
+
+      {/* Menú móvil */}
+      <div className="menu_mobile">
+        <a href="#">
+          <img
+            src="/src/assets/images/icons/mobile_menu.svg"
+            alt="Abrir menú móvil"
+          />
+        </a>
+      </div>
+    </header>
+  );
 };
 
 export default Header;
