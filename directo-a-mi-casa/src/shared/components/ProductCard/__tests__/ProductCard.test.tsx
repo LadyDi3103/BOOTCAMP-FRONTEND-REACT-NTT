@@ -1,86 +1,85 @@
-// import { render, act, screen, fireEvent } from "@testing-library/react";
-// import "@testing-library/jest-dom";
-// import ProductCard from "../ProductCard";
-// import { Product } from '../../../../app/domain/Product';
+import { render, act, screen, fireEvent } from "@testing-library/react";
+import ProductCard from "../ProductCard";
+import { Product } from '../../../../app/domain/Product';
 
 
-// // Mock the hooks used in ProductCard
-// jest.mock('../../hooks/useProductNavigation', () => ({
-//   useProductNavigation: () => ({
-//     onNavigate: jest.fn(),
-//   }),
-// }));
 
-// jest.mock("../../../app/context/ProductContext", () => ({
-//   useProducts: () => ({
-//     setSelectedProduct: jest.fn(),
-//   }),
-// }));
+jest.mock('@/shared/hooks/useProductNavigation', () => ({
+  useProductNavigation: () => ({
+    onNavigate: jest.fn(),
+  }),
+}));
 
-// jest.mock("../../../app/context/CartContext", () => ({
-//   useCart: () => ({
-//     addProduct: jest.fn(),
-//   }),
-// }));
+jest.mock("../../../app/context/ProductContext", () => ({
+  useProducts: () => ({
+    setSelectedProduct: jest.fn(),
+  }),
+}));
 
-// // Dummy product data for testing
-// const product: Product = {
-//   id: 1,
-//   title: "Product Test",
-//   thumbnail: "test-thumbnail.jpg",
-//   price: 99.99,
-//   category: "Category Test",
-// };
+jest.mock("../../../app/context/CartContext", () => ({
+  useCart: () => ({
+    addProduct: jest.fn(),
+  }),
+}));
 
-// describe("ProductCard Component", () => {
-//   it("renders without crashing", () => {
-//     render(<ProductCard product={product} />);
-//     expect(screen.getByText("Product Test")).toBeInTheDocument();
-//     expect(screen.getByText("S/ 99.99")).toBeInTheDocument();
-//     expect(screen.getByAltText("Product Test")).toBeInTheDocument();
-//   });
+// Dummy product data for testing
+const product: Product = {
+  id: 1,
+  title: "Product Test",
+  thumbnail: "test-thumbnail.jpg",
+  price: 99.99,
+  category: "Category Test",
+};
 
-//   it("handles missing product properties", () => {
-//     const incompleteProduct = { ...product, title: "" };
-//     render(<ProductCard product={incompleteProduct} />);
-//     expect(console.error).toHaveBeenCalledWith(
-//       "Faltan propiedades en el producto:",
-//       expect.objectContaining({ title: "" })
-//     );
-//   });
+describe("ProductCard Component", () => {
+  it("renders without crashing", () => {
+    render(<ProductCard product={product} />);
+    expect(screen.getByText("Product Test")).toBeInTheDocument();
+    expect(screen.getByText("S/ 99.99")).toBeInTheDocument();
+    expect(screen.getByAltText("Product Test")).toBeInTheDocument();
+  });
 
-//   it("handles add to cart click", () => {
-//     const { addProduct } = require("../../../app/context/CartContext").useCart();
-//     render(<ProductCard product={product} />);
-//     const addToCartButton = screen.getByText("Agregar");
+  it("handles missing product properties", () => {
+    const incompleteProduct = { ...product, title: "" };
+    render(<ProductCard product={incompleteProduct} />);
+    expect(console.error).toHaveBeenCalledWith(
+      "Faltan propiedades en el producto:",
+      expect.objectContaining({ title: "" })
+    );
+  });
 
-//     fireEvent.click(addToCartButton);
+  it("handles add to cart click", () => {
+    const { addProduct } = require("../../../app/context/CartContext").useCart();
+    render(<ProductCard product={product} />);
+    const addToCartButton = screen.getByText("Agregar");
 
-//     expect(addProduct).toHaveBeenCalledWith(product);
-//   });
+    fireEvent.click(addToCartButton);
 
-//   it("handles navigation to product details", () => {
-//     const { setSelectedProduct } = require("../../../app/context/ProductContext").useProducts();
-//     const { onNavigate } = require("../../hooks/useProductNavigation").useProductNavigation();
+    expect(addProduct).toHaveBeenCalledWith(product);
+  });
 
-//     render(<ProductCard product={product} />);
-//     const cardElement = screen.getByRole("img", { name: /Product Test/i }).closest("div");
+  it("handles navigation to product details", () => {
+    const { setSelectedProduct } = require("../../../app/context/ProductContext").useProducts();
+    const { onNavigate } = require("../../hooks/useProductNavigation").useProductNavigation();
 
-//     if (cardElement) {
-//       fireEvent.click(cardElement);
-//     }
+    render(<ProductCard product={product} />);
+    const cardElement = screen.getByRole("img", { name: "Product Test" }).closest("div");
 
-//     expect(setSelectedProduct).toHaveBeenCalledWith(product);
-//     expect(onNavigate).toHaveBeenCalledWith(product.title);
-//   });
+    if (cardElement) {
+      fireEvent.click(cardElement);
+    }
 
-//   it("handles image error", () => {
-//     render(<ProductCard product={product} />);
-//     const imageElement = screen.getByAltText("Product Test");
-//     fireEvent.error(imageElement);
-//     expect(console.error).toHaveBeenCalledWith(
-//       "Error al cargar la imagen del producto:",
-//       expect.any(Object)
-//     );
-//   });
-// });
+    expect(setSelectedProduct).toHaveBeenCalledWith(product);
+    expect(onNavigate).toHaveBeenCalledWith(product.title);
+  });
+
+  it("handles image error", () => {
+    render(<ProductCard product={product} />);
+    const imageElement = screen.getByAltText("Product Test");
+    fireEvent.error(imageElement);
+    expect(console.error).toHaveBeenCalledWith(
+      "Error al cargar la imagen del producto:",
+      expect.any(Object)
+    );
+  });
+});

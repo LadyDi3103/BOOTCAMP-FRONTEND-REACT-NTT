@@ -1,9 +1,5 @@
 import React from 'react';
 
-/**
- * Componente Carousel
- * Muestra imágenes en formato de carrusel para dispositivos móviles y de escritorio.
- */
 const Carousel: React.FC = () => {
     return (
         <section className="carousel">
