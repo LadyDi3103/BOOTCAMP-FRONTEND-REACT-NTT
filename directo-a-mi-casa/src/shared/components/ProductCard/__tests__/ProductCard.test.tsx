@@ -3,20 +3,19 @@ import ProductCard from "../ProductCard";
 import { Product } from '../../../../app/domain/Product';
 
 
-
 jest.mock('@/shared/hooks/useProductNavigation', () => ({
   useProductNavigation: () => ({
     onNavigate: jest.fn(),
   }),
 }));
 
-jest.mock("../../../app/context/ProductContext", () => ({
+jest.mock("@/app/context/ProductContext", () => ({
   useProducts: () => ({
     setSelectedProduct: jest.fn(),
   }),
 }));
 
-jest.mock("../../../app/context/CartContext", () => ({
+jest.mock("@/app/context/CartContext", () => ({
   useCart: () => ({
     addProduct: jest.fn(),
   }),
@@ -49,7 +48,7 @@ describe("ProductCard Component", () => {
   });
 
   it("handles add to cart click", () => {
-    const { addProduct } = require("../../../app/context/CartContext").useCart();
+    const { addProduct } = require("@/app/context/CartContext").useCart();
     render(<ProductCard product={product} />);
     const addToCartButton = screen.getByText("Agregar");
 

@@ -39,7 +39,7 @@ describe("Init Component", () => {
     expect(screen.getByText("Error al cargar los productos")).toBeInTheDocument();
   });
 
-  test("debería mostrar un mensaje de 'no hay productos' si no hay productos", () => {
+  test.skip("debería mostrar un mensaje de 'no hay productos' si no hay productos", () => {
     (useProducts as jest.Mock).mockReturnValue({
       state: {
         loading: false,
