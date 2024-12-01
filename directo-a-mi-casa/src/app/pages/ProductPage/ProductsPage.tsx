@@ -13,8 +13,9 @@ import { Review } from "../../domain/ProductDetail";
 const ProductPage: React.FC = () => {
   const { state } = useProducts();
   const { addProduct } = useCart();
-  const selectedProduct = state.selectedProduct;
-  const productDetails = state.productDetails;
+
+const selectedProduct = state?.selectedProduct || null;
+const productDetails = state?.productDetails?.[0] || null;
 
   const {
     title = "Producto no encontrado",
@@ -54,7 +55,7 @@ const ProductPage: React.FC = () => {
               {/* Botón para agregar al carrito */}
               <button
                 className="btn_order__submit"
-                onClick={() => addProduct(selectedProduct!)}
+                onClick={() => addProduct(selectedProduct)}
                 disabled={!state.productDetails}
               >
                 Agregar

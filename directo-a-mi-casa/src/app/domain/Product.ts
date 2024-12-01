@@ -10,20 +10,21 @@ export interface Product {
   price: number;
   thumbnail: string;
   category: string;
+  quantity?: number;
 }
 
 /**
  * Estado global para el contexto de productos.
  */
 export interface ProductState {
-  products: Product[]; // Productos filtrados actualmente.
-  categories: CategoryStrings[]; // Categorías disponibles.
-  specialOffers: Product[]; // Ofertas especiales destacadas.
-  allProducts: Product[]; // Todos los productos cargados (sin filtrar).
-  selectedProduct: Product[]; // Producto seleccionado actualmente.
-  productDetails: ProductDetails[]; // Detalles del producto seleccionado.
-  loading: boolean; // Estado de carga de datos.
-  error: string | null; // Error en caso de fallos en la carga de datos.
+  products: Product[];
+  categories: CategoryStrings[];
+  specialOffers: Product[];
+  allProducts: Product[];
+  selectedProduct: Product[];
+  productDetails: ProductDetails[];
+  loading: boolean;
+  error: string | null;
 }
 
 /**

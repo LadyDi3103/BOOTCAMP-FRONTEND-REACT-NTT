@@ -4,7 +4,7 @@ import { ModuleRoutes } from "../../app/routes/routes";
 import carIcon from "/src/assets/images/icons/car.svg";
 import { useProducts } from "../../app/context/ProductContext";
 import { useCart } from "../../app/context/CartContext";
-import { filterProducts } from "../../utils/helpers";
+import { filterProducts } from "../../utils/helpers/helpers";
 import RenderCategories from "@/components/RenderCategories/RenderCategories";
 
 const Header = () => {

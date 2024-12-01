@@ -3,7 +3,7 @@ import { Product, ProductState, ProductAction } from '../domain/Product';
 import { productRequest } from '../services/products/fetchProducts';
 import { initialProductState, productReducer } from './ProductReducer';
 import { ProductDetails } from '../domain/ProductDetail';
-import { getTopNLowestPricedProducts } from '../../utils/helpers';
+import { getTopNLowestPricedProducts } from '../../utils/helpers/helpers';
 
 interface ProductContextProps {
   state: ProductState;

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Carousel from "../Carousel";
 
-describe.only("Carousel Component", () => {
+describe("Carousel Component", () => {
     test("should render the mobile image correctly", () => {
         render(<Carousel />);
 
@@ -29,8 +29,9 @@ describe.only("Carousel Component", () => {
             </section>
         );
 
-        const brokenImage = screen.getByRole("img", { hidden: true });
+        const brokenImage = screen.getByAltText("");
         expect(brokenImage).toHaveAttribute("src", "/src/assets/images/carousel/non-existent-image.svg");
-        expect(brokenImage).not.toHaveAttribute("alt", "Imagen para dispositivos móviles");
     });
 });
+
+

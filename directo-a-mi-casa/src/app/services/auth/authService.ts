@@ -9,7 +9,7 @@ export const login = async (
     body: JSON.stringify({
       username,
       password,
-      expiresInMins: 30, // optional, defaults to 60
+      expiresInMins: 30,
     }),
   });
   const data = await response.json();

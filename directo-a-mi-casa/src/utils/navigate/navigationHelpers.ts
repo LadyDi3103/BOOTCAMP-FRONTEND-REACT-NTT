@@ -7,7 +7,6 @@ import { ModuleRoutes } from "../../app/routes/routes";
 export const usePageNavigation = () => {
   const navigate = useNavigate();
 
-
   const closePage = () => {
     navigate("/");
   };
@@ -17,16 +16,4 @@ export const usePageNavigation = () => {
   };
 
   return { closePage, navigateTo };
-};
-
-export const useAuth = () => {
-  const navigate = useNavigate();
-
-  const logout = () => {
-    localStorage.removeItem("authToken");
-    sessionStorage.removeItem("authToken");
-    navigate(ModuleRoutes.Login);
-  };
-
-  return { logout };
 };

@@ -12,7 +12,7 @@ interface ProductCardProps {
  * Componente reutilizable que muestra la tarjeta de un producto.
  */
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { title, thumbnail, price, category, id } = product;
+  const { title, thumbnail, price, category } = product;
   const { onNavigate } = useProductNavigation();
   const { setSelectedProduct } = useProducts();
   const { addProduct } = useCart();
@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div data-id={id} className="product-card" onClick={handleNavigate}>
+    <div className="product-card" onClick={handleNavigate}>
       {/* Imagen del producto */}
       <img
         className="product-image"
@@ -54,12 +54,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="product-details">
         <p className="product-name">{title}</p>
         <div className="product-price-wrapper">
-          <p className="product-price">S/ {price.toFixed(2)}</p>
+          <p className="product-price">S/ {price ? price.toFixed(2) : "N/A" }</p>
         </div>
       </div>
 
       {/* Botón para agregar al carrito */}
-      <button className="add-to-cart" onClick={handleAddToCart}>
+      <button 
+      className="add-to-cart" 
+      onClick={handleAddToCart}>
         Agregar
         <img
           src="src/assets/images/icons/white_car.svg"
