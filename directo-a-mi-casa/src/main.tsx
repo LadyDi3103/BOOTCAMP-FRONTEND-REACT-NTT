@@ -11,31 +11,34 @@ import { ProductProvider } from './app/context/ProductContext.tsx';
 import Footer from './Layout/Footer/Footer.tsx';
 import Header from './Layout/Header/Header.tsx';
 import { AuthProvider } from './app/context/AuthContext.tsx';
+import './assets/css/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <AuthProvider>
-      <ProductProvider>
-        <CartProvider>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
-          <BrowserRouter basename="/">
+    <BrowserRouter basename="/">
+      <AuthProvider>
+        <ProductProvider>
+          <CartProvider>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={true}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
             <Header />
             <App />
             <Footer />
-          </BrowserRouter>
-        </CartProvider>
-      </ProductProvider>
-    </AuthProvider>
+
+          </CartProvider>
+        </ProductProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </StrictMode>,
 );

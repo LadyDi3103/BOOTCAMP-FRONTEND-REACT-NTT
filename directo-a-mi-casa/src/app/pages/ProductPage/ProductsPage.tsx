@@ -5,6 +5,7 @@ import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 import { useCart } from "../../context/CartContext";
 import { Review } from "../../domain/ProductDetail";
+import withAuth from "@/HOC/withAuth";
 
 /**
  * Componente ProductPage
@@ -15,7 +16,7 @@ const ProductPage: React.FC = () => {
   const { addProduct } = useCart();
 
 const selectedProduct = state?.selectedProduct || null;
-const productDetails = state?.productDetails?.[0] || null;
+const productDetails = state.productDetails;
 
   const {
     title = "Producto no encontrado",
@@ -55,7 +56,7 @@ const productDetails = state?.productDetails?.[0] || null;
               {/* Botón para agregar al carrito */}
               <button
                 className="btn_order__submit"
-                onClick={() => addProduct(selectedProduct)}
+                onClick={() => addProduct(selectedProduct!)}
                 disabled={!state.productDetails}
               >
                 Agregar
@@ -94,4 +95,4 @@ const productDetails = state?.productDetails?.[0] || null;
   );
 }
 
-export default ProductPage;
+export default withAuth(ProductPage);

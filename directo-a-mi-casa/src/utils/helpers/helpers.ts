@@ -1,4 +1,5 @@
-import { Product } from "../../app/domain/Product";
+import { Product } from "@/app/domain/Product";
+
 
 /**
  * Filtra productos por título según el texto ingresado.
@@ -26,7 +27,7 @@ export const getTopNLowestPricedProducts = (products: Product[], n: number): Pro
   }
 
   return products
-    .slice() // Crea una copia para no mutar el array original
+    .slice() 
     .sort((a, b) => a.price - b.price)
     .slice(0, n);
 };

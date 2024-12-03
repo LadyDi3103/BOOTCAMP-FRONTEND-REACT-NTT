@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import { ModuleRoutes } from "@/app/routes/routes";
-import { useProductNavigation } from "./useProductNavigation";
+import { useProductNavigation } from "../useProductNavigation";
 
 const navigateMock = jest.fn();
 

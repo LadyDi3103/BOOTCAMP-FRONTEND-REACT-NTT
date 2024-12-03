@@ -3,7 +3,6 @@ import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import Carousel from "../../../components/Carousel/Carousel";
 import CategoriesSection from "../../../components/CategorySection/CategoriesSection";
 import CategoryItem from "../../../components/CategoryItem/CategoryItem";
-import SpecialOffers from "../../../components/SpecialOffers/SpecialOffers";
 
 const Home = () => {
     return (
@@ -13,11 +12,12 @@ const Home = () => {
 
             <Carousel />
 
-            <CategoriesSection />
-
             <CategoryItem />
 
-            <SpecialOffers />
+            <CategoriesSection />
+
+
+
         </main>
     );
 };

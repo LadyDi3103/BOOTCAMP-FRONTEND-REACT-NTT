@@ -1,6 +1,6 @@
 import React from "react";
 import { Product } from "../../../app/domain/Product";
-import { useProductNavigation } from '../../hooks/useProductNavigation';
+import { useProductNavigation } from '../../hooks/ProductNavegate/useProductNavigation';
 import { useProducts } from "../../../app/context/ProductContext";
 import { useCart } from "../../../app/context/CartContext";
 

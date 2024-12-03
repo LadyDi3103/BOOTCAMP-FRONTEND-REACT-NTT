@@ -7,10 +7,12 @@ import { ProductDetails } from './ProductDetail';
 export interface Product {
   id: number;
   title: string;
+  name?: string;
   price: number;
   thumbnail: string;
   category: string;
   quantity?: number;
+  description?: string;
 }
 
 /**

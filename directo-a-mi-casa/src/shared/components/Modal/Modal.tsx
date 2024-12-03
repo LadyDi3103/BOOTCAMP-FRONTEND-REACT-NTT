@@ -1,61 +1,20 @@
-import React from 'react';
-import './Modal.css';
+import React, { ReactNode } from "react";
+import "./Modal.css";
 
 interface ModalProps {
     isOpen: boolean;
-    modalMessage: string;
-    onClose: () => void;
-    onConfirm?: () => void;
-    confirmText?: string;
-    cancelText?: string;
-    singleButton?: boolean;
-    singleButtonText?: string;
+    children: ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({
-    isOpen,
-    modalMessage,
-    onClose,
-    onConfirm,
-    confirmText,
-    cancelText,
-    singleButton = false,
-    singleButtonText,
-}) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, children }) => {
     if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">
-
             {/* Contenido del modal */}
-            <div className="modal-content">
+            <div className="modal__content">
                 {/* Mensaje que se muestra */}
-                <h3>{modalMessage}</h3>
-                <div className="modal-actions">
-                    {singleButton ? (
-                        <button className="btn__order btn_order__submit" onClick={onClose}>
-                            {singleButtonText}
-                        </button>
-                    ) : (
-                        <>
-                            {onConfirm && (
-                                <button
-                                    className="btn__order btn_order__cancelar"
-                                    onClick={onConfirm}
-                                >
-                                    {confirmText}
-                                </button>
-                            )}
-                            <button
-                                className="btn__order btn_order__submit"
-                                onClick={onClose}
-                            >
-                                {cancelText}
-                            </button>
-                        </>
-                    )}
-                </div>
-
+                {children}
             </div>
         </div>
     );

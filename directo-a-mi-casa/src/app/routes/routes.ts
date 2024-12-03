@@ -5,6 +5,6 @@ export const enum ModuleRoutes{
     Resumen = 'resumen',
     CategoriesPage = 'categorias',
     ProductsPage = "/product",
-    MarketPage = "/market",
+    MarketPage = "/special-offers",
     Init = '/todos-los-productos',
 }

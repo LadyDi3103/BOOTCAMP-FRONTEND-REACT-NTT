@@ -3,13 +3,14 @@ import { useCart } from '../../context/CartContext';
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleBar/CategoryTitleBar";
 import './ResumenPage.css';
 import { Product } from '../../domain/Product';
+import { useDistricts } from '@/shared/hooks/Districts/useDistricts';
 import CallToAction from '../../../shared/components/CallToAction/CallToAction';
 import { FormState } from '../../domain/FormState';
-import { useDistricts } from '../../../shared/hooks/useDistricts';
 import Modal from '../../../shared/components/Modal/Modal';
 import OrderSummary from '../../../components/OrderSummary/OrderSumary';
 import OrderForm from '../../../components/OrderForm/OrderForm';
 import { useNavigate } from "react-router-dom";
+import withAuth from "@/HOC/withAuth";
 
 // Estado inicial del formulario
 const initialFormState: FormState = {
@@ -57,23 +58,29 @@ const ResumenPage: React.FC = () => {
   // Validaciones específicas para cada campo
   const validateField = (fieldName: string, value: string): string | null => {
     switch (fieldName) {
-      case 'nombre':
-      case 'apellidos':
-        return /^[a-zA-Z\s]+$/.test(value) ? null : 'Debe ingresar un valor válido';
-      case 'celular':
-        return /^[0-9]{9}$/.test(value) ? null : 'Debe ingresar un número válido de 9 dígitos';
-      case 'distrito':
-        return value ? null : 'Seleccione un distrito';
-      case 'direccion':
-      case 'referencia':
-        return value.trim() ? null : 'Campo obligatorio';
+      case "nombre":
+      case "apellidos":
+        return /^[a-zA-Z\s]+$/.test(value)
+          ? null
+          : "Debe ingresar un valor válido";
+      case "celular":
+        return /^[0-9]{9}$/.test(value)
+          ? null
+          : "Debe ingresar un número válido de 9 dígitos";
+      case "distrito":
+        return value ? null : "Seleccione un distrito";
+      case "direccion":
+      case "referencia":
+        return value.trim() ? null : "Campo obligatorio";
       default:
         return null;
     }
   };
 
-// Manejar cambios en el formulario
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  // Manejar cambios en el formulario
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
 
@@ -86,7 +93,9 @@ const ResumenPage: React.FC = () => {
     e.preventDefault();
 
     if (products.length === 0) {
-      setModalMessage('Su carrito está vacío. Por favor, añada productos antes de realizar el pedido.');
+      setModalMessage(
+        "Su carrito está vacío. Por favor, añada productos antes de realizar el pedido."
+      );
       setSingleButton(true);
       setShowModal(true);
       return;
@@ -100,26 +109,30 @@ const ResumenPage: React.FC = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      setModalMessage('Por favor, complete todos los campos del formulario correctamente.');
-      setSingleButton(true); 
+      setModalMessage(
+        "Por favor, complete todos los campos del formulario correctamente."
+      );
+      setSingleButton(true);
       setShowModal(true);
       return;
     }
 
-    setModalMessage('Su pedido se registró con éxito');
-    setSingleButton(true); 
+    setModalMessage("Su pedido se registró con éxito");
+    setSingleButton(true);
     setShowModal(true);
-    console.log('Formulario enviado:', form); 
+    console.log("Formulario enviado:", form);
     // 🔴 Este console muestra el detalle del form enviado
 
-    dispatch({ type: 'CLEAR_CART' });
+    dispatch({ type: "CLEAR_CART" });
     setForm(initialFormState);
   };
 
   // Manejar el clic en "Cancelar Orden"
   const handleCancelOrderClick = () => {
     if (state.products.length === 0) {
-      setModalMessage("No tienes productos en tu carrito. No puedes cancelar una orden vacía.");
+      setModalMessage(
+        "No tienes productos en tu carrito. No puedes cancelar una orden vacía."
+      );
       setSingleButton(true);
       setShowModal(true);
     } else {
@@ -129,32 +142,31 @@ const ResumenPage: React.FC = () => {
     }
   };
 
-  // Confirmar la cancelación
   const handleConfirmCancel = () => {
     dispatch({ type: "CLEAR_CART" });
     setShowModal(false);
   };
 
-  // Cerrar el modal
   const handleCloseModal = () => {
     setShowModal(false);
 
-    if (modalMessage === 'Su pedido se registró con éxito') {
-      navigate('/');
+    if (modalMessage === "Su pedido se registró con éxito") {
+      navigate("/");
     }
   };
 
   return (
     <>
       <CallToAction />
-      <CategoryTitleContainer 
-      title="Resumen de Órden" 
-      />
+      <CategoryTitleContainer title="Resumen de Órden" />
 
       {/* Mensaje cuando el carrito está vacío */}
       {state.products.length === 0 && (
         <div className="empty-cart-message">
-          <p>No tienes productos en tu carrito :(  ¡Añade algún producto para continuar!</p>
+          <p>
+            No tienes productos en tu carrito :( ¡Añade algún producto para
+            continuar!
+          </p>
           <div className="empty-cart-illustration">
             <img src="/src/assets/images/icons/cart.svg" alt="Carrito vacío" />
           </div>
@@ -166,9 +178,13 @@ const ResumenPage: React.FC = () => {
         <OrderSummary
           products={products}
           total={total}
-          onIncrement={(id) => dispatch({ type: 'INCREMENT_QUANTITY', productId: id })}
-          onDecrement={(id) => dispatch({ type: 'DECREMENT_QUANTITY', productId: id })}
-          onRemove={(id) => dispatch({ type: 'REMOVE_PRODUCT', productId: id })}
+          onIncrement={(id) =>
+            dispatch({ type: "INCREMENT_QUANTITY", productId: id })
+          }
+          onDecrement={(id) =>
+            dispatch({ type: "DECREMENT_QUANTITY", productId: id })
+          }
+          onRemove={(id) => dispatch({ type: "REMOVE_PRODUCT", productId: id })}
         />
       )}
 
@@ -183,18 +199,40 @@ const ResumenPage: React.FC = () => {
       />
 
       {/* Modal de confirmación */}
-      <Modal
-        isOpen={showModal}
-        modalMessage={modalMessage}
-        onClose={handleCloseModal}
-        singleButton={singleButton}
-        singleButtonText="Entendido"
-        onConfirm={!singleButton ? handleConfirmCancel : undefined}
-        confirmText="Sí, cancelar"
-        cancelText="No, mantener"
-      />
+      <Modal isOpen={showModal}>
+        <div className="modal__header">
+          <h3>{modalMessage}</h3>
+        </div>
+        <div className="modal__actions">
+          {singleButton ? (
+            <button
+              className="btn__order btn_order__submit"
+              onClick={handleCloseModal}
+            >
+              Entendido
+            </button>
+          ) : (
+            <>
+              {!singleButton && (
+                <button
+                  className="btn__order btn_order__cancelar"
+                  onClick={handleConfirmCancel}
+                >
+                  Sí, cancelar
+                </button>
+              )}
+              <button
+                className="btn__order btn_order__submit"
+                onClick={handleCloseModal}
+              >
+                No, mantener
+              </button>
+            </>
+          )}
+        </div>
+      </Modal>
     </>
   );
 };
 
-export default ResumenPage;
+export default withAuth(ResumenPage);

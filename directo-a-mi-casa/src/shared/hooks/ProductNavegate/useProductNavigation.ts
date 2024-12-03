@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ModuleRoutes } from "../../app/routes/routes";
+import { ModuleRoutes } from "../../../app/routes/routes";
 
 /**
  * Hook para navegar a la página de un producto específico.

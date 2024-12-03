@@ -6,7 +6,11 @@ import ProductsPage from './app/pages/ProductPage/ProductsPage';
 import Init from './app/pages/Init/Init';
 import Login from './app/pages/Login/Login';
 import ResumenPage from './app/pages/Resumen/ResumenPage';
+import MarketPage from './app/pages/MarketPage/MarketPage';
 import Home from './app/pages/Home/Home';
+import withAuth from '@/HOC/withAuth';
+
+const ProtectedMarketPage = withAuth(MarketPage);
 
 const App: React.FC = () => {
   return (
@@ -14,6 +18,8 @@ const App: React.FC = () => {
       <Route path={ModuleRoutes.Login} element={<Login />} />
 
       <Route path={ModuleRoutes.Home} element={<Home />} />
+
+      <Route path={ModuleRoutes.MarketPage} element={<ProtectedMarketPage />} />
 
       <Route path={ModuleRoutes.Init} element={<Init />} />
 

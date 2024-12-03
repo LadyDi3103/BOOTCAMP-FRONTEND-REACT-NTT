@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useDistricts } from "./useDistricts";
+import { useDistricts } from "../useDistricts";
 
 describe("useDistricts Hook", () => {
     it("should return the correct list of districts", () => {

@@ -2,10 +2,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
 import { login } from "@/app/services/auth/authService";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import Input from "@/components/Input/Input";
-
+import ModalForgot from "@/components/ModalForgotPassword/ModalForgotPassword";
+import { useNavigate } from "react-router-dom";
+import { ModuleRoutes } from "@/app/routes/routes";
+import { AuthContext } from "@/app/context/AuthContext";
 
 const initialValues = () => {
     return {
@@ -31,6 +34,10 @@ const validationSchema = () => {
 
 const Login = () => {
     const [logging, setLogging] = useState(false);
+    const [openModalForgot, setOpenModalForgot] = useState(false);
+
+    const navigate = useNavigate();
+    const { loginUser } = useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -42,7 +49,9 @@ const Login = () => {
     const submitLogin = async (username: string, password: string) => {
         try {
             setLogging(true);
-            await login(username.trim(), password.trim());
+            const loginData = await login(username.trim(), password.trim());
+            loginUser(loginData.accessToken);
+            navigate(ModuleRoutes.MarketPage);
             setLogging(false);
         } catch (error) {
             setLogging(false);
@@ -53,8 +62,12 @@ const Login = () => {
         }
     };
 
+    const toggleModalForgotPassword = () => {
+        setOpenModalForgot(!openModalForgot);
+    };
+
     return (
-        <main className="below-navbar login">
+        <main className="login">
             <h1 className="login__header">Iniciar sesión</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="login__body">
@@ -94,7 +107,20 @@ const Login = () => {
                 >
                     {logging ? "Iniciando sesión" : "Iniciar sesión"}
                 </button>
+                <div className="login__footer">
+                    <a
+                        href="#"
+                        onClick={toggleModalForgotPassword}
+                        className="login__forgot"
+                    >
+                        Olvidé contraseña
+                    </a>
+                </div>
             </form>
+            <ModalForgot
+                isOpen={openModalForgot}
+                setOpenModalForgot={setOpenModalForgot}
+            />
         </main>
     );
 };

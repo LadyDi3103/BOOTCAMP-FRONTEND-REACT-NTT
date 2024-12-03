@@ -3,6 +3,7 @@ import ProductCard from "../../../shared/components/ProductCard/ProductCard";
 import CategoryTitleContainer from "../../../shared/components/CategoryTitleBar/CategoryTitleBar";
 import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
+import withAuth from "@/HOC/withAuth";
 
 /**
  * Componente Init
@@ -24,7 +25,9 @@ const Init: React.FC = () => {
       {/* Renderizado de productos */}
       {!loading && !error && (
         <div>
-          <CategoryTitleContainer title={`${state.products.length || 0} Productos`} />
+          <CategoryTitleContainer
+            title={`${state.products.length || 0} Productos`}
+          />
 
           {state.products.length > 0 ? (
             <div className="products-container">
@@ -43,4 +46,4 @@ const Init: React.FC = () => {
   );
 };
 
-export default Init;
+export default withAuth(Init);

@@ -1,11 +1,18 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useContext,
+} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ModuleRoutes } from "../../app/routes/routes";
 import carIcon from "/src/assets/images/icons/car.svg";
 import { useProducts } from "../../app/context/ProductContext";
 import { useCart } from "../../app/context/CartContext";
-import { filterProducts } from "../../utils/helpers/helpers";
-import RenderCategories from "@/components/RenderCategories/RenderCategories";
+import { AuthContext } from "@/app/context/AuthContext";
+import { filterProducts } from "@/utils/helpers/helpers";
+import RenderCategories from "@/components/RenderCategories/renderCategories";
 
 const Header = () => {
   const { state: cartState } = useCart();
@@ -20,6 +27,7 @@ const Header = () => {
   const { categories, allProducts, error } = productContextState;
 
   const navigate = useNavigate();
+  const { loggedUser, logoutUser, userData } = useContext(AuthContext);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
@@ -83,13 +91,21 @@ const Header = () => {
 
   const handleAccountCategoryClick = useCallback(
     async (categoryName: string) => {
-      if (categoryName === "Login") {
-        setAccountSelectedCategory(categoryName);
-        setAccountDropdownVisible(false);
-        navigate(ModuleRoutes.Login);
+      switch (categoryName) {
+        case "Login":
+          setAccountSelectedCategory(categoryName);
+          setAccountDropdownVisible(false);
+          navigate(ModuleRoutes.Login);
+          break;
+        case "Cerrar sesión":
+          setAccountSelectedCategory(categoryName);
+          setAccountDropdownVisible(false);
+          logoutUser();
+          navigate(ModuleRoutes.Login);
+          break;
       }
     },
-    [navigate]
+    [navigate, logoutUser]
   );
 
   useEffect(() => {
@@ -115,6 +131,13 @@ const Header = () => {
 
   if (error) return <p>Error al cargar categorías: {error}</p>;
 
+  const authCategories = [];
+  if (loggedUser) {
+    authCategories.push("Cerrar sesión");
+  } else {
+    authCategories.push("Login");
+  }
+
   return (
     <header>
       {/* Logo */}
@@ -134,58 +157,64 @@ const Header = () => {
       </div>
 
       {/* Buscador */}
-      <div className="search-container">
-        <span
-          id="category-dropdown"
-          className={`category-dropdown ${isDropdownVisible ? "active" : ""}`}
-          onClick={toggleDropdown}
-        >
-          Ver categorías
-          <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
-        </span>
-        {/* Mostrar lista de categorías si el dropdown está visible */}
-        {isDropdownVisible && (
-          <RenderCategories
-            className="relative-below"
-            categories={categories || []}
-            onCategoryClick={handleCategoryClick}
-            selectedCategory={selectedCategory}
+      {loggedUser && (
+        <div className="search-container">
+          <span
+            id="category-dropdown"
+            className={`category-dropdown ${isDropdownVisible ? "active" : ""}`}
+            onClick={toggleDropdown}
+          >
+            Ver categorías
+            <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
+          </span>
+          {/* Mostrar lista de categorías si el dropdown está visible */}
+          {isDropdownVisible && (
+            <RenderCategories
+              className="relative-below"
+              categories={categories || []}
+              onCategoryClick={handleCategoryClick}
+              selectedCategory={selectedCategory}
+            />
+          )}
+          <input
+            type="text"
+            id="search-box"
+            placeholder="¿Hola, qué estás buscando?"
+            value={searchQuery}
+            onChange={handleSearchChange}
           />
-        )}
-        <input
-          type="text"
-          id="search-box"
-          placeholder="¿Hola, qué estás buscando?"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-        <img
-          src="/src/assets/images/icons/search.svg"
-          alt="Ícono buscar"
-          className="search-icon"
-        />
-      </div>
+          <img
+            src="/src/assets/images/icons/search.svg"
+            alt="Ícono buscar"
+            className="search-icon"
+          />
+        </div>
+      )}
 
       {/* Carrito y Menú */}
       <nav>
-        <div className="cart">
-          <button
-            id="load-products-btn"
-            className="btn-load-products"
-            onClick={resetAndNavigate}
-          >
-            TODOS los productos
-          </button>
-        </div>
+        {loggedUser && (
+          <>
+            <div className="cart">
+              <button
+                id="load-products-btn"
+                className="btn-load-products"
+                onClick={resetAndNavigate}
+              >
+                TODOS los productos
+              </button>
+            </div>
 
-        <div className="orders-section">
-          <img
-            src="/src/assets/images/icons/package.svg"
-            alt="Paquete"
-            className="orders-icon"
-          />
-          <span className="orders-text">Mis pedidos</span>
-        </div>
+            <div className="orders-section">
+              <img
+                src="/src/assets/images/icons/package.svg"
+                alt="Paquete"
+                className="orders-icon"
+              />
+              <span className="orders-text">Mis pedidos</span>
+            </div>
+          </>
+        )}
 
         <div className="account-section">
           <img
@@ -198,25 +227,38 @@ const Header = () => {
             className={`category-dropdown ${isDropdownVisible ? "active" : ""}`}
             onClick={toggleAccountDropdown}
           >
-            Mi cuenta
-            <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
+            {loggedUser && userData ?(
+                  <>
+                  BIENVENIDA: <br />
+                  {userData?.firstName} {userData?.lastName}
+                </>
+              ) : (
+                "Mi cuenta"
+              )}
+              <img src="/src/assets/images/icons/arial.svg" alt="Desplegable" />
           </span>
           {isAccountDropdownVisible && (
             <RenderCategories
               className="relative-below"
-              categories={["Login"]}
+              categories={authCategories}
               onCategoryClick={handleAccountCategoryClick}
               selectedCategory={accountSelectedCategory}
             />
           )}
         </div>
 
-        <div className="cart">
-          <Link to={ModuleRoutes.Resumen}>
-            <img src={carIcon} alt="Carrito de compras" className="cart-icon" />
-            <span className="cart-badge">{totalQuantity}</span>
-          </Link>
-        </div>
+        {loggedUser && (
+          <div className="cart">
+            <Link to={ModuleRoutes.Resumen}>
+              <img
+                src={carIcon}
+                alt="Carrito de compras"
+                className="cart-icon"
+              />
+              <span className="cart-badge">{totalQuantity}</span>
+            </Link>
+          </div>
+        )}
       </nav>
 
       {/* Menú móvil */}
