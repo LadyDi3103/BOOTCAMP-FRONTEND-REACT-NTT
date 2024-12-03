@@ -1,9 +1,10 @@
 import React from "react";
+import "./SpecialOffers.css"; 
 import ProductCard from "../../shared/components/ProductCard/ProductCard";
 import { usePagination } from "@/shared/hooks/Pagination/usePagination";
 import ReusablePagination from "@/shared/components/Pagination/Pagination";
 
-const PAGE_COUNT = 4;
+const PAGE_COUNT = 6;
 
 const SpecialOffers: React.FC = () => {
     const { requestPage, items, currentPage, loading, totalPages } =

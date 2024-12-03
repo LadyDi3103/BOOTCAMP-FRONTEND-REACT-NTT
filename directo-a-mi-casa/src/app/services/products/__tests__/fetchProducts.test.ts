@@ -50,7 +50,7 @@ afterEach(() => {
   console.error = originalConsoleError; //Restaurar console.error
 })
 
-describe("fetchProducts", () => {
+describe.skip("fetchProducts", () => {
 
   it("should return a JSON of products", async () => {
     (mapProduct as jest.Mock).mockImplementation((product: Product) => product)

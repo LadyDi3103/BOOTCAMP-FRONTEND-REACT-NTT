@@ -1,4 +1,5 @@
-import { District } from "../../app/domain/District";
+import { District } from "@/app/domain/District";
+
 
 export const useDistricts = (): { districts: District[] } => {
     const districts: District[] = [

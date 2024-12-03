@@ -1,101 +1,105 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useCallback } from "react";
 import { getUserData } from "../services/auth/authService";
 import { toast } from "react-toastify";
 import { UserDataResponse } from "../domain/Auth";
 import { ModuleRoutes } from "../routes/routes";
 import { useNavigate } from "react-router-dom";
 
-interface AuthContextProps {
+export interface AuthContextProps {
   loggedUser: boolean;
   loginUser: (token: string) => void;
   logoutUser: () => void;
+  setLoggingUser: (value: boolean) => void;
   userData: UserDataResponse | null;
   loggingUser: boolean;
+  checkUserAuth: () => void;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
   loggedUser: false,
-  loginUser: () => {},
-  logoutUser: () => {},
-  userData: { firstName: "", lastName: "" },
-  loggingUser: true,
+  loginUser: () => { },
+  logoutUser: () => { },
+  userData: null,
+  loggingUser: false,
+  setLoggingUser: () => { },
+  checkUserAuth: () => { },
 });
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [loggedUser, setLoggedUser] = useState(false);
-  const [loggingUser, setLoggingUser] = useState(true);
+  const [loggingUser, setLoggingUser] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [userData, setUserData] = useState<UserDataResponse | null>(null);
   const navigate = useNavigate();
 
-  const checkUserAuth = async () => {
+  const checkUserAuth = useCallback(async () => {
+
+    setLoggingUser(true);
     try {
-      setLoggingUser(true);
       const accessToken = localStorage.getItem("accessToken");
-      console.log("Access token retrieved:", accessToken);
-  
+
       if (accessToken) {
-        console.log("Calling getUserData with token:", accessToken);
-        const userData = await getUserData(accessToken);
-        console.log("User data retrieved:", userData);
-        if (userData) {
-          setUserData(userData);
+        const fetchedUserData = await getUserData(accessToken);
+
+        if (fetchedUserData) {
+          setUserData(fetchedUserData);
           setLoggedUser(true);
+
         } else {
-          console.log("getUserData did not return valid user data");
           throw new Error("Error retrieving user data");
         }
       } else {
-        console.log("No se encontró un AccessToken, usuario no autenticado");
         throw new Error("No se encontró un AccessToken");
       }
     } catch (error) {
-      console.log("Error in checkUserAuth:", error);
-      if (error instanceof Error) {
-        if (error.message.includes("Token Expired")) {
-          localStorage.removeItem("accessToken");
-          toast.error("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
-        } else if (error.message !== "No se encontró un AccessToken") {
-          toast.error("Ha ocurrido un error de autenticación. Inténtalo nuevamente.");
-        }
-        setUserData(null);
-        setLoggedUser(false);
-      }
+
+      handleAuthError(error);
     } finally {
       setLoggingUser(false);
-      console.log("Logging user status:", loggingUser);
+
     }
+  }, []);
+
+  const handleAuthError = (error: any) => {
+    if (error instanceof Error) {
+      if (error.message.includes("Token Expired")) {
+        localStorage.removeItem("accessToken");
+        toast.error("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
+      } else if (error.message !== "No se encontró un AccessToken" && !isLoggingOut) {
+        toast.error("Ha ocurrido un error de autenticación. Inténtalo nuevamente.");
+      }
+    }
+    setUserData(null);
+    setLoggedUser(false);
   };
-  
-  const loginUser = (accessToken: string) => {
-    console.log("Login user function called with token:", accessToken);
-    localStorage.setItem("accessToken", accessToken);
-    console.log("Access token stored:", localStorage.getItem("accessToken")); // Verificar que el token se guarde
+
+  const loginUser = (token: string) => {
+
+    localStorage.setItem("accessToken", token);
     setLoggedUser(true);
-    setTimeout(() => {
-      navigate(ModuleRoutes.MarketPage);
-    }, 0);
+    setUserData(null);
+    setLoggingUser(false);
+    checkUserAuth();
+    toast.success("Has iniciado sesión exitosamente!");
   };
+
 
   const logoutUser = () => {
-    console.log("Logout user function called");
-    localStorage.removeItem("accessToken");
+    setIsLoggingOut(true);
     setLoggedUser(false);
     setUserData(null);
-    navigate(ModuleRoutes.Login);
+    localStorage.removeItem("accessToken");
+    toast.info("Has cerrado sesión exitosamente!");
+    setIsLoggingOut(false);
+    navigate(ModuleRoutes.Home, { replace: true });
   };
 
-  useEffect(() => {
-    if (!loggedUser) {
-      console.log("checkUserAuth called in useEffect");
-      checkUserAuth();
-    }
-  }, [loggedUser]);
 
   return (
     <AuthContext.Provider
-      value={{ loggedUser, loginUser, logoutUser, loggingUser, userData }}
+      value={{ loggedUser, checkUserAuth, loggingUser, loginUser, logoutUser, setLoggingUser, userData }}
     >
       {children}
     </AuthContext.Provider>

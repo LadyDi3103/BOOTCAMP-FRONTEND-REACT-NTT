@@ -1,10 +1,10 @@
-import { render, RenderResult, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import Init from "../Init";
 import { useProducts } from "@/app/context/ProductContext";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { act } from "react";
 import { CartProvider } from "@/app/context/CartContext";
 import { mockProductsInit } from "../__mocks__/mock_init";
+import { AuthContext, AuthContextProps} from "@/app/context/AuthContext";
 
 jest.mock("@/shared/components/CategoryTitleBar/CategoryTitleBar", () => () => {
   return <div>Mocked CategoryTitleBar</div>;
@@ -21,9 +21,23 @@ jest.mock("@/app/context/ProductContext", () => ({
   useProducts: jest.fn(),
 }));
 
-const renderComponent = async (): Promise<RenderResult> => {
-  const component = await act(async () =>
-    render(
+jest.mock("@/HOC/withAuth", () => (Component: React.FC) => (props: any) => (
+  <Component {...props} />
+));
+
+const renderComponentWithAuth = (isAuthenticated: boolean) => {
+  const authValue: AuthContextProps = {
+    loggedUser: isAuthenticated,
+    userData: isAuthenticated ? { id: 1, name: "Test User" } : null,
+    loginUser: jest.fn(),
+    logoutUser: jest.fn(),
+    setLoggingUser: jest.fn(),
+    setLoggedUser: jest.fn(),
+    loggingUser: false,
+  };
+
+  return render(
+    <AuthContext.Provider value={authValue}>
       <CartProvider>
         <MemoryRouter initialEntries={["/todos-los-productos"]}>
           <Routes>
@@ -31,9 +45,8 @@ const renderComponent = async (): Promise<RenderResult> => {
           </Routes>
         </MemoryRouter>
       </CartProvider>
-    )
+    </AuthContext.Provider>
   );
-  return component;
 };
 
 beforeEach(() => {
@@ -51,14 +64,13 @@ beforeEach(() => {
         error: null,
       },
     };
-
     return mockState;
   });
 });
 
-describe("Init Component", () => {
+describe("Init Component with Authentication HOC", () => {
   test("Should render Init component", async () => {
-    const component = await renderComponent();
+    const component = renderComponentWithAuth(true);
     expect(component).toBeDefined();
   });
 
@@ -76,9 +88,14 @@ describe("Init Component", () => {
       },
     }));
 
-    await renderComponent();
-    const loader = screen.getByText("Cargando productos...");
-    expect(loader).toBeInTheDocument();
+    await act(async () => {
+      renderComponentWithAuth(true);
+    });
+
+    await waitFor(() => {
+      const loader = screen.getByText("Cargando productos...");
+      expect(loader).toBeInTheDocument();
+    });
   });
 
   test("Should display error message when error exists", async () => {
@@ -95,9 +112,14 @@ describe("Init Component", () => {
       },
     }));
 
-    await renderComponent();
-    const errorMessage = screen.getByText("Hubo un problema al cargar los productos.");
-    expect(errorMessage).toBeInTheDocument();
+    await act(async () => {
+      renderComponentWithAuth(true);
+    });
+
+    await waitFor(() => {
+      const errorMessage = screen.getByText("Hubo un problema al cargar los productos.");
+      expect(errorMessage).toBeInTheDocument();
+    });
   });
 
   test("Should render products when loading is false and there is no error", async () => {
@@ -114,7 +136,9 @@ describe("Init Component", () => {
       },
     }));
 
-    await renderComponent();
+    await act(async () => {
+      renderComponentWithAuth(true);
+    });
 
     for (const product of mockProductsInit) {
       const productElement = screen.getByText(product.title);
@@ -136,11 +160,13 @@ describe("Init Component", () => {
       },
     }));
 
-    await renderComponent();
+    await act(async () => {
+      renderComponentWithAuth(true);
+    });
+
     await waitFor(() => {
-      const noProductsMessage = screen.getByText("No hay productos disponibles.");
+      const noProductsMessage = screen.getByText("No hay productos disponibles");
       expect(noProductsMessage).toBeInTheDocument();
     });
   });
-
 });

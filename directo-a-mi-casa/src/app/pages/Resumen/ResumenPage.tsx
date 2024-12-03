@@ -88,7 +88,6 @@ const ResumenPage: React.FC = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  // Manejar cambios en el formulario
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -120,14 +119,13 @@ const ResumenPage: React.FC = () => {
     setModalMessage("Su pedido se registró con éxito");
     setSingleButton(true);
     setShowModal(true);
-    console.log("Formulario enviado:", form);
+    
     // 🔴 Este console muestra el detalle del form enviado
 
     dispatch({ type: "CLEAR_CART" });
     setForm(initialFormState);
   };
 
-  // Manejar el clic en "Cancelar Orden"
   const handleCancelOrderClick = () => {
     if (state.products.length === 0) {
       setModalMessage(

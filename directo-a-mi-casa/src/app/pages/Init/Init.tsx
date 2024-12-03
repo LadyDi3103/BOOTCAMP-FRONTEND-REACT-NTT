@@ -37,7 +37,7 @@ const Init: React.FC = () => {
             </div>
           ) : (
             <div className="no-products-message">
-              No hay productos disponibles.
+              No hay productos disponibles
             </div>
           )}
         </div>

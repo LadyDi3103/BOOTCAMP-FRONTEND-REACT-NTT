@@ -6,6 +6,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
+
 .login__header {
   margin-bottom: 20px;
   font-size: 1.5rem;
@@ -13,16 +14,35 @@
   text-align: center;
   color: #333;
 }
+
 .login__body {
   margin-bottom: 30px;
 }
 
 .login__footer {
-  margin-top: 20px;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: end;
 }
 
 .login__forgot {
   color: var(--color-primary);
+}
+
+.login__input-group {
+  margin-bottom: 20px;
+}
+
+.login__input-group--error {
+  color: var(--color-warn);
+  font-size: 0.875rem;
+  min-height: 1.25rem; 
+}
+
+.login__input-group input {
+  position: relative; 
+  height: 45px;
+  padding-right: 35px;
 }
 
 #login-btn {
@@ -44,4 +64,19 @@
 #login-btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.password-input-group {
+  position: relative;
+}
+
+.password-input-group img {
+  filter: invert(1); 
+}
+.toggle-password-icon {
+  position: absolute;
+  right: 10px;
+  top: 34%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }

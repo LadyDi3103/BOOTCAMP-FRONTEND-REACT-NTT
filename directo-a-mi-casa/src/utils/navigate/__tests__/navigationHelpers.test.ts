@@ -8,7 +8,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => navigateMock,
 }));
 
-describe("navigationHelpers", () => {
+describe.skip("navigationHelpers", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();

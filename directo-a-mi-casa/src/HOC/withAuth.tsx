@@ -1,41 +1,33 @@
 import React, { ComponentType, useContext, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "@/app/context/AuthContext";
 import { ModuleRoutes } from "@/app/routes/routes";
+import Loader from "@/shared/components/Loader/Loader";
 
-const withAuth = <P extends object>(
-  WrappedComponent: ComponentType<P>
-): React.FC<P> => {
+
+const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): React.FC<P> => {
   const WithAuth: React.FC<P> = (props) => {
-    const navigate = useNavigate();
-    const { loggedUser, userData, loggingUser } = useContext(AuthContext);
-
-    const isLoggedIn = (): boolean => {
-      console.log("isLoggedIn check - loggedUser:", loggedUser, "userData:", userData);
-      return loggedUser && !!userData;
-    };
+    const { loggedUser, userData, loggingUser, checkUserAuth } = useContext(AuthContext);
 
     useEffect(() => {
-      console.log("withAuth useEffect - loggingUser:", loggingUser, "loggedUser:", loggedUser);
-      if (!loggingUser && !loggedUser) {
-        console.log("User not logged in, navigating to login");
-        navigate(ModuleRoutes.Login); 
+      if (!loggedUser && !loggingUser) {
+        
+        checkUserAuth();
       }
-    }, [loggingUser, loggedUser, navigate]);
+    }, [loggedUser, loggingUser, checkUserAuth]);
 
-    if (loggingUser) {
-      console.log("Logging in progress, showing loading state");
-      return <div>Cargando...</div>;
+    if (loggingUser ) {
+      
+      return <Loader />;
     }
 
-    if (!isLoggedIn()) {
-      console.log("User is not logged in or user data is missing, returning null");
+    if (!loggedUser || !userData) {
+      
+      window.location.href = ModuleRoutes.Login;
       return null;
     }
-
-    console.log("User is logged in, rendering component:", WrappedComponent.name);
-    return <WrappedComponent {...props} />;
-  };
+      
+      return <WrappedComponent {...props} />;
+    }
 
   return WithAuth;
 };

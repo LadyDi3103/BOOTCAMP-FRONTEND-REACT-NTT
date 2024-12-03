@@ -1,4 +1,5 @@
 import React from 'react';
+import "./CategoriesSection.css"; 
 
     const categories = [
         {

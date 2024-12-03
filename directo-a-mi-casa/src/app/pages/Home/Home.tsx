@@ -1,23 +1,17 @@
 import "../Home/Home.css";
-import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import Carousel from "../../../components/Carousel/Carousel";
-import CategoriesSection from "../../../components/CategorySection/CategoriesSection";
-import CategoryItem from "../../../components/CategoryItem/CategoryItem";
+import CategoriesSection from "../../../shared/components/CategorySection/CategoriesSection";
+import CategoriesList from "../../../shared/components/CategoryItem/CategoryList";
+import CallToAction from "@/shared/components/CallToAction/CallToAction";
+
 
 const Home = () => {
     return (
         <main>
-
             <CallToAction />
-
             <Carousel />
-
-            <CategoryItem />
-
+            <CategoriesList />
             <CategoriesSection />
-
-
-
         </main>
     );
 };

@@ -28,7 +28,7 @@ const ReusablePagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         onClick={() => requestPage(currentPage - 1, pageCount)}
       >
-       <img src="/src/assets/images/icons/arrow_back.svg" alt="botón para mirar los siguientes cards"/>
+      <img src="/src/assets/images/icons/arrow_back.svg" alt="botón para mirar los siguientes cards"/>
       </button>
 
       {Array.from(
@@ -56,5 +56,6 @@ const ReusablePagination: React.FC<PaginationProps> = ({
     </div>
   );
 };
+
 
 export default ReusablePagination;
