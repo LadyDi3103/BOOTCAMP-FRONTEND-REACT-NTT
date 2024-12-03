@@ -1,4 +1,5 @@
 import React from 'react';
+import './CategoryList.css';
 
 const categories = [
     { icon: '/src/assets/images/categories/fruta.svg', alt: 'Frutas', name: 'Frutas' },

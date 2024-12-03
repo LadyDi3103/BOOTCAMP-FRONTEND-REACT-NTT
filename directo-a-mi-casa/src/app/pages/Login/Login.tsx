@@ -9,6 +9,8 @@ import ModalForgot from "@/components/ModalForgotPassword/ModalForgotPassword";
 import { useNavigate } from "react-router-dom";
 import { ModuleRoutes } from "@/app/routes/routes";
 import { AuthContext } from "@/app/context/AuthContext";
+import eyeIcon from "@/assets/images/icons/visibility.svg";
+import eyeOffIcon from "@/assets/images/icons/visibility_off.svg";
 
 const initialValues = () => {
     return {
@@ -32,12 +34,12 @@ const validationSchema = () => {
     });
 };
 
-const Login = () => {
-    const [logging, setLogging] = useState(false);
+const LoginPage = () => {
     const [openModalForgot, setOpenModalForgot] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
-    const { loginUser } = useContext(AuthContext);
+    const { loggingUser, loginUser } = useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -48,15 +50,12 @@ const Login = () => {
 
     const submitLogin = async (username: string, password: string) => {
         try {
-            setLogging(true);
             const loginData = await login(username.trim(), password.trim());
             loginUser(loginData.accessToken);
-            navigate(ModuleRoutes.MarketPage);
-            setLogging(false);
+            navigate(ModuleRoutes.MarketPage, { replace: true });
         } catch (error) {
-            setLogging(false);
             if (error instanceof Error) {
-                console.log("Error:", error.message);
+                
                 toast.error(error.message);
             }
         }
@@ -66,46 +65,52 @@ const Login = () => {
         setOpenModalForgot(!openModalForgot);
     };
 
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <main className="login">
             <h1 className="login__header">Iniciar sesión</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="login__body">
-                    <div className="input-group">
+                    <div className="login__input-group">
                         <Input
                             name="username"
                             placeholder="Nombre de usuario"
                             onChange={formik.handleChange}
                             value={formik.values.username}
                         />
-                        {formik.errors.username && (
-                            <span className="input-group__error">
-                                {formik.errors.username}
-                            </span>
-                        )}
+                        <div className="login__input-group--error">
+                            {formik.errors.username}
+                        </div>
                     </div>
-                    <div className="input-group">
+                    <div className="login__input-group password-input-group">
                         <Input
                             name="password"
                             placeholder="Contraseña"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             onChange={formik.handleChange}
                             value={formik.values.password}
                         />
-                        {formik.errors.password && (
-                            <span className="input-group__error">
-                                {formik.errors.password}
-                            </span>
-                        )}
+                        <img
+                            src={showPassword ? eyeIcon : eyeOffIcon}
+                            alt="Toggle password visibility"
+                            className="toggle-password-icon"
+                            onClick={toggleShowPassword}
+                        />
+                        <div className="login__input-group--error">
+                            {formik.errors.password}
+                        </div>
                     </div>
                 </div>
                 <button
                     id="login-btn"
                     className="btn-load-products"
                     type="submit"
-                    disabled={logging}
+                    disabled={loggingUser}
                 >
-                    {logging ? "Iniciando sesión" : "Iniciar sesión"}
+                    {loggingUser ? "Iniciando sesión" : "Iniciar sesión"}
                 </button>
                 <div className="login__footer">
                     <a
@@ -125,4 +130,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginPage;

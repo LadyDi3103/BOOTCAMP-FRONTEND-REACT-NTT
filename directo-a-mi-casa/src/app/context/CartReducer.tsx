@@ -21,19 +21,14 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
 
   switch (action.type) {
 
-    case "ADD_PRODUCT": {   
+    case "ADD_PRODUCT": {
       const existingProduct = state.products.find(
         (product) => product.id === action.product.id
       );
 
       if (existingProduct) {
         return {
-          ...state,
-          products: state.products.map((product) =>
-            product.id === action.product.id
-              ? { ...product, quantity: (product.quantity || 1) + 1 }
-              : product
-          ),
+          ...state
         };
       }
 
@@ -69,9 +64,9 @@ export const cartReducer = (state: CartState, action: Action): CartState => {
         products: state.products.map((product) =>
           product.id === action.productId
             ? {
-                ...product,
-                quantity: Math.max((product.quantity || 1) - 1, 1), // No permitir cantidades menores a 1
-              }
+              ...product,
+              quantity: Math.max((product.quantity || 1) - 1, 1), // Mínimo 1
+            }
             : product
         ),
       };

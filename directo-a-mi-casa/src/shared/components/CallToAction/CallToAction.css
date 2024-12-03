@@ -1,0 +1,25 @@
+.cta {
+    background-color: var(--color-warn);
+    text-align: center;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55px;
+    z-index: 0;
+    position: relative;
+    margin-top: 5rem;
+}
+
+.cta h1 {
+    color: var(--color-text-light);
+    font-size: 18px;
+    letter-spacing: 0.1rem;
+}
+
+.cta span {
+    background-color: var(--color-accent);
+    height: 38px !important;
+    border-radius: 15px;
+    padding: 0 10px;
+}

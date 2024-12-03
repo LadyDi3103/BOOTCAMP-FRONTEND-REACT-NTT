@@ -12,7 +12,6 @@ import OrderForm from '../../../components/OrderForm/OrderForm';
 import { useNavigate } from "react-router-dom";
 import withAuth from "@/HOC/withAuth";
 
-// Estado inicial del formulario
 const initialFormState: FormState = {
   nombre: '',
   apellidos: '',
@@ -22,7 +21,7 @@ const initialFormState: FormState = {
   celular: '',
 };
 
-// Normaliza un producto asegurando valores predeterminados
+
 const normalizeProduct = (product: Partial<Product>): Product => ({
   id: product.id || 0,
   title: product.title || '',
@@ -77,7 +76,7 @@ const ResumenPage: React.FC = () => {
     }
   };
 
-  // Manejar cambios en el formulario
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -88,7 +87,6 @@ const ResumenPage: React.FC = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  // Manejar cambios en el formulario
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -120,14 +118,13 @@ const ResumenPage: React.FC = () => {
     setModalMessage("Su pedido se registró con éxito");
     setSingleButton(true);
     setShowModal(true);
-    console.log("Formulario enviado:", form);
+    
     // 🔴 Este console muestra el detalle del form enviado
 
     dispatch({ type: "CLEAR_CART" });
     setForm(initialFormState);
   };
 
-  // Manejar el clic en "Cancelar Orden"
   const handleCancelOrderClick = () => {
     if (state.products.length === 0) {
       setModalMessage(

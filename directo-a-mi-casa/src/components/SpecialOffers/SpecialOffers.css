@@ -1,0 +1,53 @@
+
+/* Sección de ofertas especiales */
+.special-offers {
+    background-color: var(--color-surface);
+    text-align: center;
+    border-radius: 25px;
+    margin: 3rem;
+    padding-bottom: 0.5rem;
+    flex-direction: column;
+  }
+  
+  .special-offers h2 {
+    font-size: 20px;
+  }
+  
+  /* Encabezado de las ofertas con el temporizador */
+  .offers-header {
+    background-color: var(--color-warn);
+    color: var(--color-text-light);
+    padding: 15px 20px;
+    border-radius: 25px 25px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .offers-header h2 {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .clock-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .timer {
+    display: flex;
+    gap: 10px;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .timer span {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 5px 10px;
+    border-radius: 5px;
+  }

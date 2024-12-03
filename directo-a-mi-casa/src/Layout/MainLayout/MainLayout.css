@@ -1,0 +1,11 @@
+.Toastify__toast-container {
+    position: fixed; 
+    top: 65px; 
+    transform: translateX(-50%);
+    z-index: 9999; 
+    pointer-events: none;
+  }
+
+  .Toastify__toast-container--top-right{
+    margin-top: 3.5rem;
+  }

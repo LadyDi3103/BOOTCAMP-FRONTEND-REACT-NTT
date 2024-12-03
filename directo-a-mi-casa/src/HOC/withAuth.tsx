@@ -1,40 +1,41 @@
-import React, { ComponentType, useContext, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { ComponentType, useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
-import { ModuleRoutes } from "@/app/routes/routes";
+import Loader from "@/shared/components/Loader/Loader";
+import { useNavigate } from "react-router-dom";
 
-const withAuth = <P extends object>(
-  WrappedComponent: ComponentType<P>
-): React.FC<P> => {
+const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): React.FC<P> => {
   const WithAuth: React.FC<P> = (props) => {
+    const { loggedUser, loggingUser, sessionValidated , checkUserAuth } = useContext(AuthContext);
+    const [authChecked, setAuthChecked] = useState(false);
     const navigate = useNavigate();
-    const { loggedUser, userData, loggingUser } = useContext(AuthContext);
-
-    const isLoggedIn = (): boolean => {
-      console.log("isLoggedIn check - loggedUser:", loggedUser, "userData:", userData);
-      return loggedUser && !!userData;
-    };
 
     useEffect(() => {
-      console.log("withAuth useEffect - loggingUser:", loggingUser, "loggedUser:", loggedUser);
-      if (!loggingUser && !loggedUser) {
-        console.log("User not logged in, navigating to login");
-        navigate(ModuleRoutes.Login); 
+      const verifyAuth = async () => {
+      if (!authChecked && !loggedUser && !sessionValidated) {
+        await checkUserAuth();
+        setAuthChecked(true);
+      }  else if (loggedUser) {
+        setAuthChecked(true);
+      };
+    }
+    verifyAuth();
+  }, [sessionValidated, authChecked, loggedUser, checkUserAuth]);
+  
+
+    useEffect(() => {
+      if (authChecked && sessionValidated && !loggedUser) {
+        navigate("/login", { replace: true });
       }
-    }, [loggingUser, loggedUser, navigate]);
+    }, [authChecked, sessionValidated, loggedUser, navigate]);
 
-    if (loggingUser) {
-      console.log("Logging in progress, showing loading state");
-      return <div>Cargando...</div>;
+    if (loggingUser || !sessionValidated || !authChecked) {
+      return <Loader />;
     }
 
-    if (!isLoggedIn()) {
-      console.log("User is not logged in or user data is missing, returning null");
-      return null;
+    if (loggedUser) {
+      return <WrappedComponent {...props} />;
     }
-
-    console.log("User is logged in, rendering component:", WrappedComponent.name);
-    return <WrappedComponent {...props} />;
+    return <Loader />;
   };
 
   return WithAuth;

@@ -1,7 +1,8 @@
-import React, { createContext, useReducer, ReactNode, useContext } from 'react';
+import React, { createContext, useReducer, ReactNode, useContext, useEffect } from 'react';
 import { CartState, initialState, cartReducer } from './CartReducer';
 import { Product } from '../domain/Product';
 import { Action } from '../domain/cartActions.types';
+import { toast } from "react-toastify";
 
 export interface CartContextProps {
   state: CartState;
@@ -13,7 +14,16 @@ export interface CartContextProps {
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [state, dispatch] = useReducer(cartReducer, loadInitialState());
+
+  function loadInitialState(): CartState {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : initialState;
+  }
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(state));
+  }, [state]);
 
   const addProduct = (newProduct: Product) => {
     if (!newProduct || !newProduct.id) {
@@ -21,7 +31,14 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return;
     }
 
+    const existingProduct = getProductById(newProduct.id);
+    if (existingProduct) {
+      toast.info("Este producto ya está en tu carrito.");
+      return;
+    }
+
     dispatch({ type: "ADD_PRODUCT", product: newProduct });
+    toast.success(`${newProduct.title} se agregó al carrito.`);
   };
 
   /**

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "./CallToAction.css"; 
 /**
  * Componente CallToAction
  * Muestra un mensaje destacado para incentivar pedidos rápidos con entrega desde 2 horas.

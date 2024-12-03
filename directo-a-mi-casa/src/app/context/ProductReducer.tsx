@@ -1,6 +1,5 @@
 import { ProductState, ProductAction } from "../domain/Product";
 
-// Estado inicial del contexto de productos
 export const initialProductState: ProductState = {
     products: [],
     allProducts: [],
@@ -12,7 +11,6 @@ export const initialProductState: ProductState = {
     error: null,
 };
 
-// Reducer para manejar las acciones sobre el estado de productos
 export const productReducer = (
     state: ProductState,
     action: ProductAction

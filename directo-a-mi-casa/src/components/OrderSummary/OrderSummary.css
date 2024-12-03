@@ -1,0 +1,121 @@
+.cart-table__scroll {
+    max-height: 350px;
+    overflow-y: auto;
+    background-color: var(--color-white);
+}
+
+.cart-table__scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.cart-table__scroll::-webkit-scrollbar-thumb {
+    background-color: var(--color-secondary);
+    border-radius: 4px;
+}
+
+.cart-table__scroll::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-hover);
+}
+
+.cart-table__body {
+    width: 100%;
+}
+
+.cart-table__body-row {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.cart-table__body-cell {
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid var(--color-surface);
+    word-wrap: break-word;
+}
+
+.order-summary {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-background);
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.order-summary table {
+    height: 100%;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-summary table th,
+.order-summary table td {
+    text-align: center;
+    border: 1px solid var(--color-surface);
+}
+
+.order-summary table th {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    width: 20%;
+    padding: 10px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--padding-small);
+}
+
+.quantity-btn {
+    padding: var(--padding-small);
+    background-color: var(--color-secondary);
+    border: none;
+    color: var(--color-text-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1.2rem;
+    height: 50px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background-color: var(--color-hover);
+    transform: scale(1.1);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.delete-btn {
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.delete-btn img {
+    height: 25px;
+    width: 23px;
+}
+
+.delete-btn:hover {
+    opacity: 0.9;
+    background-color: var(--color-hover-light);
+    transform: scale(1.1);
+}
+
+.total-container {
+    text-align: right;
+    font-size: 18px;
+    color: var(--color-primary);
+    padding: 10px;
+    background-color: var(--color-surface-light);
+    border-top: 1px solid var(--color-surface);
+}

@@ -1,3 +1,5 @@
+import "./Footer.css"; 
+
 /**
  * Componente Footer
  * Muestra el pie de página de la aplicación con información de contacto, enlaces legales y redes sociales.

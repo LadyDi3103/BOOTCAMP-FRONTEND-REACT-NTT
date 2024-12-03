@@ -1,0 +1,38 @@
+/* Category Items */
+.categories {
+    display: flex;
+    margin: 30px 10px;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .category-item {
+    flex: 0 0 auto;
+    text-align: center;
+    scroll-snap-align: center;
+    width: 150px;
+  }
+  
+  .category-item p {
+    margin-bottom: 1.5rem;
+    color: var(--color-text-dark);
+  }
+  
+  .category-icon {
+    width: 120px;
+    height: 120px;
+    background-color: var(--color-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .categories {
+      justify-content: center;
+    }
+}
