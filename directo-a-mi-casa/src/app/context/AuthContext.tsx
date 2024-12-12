@@ -1,3 +1,4 @@
+// faltan tests en los contextos, y no debes tener c'odigo comentado
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthContextProps {

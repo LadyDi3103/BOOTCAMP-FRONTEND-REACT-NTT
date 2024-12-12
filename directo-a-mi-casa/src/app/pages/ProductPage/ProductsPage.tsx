@@ -55,6 +55,7 @@ const productDetails = state?.productDetails?.[0] || null;
               {/* Botón para agregar al carrito */}
               <button
                 className="btn_order__submit"
+                // hay error de tipado
                 onClick={() => addProduct(selectedProduct)}
                 disabled={!state.productDetails}
               >
