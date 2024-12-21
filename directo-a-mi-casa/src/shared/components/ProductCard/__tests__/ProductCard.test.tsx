@@ -28,20 +28,20 @@ jest.mock("@/app/context/CartContext", () => ({
 const navigateMock = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useNavigate:() => navigateMock,
-  }));
+  useNavigate: () => navigateMock,
+}));
 
-const renderComponent = async(): Promise<RenderResult> => {
-  const component = await act (async () => 
-    render(<ProductCard product = {productResponseMock} />)
-);
+const renderComponent = async (): Promise<RenderResult> => {
+  const component = await act(async () =>
+    render(<ProductCard product={productResponseMock} />)
+  );
 
   return component;
 }
 
 const { title } = productResponseMock;
 
-describe.skip("ProductCard Component", () => {
+describe("ProductCard Component", () => {
 
   it("should render ProductCard component", async () => {
     await renderComponent();
@@ -74,23 +74,25 @@ describe.skip("ProductCard Component", () => {
   });
 
   it("should log error if product properties are missing", async () => {
-    const incompleteProduct = { title: "Incomplete Product" }; 
-    jest.spyOn(console, "error").mockImplementation(() => {}); 
-  
+    const incompleteProduct = { title: "Producto incompleto" };
+
+    jest.spyOn(console, "error").mockImplementation(() => { });
+
     const { container } = render(<ProductCard product={incompleteProduct as Product} />);
-  
+
     expect(console.error).toHaveBeenCalledWith(
-      "Faltan propiedades en el producto:",
+      "Faltan propiedades esenciales en el producto:",
       incompleteProduct
     );
 
-    expect(container.querySelector(".product-price")?.textContent).toBe("S/ N/A");
-  
+    expect(container.querySelector(".product-name")?.textContent).toBe("Producto incompleto");
+    expect(container.querySelector(".product-price")?.textContent).toBe("S/ 0.00");
+
     (console.error as jest.Mock).mockRestore();
   });
 
   it("should log an error when image fails to load", async () => {
-    jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(console, "error").mockImplementation(() => { });
 
     await renderComponent();
 
@@ -103,6 +105,6 @@ describe.skip("ProductCard Component", () => {
 
     (console.error as jest.Mock).mockRestore();
   });
-  
+
 
 });

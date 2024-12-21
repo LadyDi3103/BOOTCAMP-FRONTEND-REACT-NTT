@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CallToAction Component Should match snapshot 1`] = `
+<div>
+  <section
+    aria-labelledby="cta-title"
+    class="cta"
+  >
+    <h1
+      id="cta-title"
+    >
+      HAZ TU PEDIDO Y RECÍBELO DESDE 
+      <span
+        class="hours"
+      >
+        2 HORAS
+      </span>
+    </h1>
+  </section>
+</div>
+`;

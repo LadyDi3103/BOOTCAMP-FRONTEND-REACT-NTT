@@ -9,3 +9,8 @@
   .Toastify__toast-container--top-right{
     margin-top: 3.5rem;
   }
+
+  .mainLayout__container{
+    height: calc(100vh -(var(--navbar-height)));
+    margin-top: var(--navbar-height);
+  }

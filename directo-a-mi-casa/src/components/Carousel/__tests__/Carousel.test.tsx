@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Carousel from "../Carousel";
 
-describe.skip("Carousel Component", () => {
+describe("Carousel Component", () => {
     test("should render the mobile image correctly", () => {
         render(<Carousel />);
 
@@ -31,6 +31,11 @@ describe.skip("Carousel Component", () => {
 
         const brokenImage = screen.getByAltText("");
         expect(brokenImage).toHaveAttribute("src", "/src/assets/images/carousel/non-existent-image.svg");
+    });
+
+    test("Should match snapshot", () => {
+        const { container } = render(<Carousel />);
+        expect(container).toMatchSnapshot();
     });
 });
 

@@ -1,38 +1,29 @@
 import { render, screen } from "@testing-library/react";
-import CategoriesList from "../CategoryList";
+import CategoriesList, { categories } from "../CategoryList";
 
+describe("CategoriesList Component", () => {
+  beforeEach(() => {
+    jest.resetModules();
+  });
 
-jest.mock('../CategoryList', () => ({
-  ...jest.requireActual('../CategoryList'),
-  categories: [], 
-}));
+  test("should render 'No hay categorias disponibles' when no categories exist", () => {
+    categories.length = 0;
 
-describe.skip("CategoriesList Component", () => {
-  test("should render 'No categories available' when no categories exist", () => {
     render(<CategoriesList />);
-
-    const noCategoriesMessage = screen.queryByText("no categories available");
+    const noCategoriesMessage = screen.getByText("No hay categorias disponibles");
     expect(noCategoriesMessage).toBeInTheDocument();
   });
 
-  test("should render all categories correctly (happy path)", () => {
+  test("should render all categories correctly", () => {
+    categories.splice(0, categories.length, 
+      { icon: "/fruta.svg", alt: "Frutas", name: "Frutas" },
+      { icon: "/vegetales.svg", alt: "Vegetales", name: "Vegetales" },
+      { icon: "/compras.svg", alt: "Conservas", name: "Conservas" },
+      { icon: "/detergente.svg", alt: "Detergentes", name: "Detergentes" }
+    );
+
     render(<CategoriesList />);
-
-    const categories = [
-      { alt: "Frutas", name: "Frutas" },
-      { alt: "Vegetales", name: "Vegetales" },
-      { alt: "Conservas", name: "Conservas" },
-      { alt: "Detergentes", name: "Detergentes" },
-    ];
-
-    categories.forEach((category) => {
-
-      const categoryImage = screen.getByAltText(category.alt);
-      expect(categoryImage).toBeInTheDocument();
-
-
-      const categoryName = screen.getByText(category.name);
-      expect(categoryName).toBeInTheDocument();
-    });
+    const categoryItems = screen.getAllByRole("img");
+    expect(categoryItems).toHaveLength(4);
   });
 });

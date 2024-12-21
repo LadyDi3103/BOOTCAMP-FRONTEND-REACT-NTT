@@ -37,41 +37,89 @@ const OrderForm: React.FC<OrderFormProps> = ({
                     </div>
                 </div>
 
-                {Object.keys(form).map((field) => (
-                    <div className="form-group" key={field}>
-                        <label htmlFor={field}>
-                            {field.charAt(0).toUpperCase() + field.slice(1)}
-                        </label>
-                        {field === 'distrito' ? (
+                <div className='form__container'>
+                    {/* Nombre y Apellidos */}
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="nombre">Nombre</label>
+                            <input
+                                id="nombre"
+                                name="nombre"
+                                value={form.nombre}
+                                onChange={onChange}
+                            />
+                            {errors.nombre && <div className="error-message">{errors.nombre}</div>}
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="apellidos">Apellidos</label>
+                            <input
+                                id="apellidos"
+                                name="apellidos"
+                                value={form.apellidos}
+                                onChange={onChange}
+                            />
+                            {errors.apellidos && <div className="error-message">{errors.apellidos}</div>}
+                        </div>
+                    </div>
+
+                    {/* Celular y Distrito */}
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="celular">Celular</label>
+                            <input
+                                id="celular"
+                                name="celular"
+                                type="tel"
+                                value={form.celular}
+                                onChange={onChange}
+                            />
+                            {errors.celular && <div className="error-message">{errors.celular}</div>}
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="distrito">Distrito</label>
                             <select
-                                id={field}
-                                name={field}
-                                value={form[field as keyof FormState]}
+                                id="distrito"
+                                name="distrito"
+                                value={form.distrito}
                                 onChange={onChange}
                             >
                                 <option value="">Seleccione un distrito</option>
-                                {districts.map((district:District) => (
+                                {districts.map((district) => (
                                     <option key={district.id} value={district.name}>
                                         {district.name}
                                     </option>
                                 ))}
                             </select>
-                        ) : (
-                            <input
-                                id={field}
-                                type={field === 'celular' ? 'tel' : 'text'}
-                                name={field}
-                                value={form[field as keyof FormState]}
-                                onChange={onChange}
-                            />
-                        )}
-                        {errors[field as keyof FormState] && (
-                            <span className="error-message">
-                                {errors[field as keyof FormState]}
-                            </span>
-                        )}
+                            {errors.distrito && <div className="error-message">{errors.distrito}</div>}
+                        </div>
                     </div>
-                ))}
+
+                    {/* Dirección y Referencia */}
+                    <div className="form-group full-width">
+                        <label htmlFor="direccion">Dirección</label>
+                        <input
+                            id="direccion"
+                            name="direccion"
+                            value={form.direccion}
+                            onChange={onChange}
+                        />
+                        {errors.direccion && <div className="error-message">{errors.direccion}</div>}
+                    </div>
+
+                    <div className="form-group full-width">
+                        <label htmlFor="referencia">Referencia</label>
+                        <input
+                            id="referencia"
+                            name="referencia"
+                            value={form.referencia}
+                            onChange={onChange}
+                        />
+                        {errors.referencia && <div className="error-message">{errors.referencia}</div>}
+                    </div>
+                </div>
+
+
+
 
                 <div className="btn__form">
                     <button

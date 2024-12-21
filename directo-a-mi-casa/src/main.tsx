@@ -14,17 +14,19 @@ import MainLayout from './Layout/MainLayout/MainLayout.tsx';
 createRoot(document.getElementById('root') as HTMLElement).render(
   // <StrictMode>
 
-      <BrowserRouter basename="/">
-      <AuthProvider>
-        <ProductProvider>
-          <CartProvider>
-            <MainLayout>
+  <BrowserRouter basename="/">
+    <AuthProvider>
+      <ProductProvider>
+        <CartProvider>
+          <MainLayout>
             <App />
-            </MainLayout>
-          </CartProvider>
-        </ProductProvider>
-      </AuthProvider>
-    </BrowserRouter>
+          </MainLayout>
+        </CartProvider>
+      </ProductProvider>
+    </AuthProvider>
+  </BrowserRouter>
 
   // </StrictMode>,
 );
+
+

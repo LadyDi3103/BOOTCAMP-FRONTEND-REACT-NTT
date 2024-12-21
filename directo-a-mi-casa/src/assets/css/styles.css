@@ -1,12 +1,10 @@
-/*CSS (Mobile-First)*/
-
 :root {
   /* Colores primarios */
-  --color-primary: #4f1a0f;
+  --color-primary: #4F1A0f;
 
-  --color-secondary: #b3b826;
+  --color-secondary: #B3B826;
 
-  --color-accent: #f7b32c;
+  --color-accent: #D68101;
 
   --secondary-transparent: #2c3e76;
 
@@ -33,7 +31,7 @@
   --color-warn: #cc292e;
 
   /* Tipografía */
-  --color-text-light: white;
+  --color-text-light: #ffffff;
   --color-text-dark: #4f1a0f;
   --color-text-dark-lighter: #666;
 
@@ -64,7 +62,7 @@ body {
 }
 
 .input-group__error {
-  color: var( --color-warn);
+  color: var(--color-warn);
   text-align: left;
 }
 
@@ -95,12 +93,13 @@ body {
 /* Estilos de las tarjetas de productos */
 .products-container {
   display: grid;
-  gap: 15px;
+  gap: 30px;
   justify-content: center;
   align-items: start;
   margin: 20px auto;
-  padding: 0 15px;
+  padding: 0 50px;
 }
+
 
 #dynamic-products {
   display: none;
@@ -111,6 +110,7 @@ body {
   justify-content: space-between;
   padding: 0.5rem;
 }
+
 .category-title-wrapper {
   display: flex;
   justify-content: space-between;
@@ -147,88 +147,7 @@ body {
   height: 20px;
 }
 
-.product-card {
-  background-color: var(--color-background);
-  border: 2px solid var(--color-accent);
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  height: 380px;
-}
 
-.product-card img {
-  height: 200px;
-  width: auto;
-}
-
-.product-price-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.product-price {
-  padding: 5px;
-  font-size: 18px;
-  color: var(--color-primary);
-  font-weight: bold;
-  border: 2px solid var(--color-primary);
-  height: 38px;
-  border-radius: 10px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.product-name {
-  color: var(--color-text-dark);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  max-width: 85%;
-  font-size: 16px;
-  display: block;
-}
-
-.add-to-cart {
-  background-color: var(--color-accent);
-  color: var(--color-text-light);
-  border: none;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  width: 220px;
-  height: 40px;
-  font-size: 1rem;
-}
-
-.add-to-cart img {
-  width: 24px;
-  height: 24px;
-}
-
-.add-to-cart:hover {
-  background-color: var(--color-hover);
-}
-
-.no-products-message {
-  text-align: center;
-  font-size: 18px;
-  color: #666;
-  margin: 20px 0;
-  font-weight: bold;
-  height: 10.3rem;
-}
 
 /* celular mediano */
 @media (min-width: 480px) and (max-width: 767px) {
@@ -237,10 +156,6 @@ body {
     display: none;
   }
 
-  .product-card {
-    padding: 15px;
-    font-size: 0.9rem;
-  }
 }
 
 /* Tablet */
@@ -343,13 +258,19 @@ body {
     height: 20px;
   }
 
-  
+
 }
 
 @media (min-width: 1300px) {
   .products-container {
     width: 90%;
-    max-width: 1400px;
+    max-width: 1100px;
   }
 
+}
+
+@media (min-width: 1400px) {
+  .products-container {
+  grid-template-columns: repeat(4, 1fr)
+  }
 }

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Page Should match snapshot 1`] = `
+<div>
+  <main>
+    <div
+      data-testid="call-to-action"
+    >
+      CallToAction
+    </div>
+    <div
+      data-testid="carousel"
+    >
+      Carousel
+    </div>
+    <div
+      data-testid="categories"
+    >
+      CategoriesList
+    </div>
+    <div
+      data-testid="categories-section"
+    >
+      CategoriesSection
+    </div>
+  </main>
+</div>
+`;

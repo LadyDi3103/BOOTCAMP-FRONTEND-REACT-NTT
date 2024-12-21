@@ -32,7 +32,12 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
         dispatch({ type: "SET_CATEGORIES", payload: categories });
         dispatch({ type: "SET_SPECIAL_OFFERS", payload: topOffers });
       } catch (error) {
-        dispatch({ type: "SET_ERROR", payload: error.message });
+        if (error instanceof Error) {
+          dispatch({ type: "SET_ERROR", payload: error.message });
+          console.error("Error al cargar detalles del producto:", error.message);
+        } else {
+          dispatch({ type: "SET_ERROR", payload: "Error desconocido" });
+        }
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }
@@ -51,8 +56,12 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
       const data: ProductDetails = await productRequest.fetchSingleProduct(productId);
       dispatch({ type: "SET_PRODUCT_DETAILS", payload: data });
     } catch (error) {
-      dispatch({ type: "SET_ERROR", payload: error.message });
-      console.error("Error al cargar detalles del producto:", error);
+      if (error instanceof Error) {
+        dispatch({ type: "SET_ERROR", payload: error.message });
+        console.error("Error al cargar detalles del producto:", error.message);
+      } else {
+        dispatch({ type: "SET_ERROR", payload: "Error desconocido" });
+      }
     } finally {
       dispatch({ type: "SET_LOADING", payload: false });
     }
@@ -69,8 +78,12 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
 
       dispatch({ type: "SET_FILTERED_PRODUCTS", payload: data });
     } catch (error) {
-      console.error("Error al cargar productos por categoría:", error);
-      dispatch({ type: "SET_ERROR", payload: error.message });
+      if (error instanceof Error) {
+        dispatch({ type: "SET_ERROR", payload: error.message });
+        console.error("Error al cargar detalles del producto:", error.message);
+      } else {
+        dispatch({ type: "SET_ERROR", payload: "Error desconocido" });
+      }
     } finally {
       dispatch({ type: "SET_LOADING", payload: false });
     }

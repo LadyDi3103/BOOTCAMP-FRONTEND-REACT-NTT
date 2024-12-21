@@ -11,7 +11,8 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "clearcache": "jest --clearCache",
-    "test:file": "jest --watchAll --collectCoverageFrom='src/**/*.{js,jsx}'"
+    "test:file": "jest --watchAll --collectCoverageFrom='src/**/*.{js,jsx}'",
+    "test:update": "jest --updateSnapshot"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -19,7 +20,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.2",
-    "react-router-dom": "^6.28.0",
+    "react-router-dom": "^7.0.2",
     "react-toastify": "^10.0.6",
     "sweetalert2": "^11.14.5",
     "yup": "^1.4.0"

@@ -2,7 +2,6 @@ footer {
     background-color: var(--color-primary);
     color: var(--color-text-light);
     text-align: center;
-    margin-top: 2rem;
   }
   
   .footer-content {

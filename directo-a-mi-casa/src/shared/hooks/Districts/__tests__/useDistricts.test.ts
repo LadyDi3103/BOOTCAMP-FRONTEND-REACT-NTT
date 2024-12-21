@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { useDistricts } from "../useDistricts";
 
-describe.skip("useDistricts Hook", () => {
+describe("useDistricts Hook", () => {
     it("should return the correct list of districts", () => {
         const { result } = renderHook(() => useDistricts());
 

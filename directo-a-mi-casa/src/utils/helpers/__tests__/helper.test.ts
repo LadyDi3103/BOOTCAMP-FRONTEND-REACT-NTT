@@ -1,7 +1,7 @@
 import { mockProducts } from "../__mocks__/mock_product";
 import { filterProducts, getTopNLowestPricedProducts } from "../helpers";
 
-describe.skip("Helper Functions", () => {
+describe("Helper Functions", () => {
     describe("filterProducts", () => {
         it("should return all products if query is empty", () => {
             const result = filterProducts(mockProducts, "");
@@ -18,6 +18,7 @@ describe.skip("Helper Functions", () => {
                     thumbnail:
                         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
                     category: "beauty",
+                    discountPercentage: 10,
                 },
             ]);
         });
@@ -37,6 +38,7 @@ describe.skip("Helper Functions", () => {
                     thumbnail:
                         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
                     category: "beauty",
+                    discountPercentage: 10,
                 },
             ]);
         });
@@ -63,6 +65,7 @@ describe.skip("Helper Functions", () => {
                     thumbnail:
                         "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png",
                     category: "beauty",
+                    discountPercentage: 10,
                 },
                 {
                     id: 1,
@@ -71,6 +74,7 @@ describe.skip("Helper Functions", () => {
                     thumbnail:
                         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
                     category: "beauty",
+                    discountPercentage: 10,
                 },
                 {
                     id: 4,
@@ -79,6 +83,7 @@ describe.skip("Helper Functions", () => {
                     thumbnail:
                         "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png",
                     category: "beauty",
+                    discountPercentage: 10,
                 },
             ]);
         });

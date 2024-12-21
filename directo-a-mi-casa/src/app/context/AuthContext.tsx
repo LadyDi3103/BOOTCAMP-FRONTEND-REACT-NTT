@@ -39,9 +39,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [state, setState] = useState<AuthState>(initialAuthState);
   const navigate = useNavigate();
-
+  const [isFetching, setIsFetching] = useState(false);
+  
   useEffect(() => {
-    const initAuthCheck = async () => {
+    const initAuth = async () => {
       const token = localStorage.getItem("accessToken");
       if (token) {
         await checkUserAuth();
@@ -49,19 +50,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         setState((prev) => ({ ...prev, sessionValidated: true }));
       }
     };
-    initAuthCheck();
+    initAuth();
   }, []);
-
-
 
 
   const checkUserAuth = async () => {
 
-    if (state.loggingUser || state.sessionValidated) {
+    if (state.loggingUser || state.sessionValidated || isFetching) {
       return;
     }
 
+    setIsFetching(true);
     setState((prev) => ({ ...prev, loggingUser: true }));
+
     try {
       const accessToken = localStorage.getItem("accessToken");
 
@@ -71,7 +72,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
 
       const fetchedUserData = await getUserData(accessToken);
-
       if (fetchedUserData) {
         setState({
           loggedUser: true,
@@ -86,9 +86,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       handleAuthError(error);
     } finally {
       setState((prev) => ({ ...prev, loggingUser: false }));
-    };
-  }
-
+      setIsFetching(false);
+    }
+  };
 
   const handleAuthError = (error: unknown) => {
     setState({ ...initialAuthState, sessionValidated: true });
@@ -99,12 +99,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         toast.error("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
         navigate(ModuleRoutes.Login, { replace: true });
       } else {
-        toast.error("Ha ocurrido un error de autenticación. Inténtalo nuevamente.");
+        toast.error("Ha ocurrido un error de autenticación. Inténtalo nuevamente.", { toastId: "authError" });
       }
     }
   };
 
   const loginUser = async (token: string) => {
+    if (isFetching) return;
+    setIsFetching(true);
+
     localStorage.setItem("accessToken", token);
     try {
       const fetchedUserData = await getUserData(token);
@@ -115,18 +118,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           loggingUser: false,
           sessionValidated: true,
         });
-        toast.success("Has iniciado sesión exitosamente!");
+        toast.success("Has iniciado sesión exitosamente!", { toastId: "loginSuccess" });
       }
     } catch (error) {
       handleAuthError(error);
+    } finally {
+      setIsFetching(false);
     }
   };
 
 
   const logoutUser = () => {
-    setState({ ...initialAuthState, sessionValidated: true });
     localStorage.removeItem("accessToken");
-    toast.info("Has cerrado sesión exitosamente!");
+    setState(initialAuthState);
+    toast.info("Has cerrado sesión.");
     navigate(ModuleRoutes.Home, { replace: true });
   };
 

@@ -1,9 +1,5 @@
 import "./Footer.css"; 
 
-/**
- * Componente Footer
- * Muestra el pie de página de la aplicación con información de contacto, enlaces legales y redes sociales.
- */
 function Footer() {
     return (
         <footer>
@@ -12,7 +8,7 @@ function Footer() {
                 {/* Logo e información breve */}
                 <div className="logo">
                     <img
-                        src="src/assets/images/logos/logo_white.svg"
+                        src="/src/assets/images/logos/logo_white.svg"
                         alt="DirectoAMiCasa"
                     />
                     <p>Todo lo que necesitas, directo a tu puerta.</p>
@@ -37,19 +33,19 @@ function Footer() {
             {/* Redes sociales */}
             <div className="social-media">
                 <a href="#">
-                    <img src="src/assets/images/icons/instagram.svg" alt="Instagram" />
+                    <img src="/src/assets/images/icons/instagram.svg" alt="Instagram" />
                 </a>
                 <a href="#">
-                    <img src="src/assets/images/icons/tiktok.svg" alt="TikTok" />
+                    <img src="/src/assets/images/icons/tiktok.svg" alt="TikTok" />
                 </a>
                 <a href="#">
-                    <img src="src/assets/images/icons/facebook.svg" alt="Facebook" />
+                    <img src="/src/assets/images/icons/facebook.svg" alt="Facebook" />
                 </a>
                 <a href="#">
-                    <img src="src/assets/images/icons/whatsapp.svg" alt="WhatsApp" />
+                    <img src="/src/assets/images/icons/whatsapp.svg" alt="WhatsApp" />
                 </a>
                 <a href="#">
-                    <img src="src/assets/images/icons/youtube.svg" alt="YouTube" />
+                    <img src="/src/assets/images/icons/youtube.svg" alt="YouTube" />
                 </a>
             </div>
 

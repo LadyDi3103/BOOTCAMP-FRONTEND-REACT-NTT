@@ -21,19 +21,15 @@ jest.mock("@/app/context/ProductContext", () => ({
   useProducts: jest.fn(),
 }));
 
-jest.mock("@/HOC/withAuth", () => (Component: React.FC) => (props: any) => (
-  <Component {...props} />
-));
-
 const renderComponentWithAuth = (isAuthenticated: boolean) => {
   const authValue: AuthContextProps = {
     loggedUser: isAuthenticated,
-    userData: isAuthenticated ? { id: 1, name: "Test User" } : null,
+    userData: isAuthenticated ? { firstName: "Test firstName", lastName: "Test lastName" } : null,
     loginUser: jest.fn(),
     logoutUser: jest.fn(),
-    setLoggingUser: jest.fn(),
-    setLoggedUser: jest.fn(),
     loggingUser: false,
+    sessionValidated: true,
+    checkUserAuth: jest.fn(),
   };
 
   return render(

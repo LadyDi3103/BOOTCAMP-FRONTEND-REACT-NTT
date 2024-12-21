@@ -9,7 +9,7 @@
   border: 1px solid #ccc;
   outline: none;
   font-size: 1rem;
-  color: var(--muted);
+  color: var(--color-text-dark-lighter);
 }
 .input:not([type="color"]):not([type="submit"]):not([type="range"])::placeholder {
   font-weight: 500;

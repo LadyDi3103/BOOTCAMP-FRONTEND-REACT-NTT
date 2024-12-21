@@ -5,5 +5,6 @@ export const productMapperMock:Product = {
     title: "Essence Mascara Lash Princess",
     price: 9.99,
     thumbnail: "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-    category: "beauty"
+    category: "beauty",
+    discountPercentage: 10,
 }

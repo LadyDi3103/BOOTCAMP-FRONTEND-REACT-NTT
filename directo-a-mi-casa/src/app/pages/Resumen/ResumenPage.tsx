@@ -31,6 +31,7 @@ const normalizeProduct = (product: Partial<Product>): Product => ({
   thumbnail: product.thumbnail || '',
   category: product.category || '',
   quantity: Number(product.quantity) || 0,
+  discountPercentage: product.discountPercentage || 0,
 });
 
 /**
@@ -47,30 +48,52 @@ const ResumenPage: React.FC = () => {
   const [singleButton, setSingleButton] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // Lista de productos normalizados
   const products = state.products.map(normalizeProduct);
 
   const total = products
     .reduce((sum, product) => sum + product.price * (product.quantity || 0), 0)
     .toFixed(2);
 
-  // Validaciones específicas para cada campo
   const validateField = (fieldName: string, value: string): string | null => {
     switch (fieldName) {
       case "nombre":
+        if (!value.trim()) return "Por favor, ingresa tu nombre.";
+        if (value.trim().length < 2)
+          return "El nombre debe tener al menos 2 caracteres.";
+        if (!/^[a-zA-Z\s]+$/.test(value))
+          return "El nombre solo puede contener letras y espacios.";
+        return null;
+
       case "apellidos":
-        return /^[a-zA-Z\s]+$/.test(value)
-          ? null
-          : "Debe ingresar un valor válido";
+        if (!value.trim()) return "Por favor, ingresa tus apellidos.";
+        if (value.trim().length < 2)
+          return "Los apellidos deben tener al menos 2 caracteres.";
+        if (!/^[a-zA-Z\s]+$/.test(value))
+          return "Los apellidos solo pueden contener letras y espacios.";
+        return null;
+
       case "celular":
-        return /^[0-9]{9}$/.test(value)
-          ? null
-          : "Debe ingresar un número válido de 9 dígitos";
+        if (!value.trim()) return "Por favor, ingresa tu número de celular.";
+        if (!/^[0-9]{9}$/.test(value))
+          return "El número de celular debe tener 9 dígitos.";
+        return null;
+
       case "distrito":
-        return value ? null : "Seleccione un distrito";
+        return value ? null : "Por favor, selecciona tu distrito de entrega.";
+
       case "direccion":
+        if (!value.trim()) return "Por favor, ingresa tu dirección exacta.";
+        if (value.trim().length < 5)
+          return "La dirección debe tener al menos 5 caracteres.";
+        return null;
+
       case "referencia":
-        return value.trim() ? null : "Campo obligatorio";
+        if (!value.trim())
+          return "Por favor, proporciona una referencia para facilitar la entrega.";
+        if (value.trim().length < 5)
+          return "La referencia debe tener al menos 5 caracteres.";
+        return null;
+
       default:
         return null;
     }
@@ -118,7 +141,7 @@ const ResumenPage: React.FC = () => {
     setModalMessage("Su pedido se registró con éxito");
     setSingleButton(true);
     setShowModal(true);
-    
+
     // 🔴 Este console muestra el detalle del form enviado
 
     dispatch({ type: "CLEAR_CART" });

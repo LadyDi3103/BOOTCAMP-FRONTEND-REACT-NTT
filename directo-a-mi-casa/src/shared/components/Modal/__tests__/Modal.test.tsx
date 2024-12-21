@@ -1,137 +1,59 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Modal from '../Modal';
 import '@testing-library/jest-dom';
 
 describe("Modal Component", () => {
-    const mockOnClose = jest.fn();
-    const mockOnConfirm = jest.fn();
 
 beforeEach(() => {
     jest.clearAllMocks();
 });
 
-it('should render the modal with the given message when isOpen is true', () => {
+it("should not render the modal when isOpen is false", () => {
     render(
-        <Modal
-            isOpen={true} 
-            modalMessage="This is a test message"
-            onClose={mockOnClose}
-            onConfirm={mockOnConfirm}
-            confirmText="Confirm"
-            cancelText="Cancel"
-        />
+      <Modal isOpen={false}>
+        <p>This is a test message</p>
+      </Modal>
     );
 
-        const messageElement = screen.getByText("This is a test message")
-        expect(messageElement).toBeInTheDocument();
-
-        const confirmButton = screen.getByText("Confirm");
-        const cancelButton = screen.getByText("Cancel");
-        expect(confirmButton).toBeInTheDocument();
-        expect(cancelButton).toBeInTheDocument();
+    const modalContent = screen.queryByText("This is a test message");
+    expect(modalContent).not.toBeInTheDocument();
 });
 
-it('should call the onClose function when the cancel button is clicked', () => {
-    render(
-        <Modal
-        isOpen={true}
-        modalMessage= "This is a test message"
-        onClose={mockOnClose}
-        cancelText= "Cancel"
-        />
-    );
+it("should render the modal with children when isOpen is true", () => {
+  render(
+    <Modal isOpen={true}>
+      <p>This is a test message</p>
+    </Modal>
+  );
 
-    const cancelButton = screen.getByText("Cancel");
-    fireEvent.click(cancelButton);
+  const modalContent = screen.getByText("This is a test message");
+  expect(modalContent).toBeInTheDocument();
+});
 
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
-})
+it("should render the modal content inside a div with class 'modal__content'", () => {
+  render(
+    <Modal isOpen={true}>
+      <p>Test content</p>
+    </Modal>
+  );
 
-it('should call onConfirm when the confirm button is clicked', () => {
-    render(
-      <Modal
-        isOpen={true}
-        modalMessage="This is a test message"
-        onClose={mockOnClose}
-        onConfirm={mockOnConfirm}
-        confirmText="Confirm"
-      />
-    );
+  const modalContent = screen.getByText("Test content");
+  expect(modalContent).toBeInTheDocument();
 
-    const confirmButton = screen.getByText("Confirm");
-    fireEvent.click(confirmButton);
+  const modalContainer = modalContent.closest("div");
+  expect(modalContainer).toHaveClass("modal__content");
+});
 
-    expect(mockOnConfirm).toHaveBeenCalledTimes(1);
-  });
+it("should render the modal overlay when isOpen is true", () => {
+  render(
+    <Modal isOpen={true}>
+      <p>Overlay test</p>
+    </Modal>
+  );
 
-  it('should not render the modal when isOpen is false', () => {
-    render(
-      <Modal
-        isOpen={false}
-        modalMessage="This is a test message"
-        onClose={mockOnClose}
-      />
-    );
+  const overlayElement = screen.getByText("Overlay test").closest(".modal-overlay");
+  expect(overlayElement).toBeInTheDocument();
+});
 
-    const messageElement = screen.queryByText("This is a test message");
-    expect(messageElement).not.toBeInTheDocument();
-  });
-
-  it('should not call onClose or onConfirm if buttons are not clicked', () => {
-    render(
-      <Modal
-        isOpen={true}
-        modalMessage="This is a test message"
-        onClose={mockOnClose}
-        onConfirm={mockOnConfirm}
-        confirmText="Confirm"
-        cancelText="Cancel"
-      />
-    );
-
-    expect(mockOnClose).not.toHaveBeenCalled();
-    expect(mockOnConfirm).not.toHaveBeenCalled();
-  });
-
-  it('should render the single button when singleButton is true and call onClose when clicked', () => {
-  
-    render(
-      <Modal
-        isOpen={true}
-        modalMessage="This is a test message"
-        onClose={mockOnClose}
-        singleButton={true}
-        singleButtonText="Close"
-      />
-    );
-
-    const button = screen.getByText('Close');
-    expect(button).toBeInTheDocument();
-
-    fireEvent.click(button);
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
-  });
-
-  it('should render the single button with the correct class and call onClose when clicked', () => {
-
-    render(
-      <Modal
-        isOpen={true}
-        modalMessage="This is a test message"
-        onClose={mockOnClose}
-        singleButton={true}
-        singleButtonText="Close"
-      />
-    );
-
-    const button = screen.getByText('Close');
-    expect(button).toBeInTheDocument();
-
-    expect(button).toHaveClass('btn__order');
-
-    fireEvent.click(button);
-
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
-  });
 
 })

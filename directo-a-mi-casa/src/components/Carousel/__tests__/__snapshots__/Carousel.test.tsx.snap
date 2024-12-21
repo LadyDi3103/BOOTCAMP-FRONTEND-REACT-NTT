@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Carousel Component Should match snapshot 1`] = `
+<div>
+  <section
+    class="carousel"
+  >
+    <img
+      alt="Imagen para dispositivos móviles"
+      class="carousel-img carousel-mobile"
+      src="/src/assets/images/carousel/HP-BANNER-PRINCIPAL-mobile.svg"
+    />
+    <img
+      alt="Imagen para dispositivos de escritorio"
+      class="carousel-img carousel-desktop"
+      src="/src/assets/images/carousel/baner_desktop.webp"
+    />
+  </section>
+</div>
+`;

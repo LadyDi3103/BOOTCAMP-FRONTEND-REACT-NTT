@@ -8,6 +8,7 @@ export const mockProductsInit: Product[] = [
         price: 9.99,
         thumbnail: "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
         category: "beauty",
+        discountPercentage: 15,
     },
     {
         id: 2,
@@ -15,6 +16,7 @@ export const mockProductsInit: Product[] = [
         price: 19.99,
         thumbnail: "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
         category: "beauty",
+        discountPercentage: 15,
     },
     {
         id: 3,
@@ -22,5 +24,6 @@ export const mockProductsInit: Product[] = [
         price: 14.99,
         thumbnail: "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
         category: "beauty",
+        discountPercentage: 15,
     },
 ];

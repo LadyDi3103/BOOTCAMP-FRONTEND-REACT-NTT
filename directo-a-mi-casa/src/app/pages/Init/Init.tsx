@@ -5,10 +5,6 @@ import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 import withAuth from "@/HOC/withAuth";
 
-/**
- * Componente Init
- * Renderiza una lista de productos con un título, un mensaje de carga o error si corresponde.
- */
 const Init: React.FC = () => {
   const { state } = useProducts();
   const { loading, error } = state;

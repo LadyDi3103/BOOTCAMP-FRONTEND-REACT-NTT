@@ -7,7 +7,7 @@ jest.mock('@/utils/navigate/navigationHelpers', () => ({
   usePageNavigation: jest.fn(),
 }));
 
-describe.skip('CategoryTitleBar Component', () => {
+describe('CategoryTitleBar Component', () => {
   const mockClosePage = jest.fn();
 
   beforeEach(() => {
@@ -33,15 +33,21 @@ describe.skip('CategoryTitleBar Component', () => {
     expect(mockClosePage).toHaveBeenCalled();
   });
 
-  it('should not call closePage if the button is not clicked', () => {
-    render(<CategoryTitleBar title="Test Category" />);
-
-    expect(mockClosePage).not.toHaveBeenCalledTimes(1);
-  });
-
   it("should not call closePage if the button is not clicked", () =>{
     render(<CategoryTitleBar title="Test Category" />);
 
     expect(mockClosePage).not.toHaveBeenCalled();
   })
+
+  it("should not crash if closePage is undefined", () => {
+    (usePageNavigation as jest.Mock).mockReturnValue({});
+    render(<CategoryTitleBar title="Test Category" />);
+  
+    const closeButton = screen.getByRole("button");
+    fireEvent.click(closeButton);
+  
+    expect(closeButton).toBeInTheDocument();
+    expect(mockClosePage).not.toHaveBeenCalledTimes(1);
+  });
+  
 });

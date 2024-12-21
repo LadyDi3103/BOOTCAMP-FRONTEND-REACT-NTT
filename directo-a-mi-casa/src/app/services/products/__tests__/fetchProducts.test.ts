@@ -50,7 +50,7 @@ afterEach(() => {
   console.error = originalConsoleError; //Restaurar console.error
 })
 
-describe.skip("fetchProducts", () => {
+describe("fetchProducts", () => {
 
   it("should return a JSON of products", async () => {
     (mapProduct as jest.Mock).mockImplementation((product: Product) => product)
@@ -108,13 +108,13 @@ describe.skip("fetchProducts", () => {
 
   it("should return paginated products when called with limit and skip", async () => {
     mockFetch(paginatedProductsResponseMock);
-
+ 
     const response = await fetchPaginatedProducts(2, 10);
 
     expect.assertions(4);
     expect(response).toBeDefined();
-    expect(response.length).toBe(2);
-    expect(response).toEqual(paginatedProductsResponseMock.products);
+    expect(response.products.length).toBe(2);
+    expect(response.products).toEqual(paginatedProductsResponseMock.products);
     expect(fetch).toHaveBeenCalledWith(
       `${environment.API_BASE_URL}${environment.PRODUCTS_ENDPOINT}?limit=2&skip=10`
     );

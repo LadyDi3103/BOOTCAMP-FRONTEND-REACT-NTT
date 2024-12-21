@@ -4,25 +4,22 @@ import './ProductPage.css';
 import CallToAction from "../../../shared/components/CallToAction/CallToAction";
 import { useProducts } from "../../context/ProductContext";
 import { useCart } from "../../context/CartContext";
-import { Review } from "../../domain/ProductDetail";
+import { Review, ProductDetails } from '../../domain/ProductDetail';
 import withAuth from "@/HOC/withAuth";
 
-/**
- * Componente ProductPage
- * Renderiza los detalles del producto seleccionado, incluyendo reseñas y un botón para agregar al carrito.
- */
 const ProductPage: React.FC = () => {
   const { state } = useProducts();
   const { addProduct } = useCart();
 
+  const productDetails: ProductDetails = state?.productDetails || ({} as ProductDetails);
+
 const selectedProduct = state?.selectedProduct || null;
-const productDetails = state.productDetails;
 
   const {
     title = "Producto no encontrado",
     description = "Descripción no disponible",
     price = 0,
-    images = "/src/assets/images/placeholder.png", 
+    images = ["/src/assets/images/placeholder.png"], 
     category = "Sin categoría",
     reviews = [],
   } = productDetails;
@@ -37,7 +34,7 @@ const productDetails = state.productDetails;
           {/* Imagen del producto */}
           <div className="producto-imagen">
             <img
-              src={`${images}`}
+              src={`${images[0]}`}
               alt={title}
               className="description__img"
             />
@@ -56,8 +53,8 @@ const productDetails = state.productDetails;
               {/* Botón para agregar al carrito */}
               <button
                 className="btn_order__submit"
-                onClick={() => addProduct(selectedProduct!)}
-                disabled={!state.productDetails}
+                onClick={() => addProduct(selectedProduct)}
+                disabled={!selectedProduct}
               >
                 Agregar
                 <img

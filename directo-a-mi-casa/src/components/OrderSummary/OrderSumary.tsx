@@ -37,7 +37,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                         {products.map((product) => (
                             <tr key={product.id} className="cart-table__body-row">
                                 <td className="cart-table__body-cell">
-                                    <img src={product.thumbnail} alt={product.name} width="80" />
+                                    <img src={product.thumbnail} alt={product.name} width="60" />
                                 </td>
                                 <td className="cart-table__body-cell">{product.title}</td>
                                 <td className="cart-table__body-cell">{product.price}</td>
